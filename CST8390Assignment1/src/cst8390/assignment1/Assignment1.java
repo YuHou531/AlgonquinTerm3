@@ -124,55 +124,208 @@ public class Assignment1 extends Application {
 			this.myNEIGHBOURHOOD_CODE = myNEIGHBOURHOOD_CODE;          
 		}
 		
+		/**
+		 * @return myPID
+		 */
 		public String getPID() {
 			return myPID;
 		}
 		
+		/**
+		 * @return myLEGAL_TYPE
+		 */
 		public String getLEGAL_TYPE() {
 			return myLEGAL_TYPE;
 		}
 		
+		/**
+		 * @return myFOLIO
+		 */
 		public String getFOLIO() {
 			return myFOLIO;
 		}
 		
+		/**
+		 * @return myLAND_COORDINATE
+		 */
 		public String getLAND_COORDINATE() {
 			return myLAND_COORDINATE;
 		}
 		
+		/**
+		 * @return myZONE_NAME
+		 */
 		public String getZONE_NAME() {
 			return myZONE_NAME;
 		}
 		
-
-		this.myZONE_CATEGORY = myZONE_CATEGORY;
-		this.myLOT = myLOT;
-		this.myBLOCK = myBLOCK;
-		this.myPLAN = myPLAN;
-		this.myDISTRICT_LOT = myDISTRICT_LOT;
-		this.myFROM_CIVIC_NUMBER = myFROM_CIVIC_NUMBER;
-		this.myTO_CIVIC_NUMBER = myTO_CIVIC_NUMBER;
-		this.mySTREET_NAME = mySTREET_NAME;
-		this.myPROPERTY_POSTAL_CODE = myPROPERTY_POSTAL_CODE;
-		this.myLegalLine1 = myLegalLine1;
-		this.myLegalLine2 = myLegalLine2;
-		this.myLegalLine3 = myLegalLine3;
-		this.myLegalLine4 = myLegalLine4;
-		this.myLegalLine5 = myLegalLine5;
-		this.myCURRENT_LAND_VALUE = myCURRENT_LAND_VALUE;
-		this.myCURRENT_IMPROVEMENT_VALUE = myCURRENT_IMPROVEMENT_VALUE;
-		this.myTAX_ASSESSMENT_YEAR = myTAX_ASSESSMENT_YEAR;
-		this.myPREVIOUS_LAND_VALUE = myPREVIOUS_LAND_VALUE;
-		this.myPREVIOUS_IMPROVEMENT_VALUE = myPREVIOUS_IMPROVEMENT_VALUE;
-		this.myYEAR_BUILT = myYEAR_BUILT;
-		this.myBIG_IMPROVEMENT_YEAR = myBIG_IMPROVEMENT_YEAR;
-		this.myTAX_LEVY = myTAX_LEVY;
-		this.myNEIGHBOURHOOD_CODE = myNEIGHBOURHOOD_CODE;          
-
+		/**
+		 * @return myZONE_CATEGORY
+		 */
+		public String getZONE_CATEGORYz() {
+			return myZONE_CATEGORY;
+		}
 		
+		/**
+		 * @return myLOT
+		 */
+		public String getLOT() {
+			return myLOT;
+		}
 		
+		/**
+		 * @return myBLOCK
+		 */
+		public String getBLOCK() {
+			return myBLOCK;
+		}
+		
+		/**
+		 * @return myPLAN
+		 */
+		public String getPLAN() {
+			return myPLAN;
+		}
+		
+		/**
+		 * @return myDISTRICT_LOT
+		 */
+		public String getDISTRICT_LOT() {
+			return myDISTRICT_LOT;
+		}
+		
+		/**
+		 * @return myFROM_CIVIC_NUMBER
+		 */
+		public String getFROM_CIVIC_NUMBER() {
+			return myFROM_CIVIC_NUMBER;
+		}
+		
+		/**
+		 * @return myTO_CIVIC_NUMBER
+		 */
+		public String getTO_CIVIC_NUMBER() {
+			return myTO_CIVIC_NUMBER;
+		}
+		
+		/**
+		 * @return mySTREET_NAME
+		 */
+		public String getSTREET_NAME() {
+			return mySTREET_NAME;
+		}
+		
+		/**
+		 * @return myPROPERTY_POSTAL_CODE
+		 */
+		public String getPROPERTY_POSTAL_CODE() {
+			return myPROPERTY_POSTAL_CODE;
+		}
+
+		/**
+		 * @return myLegalLine1
+		 */
+		public String getLegalLine1() {
+			return myLegalLine1;
+		}
+		
+		/**
+		 * @return myLegalLine2
+		 */
+		public String getLegalLine2() {
+			return myLegalLine2;
+		}
+		
+		/**
+		 * @return myLegalLine3
+		 */
+		public String getLegalLine3() {
+			return myLegalLine3;
+		}
+		
+		/**
+		 * @return myLegalLine4
+		 */
+		public String getLegalLine4() {
+			return myLegalLine4;
+		}
+		
+		/**
+		 * @return myLegalLine5
+		 */
+		public String getLegalLine5() {
+			return myLegalLine5;
+		}
+		
+		/**
+		 * @return myCURRENT_LAND_VALUE
+		 */
+		public long getCURRENT_LAND_VALUE() {
+			return myCURRENT_LAND_VALUE;
+		}
+		
+		/**
+		 * @return myCURRENT_IMPROVEMENT_VALUE
+		 */
+		public long getCURRENT_IMPROVEMENT_VALUE() {
+			return myCURRENT_IMPROVEMENT_VALUE;
+		}
+		
+		/**
+		 * @return myTAX_ASSESSMENT_YEAR
+		 */
+		public int getTAX_ASSESSMENT_YEAR() {
+			return myTAX_ASSESSMENT_YEAR;
+		}
+		
+		/**
+		 * @return myPREVIOUS_LAND_VALUE
+		 */
+		public long getPREVIOUS_LAND_VALUE() {
+			return myPREVIOUS_LAND_VALUE;
+		}
+		
+		/**
+		 * @return myPREVIOUS_IMPROVEMENT_VALUE
+		 */
+		public long getPREVIOUS_IMPROVEMENT_VALUE() {
+			return myPREVIOUS_IMPROVEMENT_VALUE;
+		}
+		
+		/**
+		 * @return myYEAR_BUILT
+		 */
+		public int getYEAR_BUILT() {
+			return myYEAR_BUILT;
+		}
+		
+		/**
+		 * @return myBIG_IMPROVEMENT_YEAR
+		 */
+		public int getBIG_IMPROVEMENT_YEAR() {
+			return myBIG_IMPROVEMENT_YEAR;
+		}
+		
+		/**
+		 * @return myTAX_LEVY
+		 */
+		public double getTAX_LEVY() {
+			return myTAX_LEVY;
+		}
+		
+		/**
+		 * @return myNEIGHBOURHOOD_CODE
+		 */
+		public int getNEIGHBOURHOOD_CODE() {
+			return myNEIGHBOURHOOD_CODE;
+		}
 	}
 	
+	/** A class that will store values for Data objects (what you read in from lines of the file).
+	 * 
+	 * @author etorunski
+	 *
+	 */
 	public class MyData{
 		public MyData(String n, int a, int sal)
 		{
@@ -190,8 +343,14 @@ public class Assignment1 extends Application {
 		private int annualSalary;
 	}
 	
+	/**
+	 * main class
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
+		//read the CSV data
 		String workingdirectory = System.getProperty("user.dir");
 		String fileName = workingdirectory + "\\property_tax_report.csv";
 		readCSVFile(fileName);
@@ -295,15 +454,16 @@ public class Assignment1 extends Application {
 				//get a line of text from the file
 				line = reader.readLine();
 				
-				//Split the line by commas
-				String [] partsOfLine = line.split(",");
-				int columnNum = partsOfLine.length;
-				
-				
-				//The array partsOfLine should now hold everything in the line between commas
-				String first = partsOfLine[0];
-				String second = partsOfLine[1];
-				String third = partsOfLine[2];
+				if( line != null) {
+					//Split the line by commas
+					String [] partsOfLine = line.split(",");
+
+					//The array partsOfLine should now hold everything in the line between commas
+					String first = partsOfLine[0];
+					String second = partsOfLine[1];
+					String third = partsOfLine[2];
+				}
+
 			}
 			
 		}catch(IOException ioe)
