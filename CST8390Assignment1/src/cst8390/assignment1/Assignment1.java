@@ -19,11 +19,160 @@ import javafx.stage.Stage;
 
 public class Assignment1 extends Application {
 
-	/** A class that will store values for Data objects (what you read in from lines of the file).
+	/** 
+	 * This class will store values for Property Tax Data objects (what you read from property_tax_report.csv)
 	 * 
-	 * @author etorunski
-	 *
+	 * @author Yu Hou
 	 */
+	public class propertyTaxData {
+		
+		private String myPID; //011-095-563
+		private String myLEGAL_TYPE; //LAND
+		private String myFOLIO; //122730560000
+		private String myLAND_COORDINATE; //12273056
+		private String myZONE_NAME; //RS-5
+		private String myZONE_CATEGORY; //One Family Dwelling
+		private String myLOT; //6
+		private String myBLOCK; //829
+		private String myPLAN; //VAP6011
+		private String myDISTRICT_LOT; //526
+		private String myFROM_CIVIC_NUMBER; //
+		private String myTO_CIVIC_NUMBER; //5012
+		private String mySTREET_NAME; //MARGUERITE ST
+		private String myPROPERTY_POSTAL_CODE; //V6M 3K1
+		private String myLegalLine1; //LOT 6  BLOCK 829  PLAN VAP6011  DIS
+		private String myLegalLine2; //TRICT LOT 526  NEW WESTMINSTER
+		private String myLegalLine3; //
+		private String myLegalLine4; //
+		private String myLegalLine5; //
+		private long myCURRENT_LAND_VALUE; //4081000
+		private long myCURRENT_IMPROVEMENT_VALUE; //814000
+		private int myTAX_ASSESSMENT_YEAR; //2015
+		private long myPREVIOUS_LAND_VALUE; //3617000
+		private long myPREVIOUS_IMPROVEMENT_VALUE; //801000
+		private int myYEAR_BUILT; //1956
+		private int myBIG_IMPROVEMENT_YEAR; //2006
+		private double myTAX_LEVY; //18484.54
+		private int myNEIGHBOURHOOD_CODE; //8
+		
+		/**
+		 * Constructor 
+		 * 
+		 * @param myPID PID
+		 * @param myLEGAL_TYPE LEGAL_TYPE
+		 * @param myFOLIO FOLIO
+		 * @param myLAND_COORDINATE LAND_COORDINATE
+		 * @param myZONE_NAME ZONE_NAME
+		 * @param myZONE_CATEGORY ZONE_CATEGORY
+		 * @param myLOT LOT
+		 * @param myBLOCK BLOCK
+		 * @param myPLAN PLAN
+		 * @param myDISTRICT_LOT DISTRICT_LOT
+		 * @param myFROM_CIVIC_NUMBER FROM_CIVIC_NUMBER
+		 * @param myTO_CIVIC_NUMBER TO_CIVIC_NUMBER
+		 * @param mySTREET_NAME STREET_NAME
+		 * @param myPROPERTY_POSTAL_CODE PROPERTY_POSTAL_CODE
+		 * @param myLegalLine1 legal description line 1
+		 * @param myLegalLine2 legal description line 2
+		 * @param myLegalLine3 legal description line 3
+		 * @param myLegalLine4 legal description line 4
+		 * @param myLegalLine5 legal description line 5
+		 * @param myCURRENT_LAND_VALUE CURRENT_LAND_VALUE
+		 * @param myCURRENT_IMPROVEMENT_VALUE CURRENT_IMPROVEMENT_VALUE
+		 * @param myTAX_ASSESSMENT_YEAR TAX_ASSESSMENT_YEAR
+		 * @param myPREVIOUS_LAND_VALUE PREVIOUS_LAND_VALUE
+		 * @param myPREVIOUS_IMPROVEMENT_VALUE PREVIOUS_IMPROVEMENT_VALUE
+		 * @param myYEAR_BUILT YEAR_BUILT
+		 * @param myBIG_IMPROVEMENT_YEAR BIG_IMPROVEMENT_YEAR
+		 * @param myTAX_LEVY TAX_LEVY
+		 * @param myNEIGHBOURHOOD_CODE NEIGHBOURHOOD_CODE
+		 */
+		public propertyTaxData(String myPID, String myLEGAL_TYPE, String myFOLIO, String myLAND_COORDINATE, String myZONE_NAME,
+				String myZONE_CATEGORY, String myLOT, String myBLOCK, String myPLAN, String myDISTRICT_LOT, String myFROM_CIVIC_NUMBER,
+				String myTO_CIVIC_NUMBER, String mySTREET_NAME, String myPROPERTY_POSTAL_CODE, String myLegalLine1, String myLegalLine2,
+				String myLegalLine3, String myLegalLine4, String myLegalLine5, long myCURRENT_LAND_VALUE, long myCURRENT_IMPROVEMENT_VALUE,
+				int myTAX_ASSESSMENT_YEAR, long myPREVIOUS_LAND_VALUE, long myPREVIOUS_IMPROVEMENT_VALUE, int myYEAR_BUILT, int myBIG_IMPROVEMENT_YEAR,
+				double myTAX_LEVY, int myNEIGHBOURHOOD_CODE)
+		{
+			this.myPID = myPID;
+			this.myLEGAL_TYPE = myLEGAL_TYPE;
+			this.myFOLIO = myFOLIO;
+			this.myLAND_COORDINATE = myLAND_COORDINATE;
+			this.myZONE_NAME = myZONE_NAME;
+			this.myZONE_CATEGORY = myZONE_CATEGORY;
+			this.myLOT = myLOT;
+			this.myBLOCK = myBLOCK;
+			this.myPLAN = myPLAN;
+			this.myDISTRICT_LOT = myDISTRICT_LOT;
+			this.myFROM_CIVIC_NUMBER = myFROM_CIVIC_NUMBER;
+			this.myTO_CIVIC_NUMBER = myTO_CIVIC_NUMBER;
+			this.mySTREET_NAME = mySTREET_NAME;
+			this.myPROPERTY_POSTAL_CODE = myPROPERTY_POSTAL_CODE;
+			this.myLegalLine1 = myLegalLine1;
+			this.myLegalLine2 = myLegalLine2;
+			this.myLegalLine3 = myLegalLine3;
+			this.myLegalLine4 = myLegalLine4;
+			this.myLegalLine5 = myLegalLine5;
+			this.myCURRENT_LAND_VALUE = myCURRENT_LAND_VALUE;
+			this.myCURRENT_IMPROVEMENT_VALUE = myCURRENT_IMPROVEMENT_VALUE;
+			this.myTAX_ASSESSMENT_YEAR = myTAX_ASSESSMENT_YEAR;
+			this.myPREVIOUS_LAND_VALUE = myPREVIOUS_LAND_VALUE;
+			this.myPREVIOUS_IMPROVEMENT_VALUE = myPREVIOUS_IMPROVEMENT_VALUE;
+			this.myYEAR_BUILT = myYEAR_BUILT;
+			this.myBIG_IMPROVEMENT_YEAR = myBIG_IMPROVEMENT_YEAR;
+			this.myTAX_LEVY = myTAX_LEVY;
+			this.myNEIGHBOURHOOD_CODE = myNEIGHBOURHOOD_CODE;          
+		}
+		
+		public String getPID() {
+			return myPID;
+		}
+		
+		public String getLEGAL_TYPE() {
+			return myLEGAL_TYPE;
+		}
+		
+		public String getFOLIO() {
+			return myFOLIO;
+		}
+		
+		public String getLAND_COORDINATE() {
+			return myLAND_COORDINATE;
+		}
+		
+		public String getZONE_NAME() {
+			return myZONE_NAME;
+		}
+		
+
+		this.myZONE_CATEGORY = myZONE_CATEGORY;
+		this.myLOT = myLOT;
+		this.myBLOCK = myBLOCK;
+		this.myPLAN = myPLAN;
+		this.myDISTRICT_LOT = myDISTRICT_LOT;
+		this.myFROM_CIVIC_NUMBER = myFROM_CIVIC_NUMBER;
+		this.myTO_CIVIC_NUMBER = myTO_CIVIC_NUMBER;
+		this.mySTREET_NAME = mySTREET_NAME;
+		this.myPROPERTY_POSTAL_CODE = myPROPERTY_POSTAL_CODE;
+		this.myLegalLine1 = myLegalLine1;
+		this.myLegalLine2 = myLegalLine2;
+		this.myLegalLine3 = myLegalLine3;
+		this.myLegalLine4 = myLegalLine4;
+		this.myLegalLine5 = myLegalLine5;
+		this.myCURRENT_LAND_VALUE = myCURRENT_LAND_VALUE;
+		this.myCURRENT_IMPROVEMENT_VALUE = myCURRENT_IMPROVEMENT_VALUE;
+		this.myTAX_ASSESSMENT_YEAR = myTAX_ASSESSMENT_YEAR;
+		this.myPREVIOUS_LAND_VALUE = myPREVIOUS_LAND_VALUE;
+		this.myPREVIOUS_IMPROVEMENT_VALUE = myPREVIOUS_IMPROVEMENT_VALUE;
+		this.myYEAR_BUILT = myYEAR_BUILT;
+		this.myBIG_IMPROVEMENT_YEAR = myBIG_IMPROVEMENT_YEAR;
+		this.myTAX_LEVY = myTAX_LEVY;
+		this.myNEIGHBOURHOOD_CODE = myNEIGHBOURHOOD_CODE;          
+
+		
+		
+	}
+	
 	public class MyData{
 		public MyData(String n, int a, int sal)
 		{
@@ -42,6 +191,11 @@ public class Assignment1 extends Application {
 	}
 	
 	public static void main(String[] args) {
+		
+		String workingdirectory = System.getProperty("user.dir");
+		String fileName = workingdirectory + "\\property_tax_report.csv";
+		readCSVFile(fileName);
+		
 		launch(args);
 	}
 	
@@ -126,13 +280,13 @@ public class Assignment1 extends Application {
 	}
 	
 	
-	/**  This is the basic parts of reading a CSV file.
+	/**  
+	 * This is the basic parts of reading a CSV file.
 	 * 
 	 * @param filename The string representing a filename to open.
 	 */
-	public void readCSVFile(String filename)
+	public static void readCSVFile(String filename)
 	{
-		
 		try(BufferedReader reader = Files.newBufferedReader(Paths.get(filename)))
 		{
 			String line = "";
@@ -143,6 +297,7 @@ public class Assignment1 extends Application {
 				
 				//Split the line by commas
 				String [] partsOfLine = line.split(",");
+				int columnNum = partsOfLine.length;
 				
 				
 				//The array partsOfLine should now hold everything in the line between commas
