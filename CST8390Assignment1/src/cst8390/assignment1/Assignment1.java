@@ -19,12 +19,15 @@ import javafx.stage.Stage;
 
 public class Assignment1 extends Application {
 
+	//Used to store propertyTaxData
+	final ObservableList<PropertyTaxData> propertyTaxData = FXCollections.observableArrayList();
+	
 	/** 
 	 * This class will store values for Property Tax Data objects (what you read from property_tax_report.csv)
 	 * 
 	 * @author Yu Hou
 	 */
-	public class propertyTaxData {
+	public class PropertyTaxData {
 		
 		private String myPID; //011-095-563
 		private String myLEGAL_TYPE; //LAND
@@ -87,7 +90,7 @@ public class Assignment1 extends Application {
 		 * @param myTAX_LEVY TAX_LEVY
 		 * @param myNEIGHBOURHOOD_CODE NEIGHBOURHOOD_CODE
 		 */
-		public propertyTaxData(String myPID, String myLEGAL_TYPE, String myFOLIO, String myLAND_COORDINATE, String myZONE_NAME,
+		public PropertyTaxData(String myPID, String myLEGAL_TYPE, String myFOLIO, String myLAND_COORDINATE, String myZONE_NAME,
 				String myZONE_CATEGORY, String myLOT, String myBLOCK, String myPLAN, String myDISTRICT_LOT, String myFROM_CIVIC_NUMBER,
 				String myTO_CIVIC_NUMBER, String mySTREET_NAME, String myPROPERTY_POSTAL_CODE, String myLegalLine1, String myLegalLine2,
 				String myLegalLine3, String myLegalLine4, String myLegalLine5, long myCURRENT_LAND_VALUE, long myCURRENT_IMPROVEMENT_VALUE,
@@ -350,7 +353,7 @@ public class Assignment1 extends Application {
 	 */
 	public static void main(String[] args) {
 		
-		//read the CSV data
+		//read the CSV data and load the values to data
 		String workingdirectory = System.getProperty("user.dir");
 		String fileName = workingdirectory + "\\property_tax_report.csv";
 		readCSVFile(fileName);
@@ -438,6 +441,72 @@ public class Assignment1 extends Application {
 		newStage.show();
 	}
 	
+	/**
+	 * Used to read the property tax csv file and store the data to ObservableList<propertyTaxData> propertyTaxData
+	 * 
+	 * @param filename The string representing a filename to open
+	 */
+	public void readPropertyTaxCSVFile(String filename) {
+		
+		try(BufferedReader reader = Files.newBufferedReader(Paths.get(filename)))
+		{
+			String line = "";
+			while(line != null){
+				
+				//get a line of text from the file
+				line = reader.readLine();
+				
+				if( line != null) {
+					//Split the line by commas
+					String [] partsOfLine = line.split(",");
+
+					//The array partsOfLine should now hold everything in the line between commas
+					String pid = partsOfLine[0];
+					String legal_type = partsOfLine[1];
+					String folio = partsOfLine[2];
+					String land_coordinate = partsOfLine[3];
+					String zone_name = partsOfLine[4];
+					String zone_category = partsOfLine[5];
+					String lot = partsOfLine[6];
+					String block = partsOfLine[7];
+					String plan = partsOfLine[8];
+					String district_lot = partsOfLine[9];
+					String from_civic_number = partsOfLine[10];
+					String to_civic_number = partsOfLine[11];
+					String street_name = partsOfLine[12];
+					String property_postal_code = partsOfLine[13];
+					String legalLine1 = partsOfLine[14];
+					String legalLine2 = partsOfLine[15];
+					String legalLine3 = partsOfLine[16];
+					String legalLine4 = partsOfLine[17];
+					String legalLine5 = partsOfLine[18];
+					long current_land_value = Long.valueOf(partsOfLine[19]).longValue();
+					long current_improvement_value = Long.valueOf(partsOfLine[20]).longValue();
+					int tax_assessment_year = Integer.valueOf(partsOfLine[21]).intValue();
+					long previous_land_value = Long.valueOf(partsOfLine[22]).longValue();
+					long previous_improvement_value = Long.valueOf(partsOfLine[23]).longValue();
+					int year_built = Integer.valueOf(partsOfLine[24]).intValue();
+					int big_improvement_year = Integer.valueOf(partsOfLine[25]).intValue();
+					double tax_levy = Double.valueOf(partsOfLine[26]).doubleValue();
+					int neighbourhood_code = Integer.valueOf(partsOfLine[27]).intValue();	
+					
+					PropertyTaxData record = new PropertyTaxData(pid, legal_type, folio, land_coordinate, zone_name,
+							zone_category, lot, block, plan, district_lot, from_civic_number, to_civic_number, 
+							street_name, property_postal_code, legalLine1, legalLine2, legalLine3, legalLine4, 
+							legalLine5, current_land_value, current_improvement_value, tax_assessment_year, 
+							previous_land_value, previous_improvement_value, year_built, big_improvement_year, tax_levy, neighbourhood_code);
+					
+					propertyTaxData.add(record);
+				}
+
+			}
+			
+		}catch(IOException ioe)
+		{
+			System.out.println("Problem reading csv: " + ioe.getMessage());
+		}
+		
+	}
 	
 	/**  
 	 * This is the basic parts of reading a CSV file.
