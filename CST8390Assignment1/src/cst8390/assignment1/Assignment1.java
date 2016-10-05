@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
+import cst8390.assignment1.Assignment1.PropertyTaxData;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,8 +22,15 @@ import javafx.stage.Stage;
 
 public class Assignment1 extends Application {
 
-	//Used to store propertyTaxData
-	final ObservableList<PropertyTaxData> propertyTaxData = FXCollections.observableArrayList();
+	/**
+	 * Default constructor for Assignment 1
+	 * 
+	 * @author Yu Hou
+	 */
+	public Assignment1() {
+		//Used to store propertyTaxData
+		ObservableList<PropertyTaxData> propertyTaxData = FXCollections.observableArrayList();
+	}
 	
 	/** 
 	 * This class will store values for Property Tax Data objects (what you read from property_tax_report.csv)
@@ -56,7 +66,7 @@ public class Assignment1 extends Application {
 		private int myYEAR_BUILT; //1956
 		private int myBIG_IMPROVEMENT_YEAR; //2006
 		private double myTAX_LEVY; //18484.54
-		private int myNEIGHBOURHOOD_CODE; //8
+		private String myNEIGHBOURHOOD_CODE; //8
 		
 		/**
 		 * Constructor 
@@ -95,7 +105,7 @@ public class Assignment1 extends Application {
 				String myTO_CIVIC_NUMBER, String mySTREET_NAME, String myPROPERTY_POSTAL_CODE, String myLegalLine1, String myLegalLine2,
 				String myLegalLine3, String myLegalLine4, String myLegalLine5, long myCURRENT_LAND_VALUE, long myCURRENT_IMPROVEMENT_VALUE,
 				int myTAX_ASSESSMENT_YEAR, long myPREVIOUS_LAND_VALUE, long myPREVIOUS_IMPROVEMENT_VALUE, int myYEAR_BUILT, int myBIG_IMPROVEMENT_YEAR,
-				double myTAX_LEVY, int myNEIGHBOURHOOD_CODE)
+				double myTAX_LEVY, String myNEIGHBOURHOOD_CODE)
 		{
 			this.myPID = myPID;
 			this.myLEGAL_TYPE = myLEGAL_TYPE;
@@ -319,7 +329,7 @@ public class Assignment1 extends Application {
 		/**
 		 * @return myNEIGHBOURHOOD_CODE
 		 */
-		public int getNEIGHBOURHOOD_CODE() {
+		public String getNEIGHBOURHOOD_CODE() {
 			return myNEIGHBOURHOOD_CODE;
 		}
 	}
@@ -353,10 +363,14 @@ public class Assignment1 extends Application {
 	 */
 	public static void main(String[] args) {
 		
+		Assignment1 assign = new Assignment1();
+		
 		//read the CSV data and load the values to data
 		String workingdirectory = System.getProperty("user.dir");
 		String fileName = workingdirectory + "\\property_tax_report.csv";
-		readCSVFile(fileName);
+		List<PropertyTaxData> data = assign.readPropertyTaxCSVFile(fileName);
+		
+
 		
 		launch(args);
 	}
@@ -446,11 +460,14 @@ public class Assignment1 extends Application {
 	 * 
 	 * @param filename The string representing a filename to open
 	 */
-	public void readPropertyTaxCSVFile(String filename) {
+	public List<PropertyTaxData> readPropertyTaxCSVFile(String filename) {
+		
+		List<PropertyTaxData> propertyTaxData = new ArrayList<>();
 		
 		try(BufferedReader reader = Files.newBufferedReader(Paths.get(filename)))
 		{
 			String line = "";
+			int count = 0;
 			while(line != null){
 				
 				//get a line of text from the file
@@ -459,53 +476,80 @@ public class Assignment1 extends Application {
 				if( line != null) {
 					//Split the line by commas
 					String [] partsOfLine = line.split(",");
-
-					//The array partsOfLine should now hold everything in the line between commas
-					String pid = partsOfLine[0];
-					String legal_type = partsOfLine[1];
-					String folio = partsOfLine[2];
-					String land_coordinate = partsOfLine[3];
-					String zone_name = partsOfLine[4];
-					String zone_category = partsOfLine[5];
-					String lot = partsOfLine[6];
-					String block = partsOfLine[7];
-					String plan = partsOfLine[8];
-					String district_lot = partsOfLine[9];
-					String from_civic_number = partsOfLine[10];
-					String to_civic_number = partsOfLine[11];
-					String street_name = partsOfLine[12];
-					String property_postal_code = partsOfLine[13];
-					String legalLine1 = partsOfLine[14];
-					String legalLine2 = partsOfLine[15];
-					String legalLine3 = partsOfLine[16];
-					String legalLine4 = partsOfLine[17];
-					String legalLine5 = partsOfLine[18];
-					long current_land_value = Long.valueOf(partsOfLine[19]).longValue();
-					long current_improvement_value = Long.valueOf(partsOfLine[20]).longValue();
-					int tax_assessment_year = Integer.valueOf(partsOfLine[21]).intValue();
-					long previous_land_value = Long.valueOf(partsOfLine[22]).longValue();
-					long previous_improvement_value = Long.valueOf(partsOfLine[23]).longValue();
-					int year_built = Integer.valueOf(partsOfLine[24]).intValue();
-					int big_improvement_year = Integer.valueOf(partsOfLine[25]).intValue();
-					double tax_levy = Double.valueOf(partsOfLine[26]).doubleValue();
-					int neighbourhood_code = Integer.valueOf(partsOfLine[27]).intValue();	
+					count++;
 					
-					PropertyTaxData record = new PropertyTaxData(pid, legal_type, folio, land_coordinate, zone_name,
-							zone_category, lot, block, plan, district_lot, from_civic_number, to_civic_number, 
-							street_name, property_postal_code, legalLine1, legalLine2, legalLine3, legalLine4, 
-							legalLine5, current_land_value, current_improvement_value, tax_assessment_year, 
-							previous_land_value, previous_improvement_value, year_built, big_improvement_year, tax_levy, neighbourhood_code);
-					
-					propertyTaxData.add(record);
+					//skip column names
+					if(count > 1) {
+						//The array partsOfLine should now hold everything in the line between commas
+						String pid = partsOfLine[0];
+						String legal_type = partsOfLine[1];
+						String folio = partsOfLine[2];
+						String land_coordinate = partsOfLine[3];
+						String zone_name = partsOfLine[4];
+						String zone_category = partsOfLine[5];
+						String lot = partsOfLine[6];
+						String block = partsOfLine[7];
+						String plan = partsOfLine[8];
+						String district_lot = partsOfLine[9];
+						String from_civic_number = partsOfLine[10];
+						String to_civic_number = partsOfLine[11];
+						String street_name = partsOfLine[12];
+						String property_postal_code = partsOfLine[13];
+						String legalLine1 = partsOfLine[14];
+						String legalLine2 = partsOfLine[15];
+						String legalLine3 = partsOfLine[16];
+						String legalLine4 = partsOfLine[17];
+						String legalLine5 = partsOfLine[18];
+						long current_land_value = 0;
+						if(!partsOfLine[19].equals("")) {
+							current_land_value = Long.valueOf(partsOfLine[19]).longValue();
+						}
+						long current_improvement_value = 0;
+						if(!partsOfLine[20].equals("")) {
+							current_improvement_value = Long.valueOf(partsOfLine[20]).longValue();
+						}
+						int tax_assessment_year = 0;
+						if(!partsOfLine[21].equals("")) {
+							tax_assessment_year = Integer.valueOf(partsOfLine[21]).intValue();
+						}
+						long previous_land_value = 0;
+						if(!partsOfLine[22].equals("")) {
+							previous_land_value = Long.valueOf(partsOfLine[22]).longValue();
+						}
+						long previous_improvement_value = 0;
+						if(!partsOfLine[23].equals("")) {
+							previous_improvement_value = Long.valueOf(partsOfLine[23]).longValue();
+						}
+						int year_built = 0;
+						if(!partsOfLine[24].equals("")) {
+							year_built = Integer.valueOf(partsOfLine[24]).intValue();
+						}
+						int big_improvement_year = 0;
+						if(!partsOfLine[25].equals("")) {
+							big_improvement_year = Integer.valueOf(partsOfLine[25]).intValue();
+						}
+						double tax_levy = 0.0;
+						if(!partsOfLine[26].equals("")) {
+							tax_levy = Double.valueOf(partsOfLine[26]).doubleValue();
+						}
+						String neighbourhood_code = partsOfLine[27];
+						
+						PropertyTaxData record = new PropertyTaxData(pid, legal_type, folio, land_coordinate, zone_name,
+								zone_category, lot, block, plan, district_lot, from_civic_number, to_civic_number, 
+								street_name, property_postal_code, legalLine1, legalLine2, legalLine3, legalLine4, 
+								legalLine5, current_land_value, current_improvement_value, tax_assessment_year, 
+								previous_land_value, previous_improvement_value, year_built, big_improvement_year, tax_levy, neighbourhood_code);
+						
+						propertyTaxData.add(record);
+					}
 				}
-
 			}
 			
 		}catch(IOException ioe)
 		{
 			System.out.println("Problem reading csv: " + ioe.getMessage());
 		}
-		
+		return propertyTaxData;
 	}
 	
 	/**  
