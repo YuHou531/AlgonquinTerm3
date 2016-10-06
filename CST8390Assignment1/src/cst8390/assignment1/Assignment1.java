@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import cst8390.assignment1.Assignment1.PropertyTaxData;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,16 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Assignment1 extends Application {
-
-	/**
-	 * Default constructor for Assignment 1
-	 * 
-	 * @author Yu Hou
-	 */
-	public Assignment1() {
-		//Used to store propertyTaxData
-		ObservableList<PropertyTaxData> propertyTaxData = FXCollections.observableArrayList();
-	}
 	
 	/** 
 	 * This class will store values for Property Tax Data objects (what you read from property_tax_report.csv)
@@ -357,27 +346,83 @@ public class Assignment1 extends Application {
 	}
 	
 	/**
-	 * main class
+	 * main class for the application 
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		Assignment1 assign = new Assignment1();
-		
-		//read the CSV data and load the values to data
-		String workingdirectory = System.getProperty("user.dir");
-		String fileName = workingdirectory + "\\property_tax_report.csv";
-		List<PropertyTaxData> data = assign.readPropertyTaxCSVFile(fileName);
-		
-
-		
 		launch(args);
 	}
 	
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		//Step 0 - read the CSV data and load the values to data
+		String workingdirectory = System.getProperty("user.dir");
+		String fileName = workingdirectory + "\\property_tax_report.csv";
+		List<PropertyTaxData> propertyData = readPropertyTaxCSVFile(fileName);
+		
+		int dataSize = propertyData.size();
+		System.out.println("Total dataSize: " + dataSize);
+		
+		long currentLandValueSum = 0;
+		long previousLandValueSum = 0;
+		long houseAgeSum = 0;
+		
+		for(int i = 0; i < dataSize; i++) {
+			currentLandValueSum += propertyData.get(i).getCURRENT_LAND_VALUE();
+			//System.out.println(propertyData.get(i).getCURRENT_LAND_VALUE());
+			previousLandValueSum += propertyData.get(i).getPREVIOUS_LAND_VALUE();
+			//System.out.println(propertyData.get(i).getPREVIOUS_LAND_VALUE());
+			houseAgeSum += (2016 - propertyData.get(i).getYEAR_BUILT());
+			//System.out.println(2016 - propertyData.get(i).getYEAR_BUILT());
+			//System.out.println("------");
+		}
+		
+		//Calculate Average Property Value
+		System.out.println("currentLandValueSum " + currentLandValueSum);
+		long averagePropertyValue = (long) currentLandValueSum / dataSize;
+		System.out.println("averagePropertyValue " + averagePropertyValue);
+		
+		//Calculate Average House Age
+		System.out.println("houseAgeSum " + houseAgeSum);
+		int averageHouseAge = (int) houseAgeSum / dataSize;
+		System.out.println("averageHouseAge " + averageHouseAge);
+		
+		//Calculate Total house value change
+		System.out.println("previousLandValueSum " + previousLandValueSum);
+		long totalHouseValueChange = currentLandValueSum - previousLandValueSum;
+		System.out.println("totalHouseValueChange " + totalHouseValueChange);
+		
+		//Calculate Property Value / House Age Standard Deviation
+		long diffPropertySum = 0;
+		long diffAgeSum = 0;
+		for(int i = 0; i < dataSize; i++) {
+			diffPropertySum += Math.pow( propertyData.get(i).getCURRENT_LAND_VALUE() - averagePropertyValue, 2);
+			diffAgeSum += Math.pow(2016 - propertyData.get(i).getYEAR_BUILT() - averageHouseAge, 2);
+		}
+		System.out.println("diffPropertySum " + diffPropertySum);
+		System.out.println("diffAgeSum " + diffAgeSum);
+		float sdPropertyValue = (float)Math.sqrt(diffPropertySum / dataSize);
+		float sdHouseAge = (float)Math.sqrt(diffAgeSum / dataSize);
+		System.out.println("sdPropertyValue " + sdPropertyValue);
+		System.out.println("sdHouseAge " + sdHouseAge);
+		
+		//Step 1 - Average property value and standard deviation for the entire data set. 
+		
+		//Step 2 - Average house age and standard deviation for the entire data set.
+		
+		//Step 3 - Total house value change for the entire data set (current land value – previous land value).
+		
+		//Step 4 - Number of Commercial, One Family and Multiple Family Dwelling for the entire data set.
+		
+		//Step 5 - The maximumvalue, minimumvalue, and number of homes with house value by increments of $25000. 
+		//         For example, this could be a table, bar chart, or pie chart, which shows the number of homes 
+		//         with value from (thousands) 100 – 125, 125-150, 150-175, 175-200, etc all the way to the 
+		//         maximum first “bin” or interval that has 0 (this should be somewhere in the millions..)
+		
+
+		
 		Button newButton = new Button("Go!");
 		
 		//Create the table, and 3 columns: 
@@ -520,7 +565,7 @@ public class Assignment1 extends Application {
 						if(!partsOfLine[23].equals("")) {
 							previous_improvement_value = Long.valueOf(partsOfLine[23]).longValue();
 						}
-						int year_built = 0;
+						int year_built = 2015;
 						if(!partsOfLine[24].equals("")) {
 							year_built = Integer.valueOf(partsOfLine[24]).intValue();
 						}
@@ -539,7 +584,7 @@ public class Assignment1 extends Application {
 								street_name, property_postal_code, legalLine1, legalLine2, legalLine3, legalLine4, 
 								legalLine5, current_land_value, current_improvement_value, tax_assessment_year, 
 								previous_land_value, previous_improvement_value, year_built, big_improvement_year, tax_levy, neighbourhood_code);
-						
+												
 						propertyTaxData.add(record);
 					}
 				}
