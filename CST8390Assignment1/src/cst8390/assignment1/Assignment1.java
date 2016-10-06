@@ -164,7 +164,7 @@ public class Assignment1 extends Application {
 		/**
 		 * @return myZONE_CATEGORY
 		 */
-		public String getZONE_CATEGORYz() {
+		public String getZONE_CATEGORY() {
 			return myZONE_CATEGORY;
 		}
 		
@@ -368,14 +368,26 @@ public class Assignment1 extends Application {
 		long currentLandValueSum = 0;
 		long previousLandValueSum = 0;
 		long houseAgeSum = 0;
+		long numOfCommercial = 0;
+		long numOfOneFamily = 0;
+		long numOfMultipleFamily = 0;
 		
 		for(int i = 0; i < dataSize; i++) {
-			currentLandValueSum += propertyData.get(i).getCURRENT_LAND_VALUE();
-			//System.out.println(propertyData.get(i).getCURRENT_LAND_VALUE());
-			previousLandValueSum += propertyData.get(i).getPREVIOUS_LAND_VALUE();
-			//System.out.println(propertyData.get(i).getPREVIOUS_LAND_VALUE());
-			houseAgeSum += (2016 - propertyData.get(i).getYEAR_BUILT());
-			//System.out.println(2016 - propertyData.get(i).getYEAR_BUILT());
+			PropertyTaxData record = propertyData.get(i); 
+			currentLandValueSum += record.getCURRENT_LAND_VALUE();
+			//System.out.println(record.getCURRENT_LAND_VALUE());
+			previousLandValueSum += record.getPREVIOUS_LAND_VALUE();
+			//System.out.println(record.getPREVIOUS_LAND_VALUE());
+			houseAgeSum += (2016 - record.getYEAR_BUILT());
+			//System.out.println(2016 - record.getYEAR_BUILT());
+			String zoneType = record.getZONE_CATEGORY();
+			//System.out.println(zoneType);
+			if( zoneType.contains("One Family"))
+				numOfOneFamily++;
+			if( zoneType.contains("Commercial"))
+				numOfCommercial++;
+			if( zoneType.contains("Multiple Family"))
+				numOfMultipleFamily++;
 			//System.out.println("------");
 		}
 		
@@ -408,6 +420,10 @@ public class Assignment1 extends Application {
 		System.out.println("sdPropertyValue " + sdPropertyValue);
 		System.out.println("sdHouseAge " + sdHouseAge);
 		
+		System.out.println("Number of Commercial for the entire data set " + numOfCommercial);
+		System.out.println("Number of One Family for the entire data set " + numOfOneFamily);
+		System.out.println("Number of Multiple Family for the entire data set " + numOfMultipleFamily);
+		
 		//Step 1 - Average property value and standard deviation for the entire data set. 
 		
 		//Step 2 - Average house age and standard deviation for the entire data set.
@@ -421,7 +437,12 @@ public class Assignment1 extends Application {
 		//         with value from (thousands) 100 – 125, 125-150, 150-175, 175-200, etc all the way to the 
 		//         maximum first “bin” or interval that has 0 (this should be somewhere in the millions..)
 		
-
+		//Step 6 - The user should be able to double-click on any of the displays for items 1-5 to drill down to 
+		//         show more detail on the calculation. The next level of detail should be a stage with a  ListView 
+		//         by street name, and then double-clicking on a given item should open another stage showing the 
+		//         calculation by postal code. For example, double-clicking on the property value should show a 
+		//         display of property values by street. Double-clicking on a given street name should then show 
+		//         the property values by postal code on that street.
 		
 		Button newButton = new Button("Go!");
 		
