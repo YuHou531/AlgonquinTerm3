@@ -371,10 +371,13 @@ public class Assignment1 extends Application {
 		long numOfCommercial = 0;
 		long numOfOneFamily = 0;
 		long numOfMultipleFamily = 0;
+		long highestPropertyValue = 0;
 		
 		for(int i = 0; i < dataSize; i++) {
 			PropertyTaxData record = propertyData.get(i); 
 			currentLandValueSum += record.getCURRENT_LAND_VALUE();
+			if( highestPropertyValue < record.getCURRENT_LAND_VALUE())
+				highestPropertyValue = record.getCURRENT_LAND_VALUE();
 			//System.out.println(record.getCURRENT_LAND_VALUE());
 			previousLandValueSum += record.getPREVIOUS_LAND_VALUE();
 			//System.out.println(record.getPREVIOUS_LAND_VALUE());
@@ -420,23 +423,146 @@ public class Assignment1 extends Application {
 		System.out.println("sdPropertyValue " + sdPropertyValue);
 		System.out.println("sdHouseAge " + sdHouseAge);
 		
+		// Number of Commercial / One Family / Multiple Family
 		System.out.println("Number of Commercial for the entire data set " + numOfCommercial);
 		System.out.println("Number of One Family for the entire data set " + numOfOneFamily);
 		System.out.println("Number of Multiple Family for the entire data set " + numOfMultipleFamily);
 		
+		// Highest Property
+		System.out.println("Highest Property is " + highestPropertyValue);
+		// Separate few groups
+		// 0 ~ 2000 (thousands)      - group 1
+		// 2000 ~ 6000 (thousands)   - group 2
+		// 6000 ~ 10000 (thousands)  - group 3 
+		// 10000 ~ 14000 (thousands) - group 4
+		// 14000 ~ 18000 (thousands) - group 5
+		// 18000 plus (thousands)    - group 6
+		List<PropertyTaxData> propertyDataGroup1 = new ArrayList<>();
+		long minValueGroup1 = 0;
+		long maxValueGroup1 = 0;
+		boolean firstTimeGroup1 = true;
+		List<PropertyTaxData> propertyDataGroup2 = new ArrayList<>();
+		long minValueGroup2 = 0;
+		long maxValueGroup2 = 0;
+		boolean firstTimeGroup2 = true;
+		List<PropertyTaxData> propertyDataGroup3 = new ArrayList<>();
+		long minValueGroup3 = 0;
+		long maxValueGroup3 = 0;
+		boolean firstTimeGroup3 = true;
+		List<PropertyTaxData> propertyDataGroup4 = new ArrayList<>();
+		long minValueGroup4 = 0;
+		long maxValueGroup4 = 0;
+		boolean firstTimeGroup4 = true;
+		List<PropertyTaxData> propertyDataGroup5 = new ArrayList<>();
+		long minValueGroup5 = 0;
+		long maxValueGroup5 = 0;
+		boolean firstTimeGroup5 = true;
+		List<PropertyTaxData> propertyDataGroup6 = new ArrayList<>();
+		long minValueGroup6 = 0;
+		long maxValueGroup6 = 0;
+		boolean firstTimeGroup6 = true;
+		List<String> streetNames = new ArrayList<>();
+		String currentStreet = "";
+		
+		for(int i = 0; i < dataSize; i++) {
+			PropertyTaxData record = propertyData.get(i);
+			//Collect unique street names
+			if(!currentStreet.equals(record.getSTREET_NAME()))
+				streetNames.add(record.getSTREET_NAME());
+			//Separate groups
+			long value = record.getCURRENT_LAND_VALUE();
+			if( value < 20000000) {
+				propertyDataGroup1.add(record);
+				if(firstTimeGroup1) {
+					minValueGroup1 = value;
+					maxValueGroup1 = value;
+					firstTimeGroup1 = false;
+				}
+				if( minValueGroup1 >= value ) 
+					minValueGroup1 = value;
+				if( maxValueGroup1 <= value ) 
+					maxValueGroup1 = value;
+			}
+			else if( value >= 20000000 && value < 60000000 ) {
+				propertyDataGroup2.add(record);
+				if(firstTimeGroup2) {
+					minValueGroup2 = value;
+					maxValueGroup2 = value;
+					firstTimeGroup2 = false;
+				}
+				if( minValueGroup2 >= value ) 
+					minValueGroup2 = value;
+				if( maxValueGroup2 <= value ) 
+					maxValueGroup2 = value;
+			}
+			else if( value >= 60000000 && value < 100000000 ) {
+				propertyDataGroup3.add(record);
+				if(firstTimeGroup3) {
+					minValueGroup3 = value;
+					maxValueGroup3 = value;
+					firstTimeGroup3 = false;
+				}
+				if( minValueGroup3 >= value ) 
+					minValueGroup3 = value;
+				if( maxValueGroup3 <= value ) 
+					maxValueGroup3 = value;
+			}
+			else if( value >= 100000000 && value < 140000000 ) {
+				propertyDataGroup4.add(record);
+				if(firstTimeGroup4) {
+					minValueGroup4 = value;
+					maxValueGroup4 = value;
+					firstTimeGroup4 = false;
+				}
+				if( minValueGroup4 >= value ) 
+					minValueGroup4 = value;
+				if( maxValueGroup4 <= value ) 
+					maxValueGroup4 = value;
+			}
+			else if( value >= 140000000 && value < 180000000 ) {
+				propertyDataGroup5.add(record);
+				if(firstTimeGroup5) {
+					minValueGroup5 = value;
+					maxValueGroup5 = value;
+					firstTimeGroup5 = false;
+				}
+				if( minValueGroup5 >= value ) 
+					minValueGroup5 = value;
+				if( maxValueGroup5 <= value ) 
+					maxValueGroup5 = value;
+			}
+			else if( value >= 180000000 ) {
+				propertyDataGroup6.add(record);
+				if(firstTimeGroup6) {
+					minValueGroup6 = value;
+					maxValueGroup6 = value;
+					firstTimeGroup6 = false;
+				}
+				if( minValueGroup6 >= value ) 
+					minValueGroup6 = value;
+				if( maxValueGroup6 <= value ) 
+					maxValueGroup6 = value;
+			}
+		}
+		
+		//Test streetNames
+		System.out.println("StreetNames list size is " + streetNames.size());
+		//Display group min value, max value and number of houses
+		System.out.println("Group 1  0 ~ 2000 (thousands) minimum value " + minValueGroup1 + " maximum value " + maxValueGroup1 + " group total numbers " + propertyDataGroup1.size());
+		System.out.println("Group 2  2000 ~ 6000 (thousands) minimum value " + minValueGroup2 + " maximum value " + maxValueGroup2 + " group total numbers " + propertyDataGroup2.size());
+		System.out.println("Group 3  6000 ~ 10000 (thousands) minimum value " + minValueGroup3 + " maximum value " + maxValueGroup3 + " group total numbers " + propertyDataGroup3.size());
+		System.out.println("Group 4  10000 ~ 14000 (thousands) minimum value " + minValueGroup4 + " maximum value " + maxValueGroup4 + " group total numbers " + propertyDataGroup4.size());
+		System.out.println("Group 5  10000 ~ 18000 (thousands) minimum value " + minValueGroup5 + " maximum value " + maxValueGroup5 + " group total numbers " + propertyDataGroup5.size());
+		System.out.println("Group 6  18000 plus (thousands) minimum value " + minValueGroup6 + " maximum value " + maxValueGroup6 + " group total numbers " + propertyDataGroup6.size());
+		
 		//Step 1 - Average property value and standard deviation for the entire data set. 
-		
 		//Step 2 - Average house age and standard deviation for the entire data set.
-		
 		//Step 3 - Total house value change for the entire data set (current land value – previous land value).
-		
 		//Step 4 - Number of Commercial, One Family and Multiple Family Dwelling for the entire data set.
-		
 		//Step 5 - The maximumvalue, minimumvalue, and number of homes with house value by increments of $25000. 
 		//         For example, this could be a table, bar chart, or pie chart, which shows the number of homes 
 		//         with value from (thousands) 100 – 125, 125-150, 150-175, 175-200, etc all the way to the 
 		//         maximum first “bin” or interval that has 0 (this should be somewhere in the millions..)
-		
 		//Step 6 - The user should be able to double-click on any of the displays for items 1-5 to drill down to 
 		//         show more detail on the calculation. The next level of detail should be a stage with a  ListView 
 		//         by street name, and then double-clicking on a given item should open another stage showing the 
@@ -486,13 +612,13 @@ public class Assignment1 extends Application {
 		primaryStage.setScene(new Scene(new VBox(newButton, table), 640, 480));
 		
 		//when clicking the button, call openOtherStage();
-		newButton.setOnMouseClicked(clickEvent -> openOtherStage() );
+		newButton.setOnMouseClicked(clickEvent -> openOtherStage(streetNames) );
 		
 		primaryStage.show();
 	}
 
 	
-	protected void openOtherStage()
+	protected void openOtherStage(List<String> streetNames)
 	{
 		
 		VBox root = new VBox();
@@ -505,14 +631,16 @@ public class Assignment1 extends Application {
 		
 		//Create a ListView object
 		ListView<Number> list = new ListView<>();
+		ListView<String> listStr = new ListView<>();
 		
 		//Create a list of data numbers
-		ObservableList<Number> items = FXCollections.observableArrayList ( 1, 2, 3, 4, 5.5 );
-		
+		//ObservableList<Number> items = FXCollections.observableArrayList ( 1, 2, 3, 4, 5.5 );
+		ObservableList<String> itemStrs = FXCollections.observableArrayList ( streetNames );
 		//Give the listView a list of numbers:
-		list.setItems(items);
+		//list.setItems(items);
+		listStr.setItems(itemStrs);
 		
-		root.getChildren().add(list);
+		root.getChildren().add(listStr);
 		
 		//Tell the stage which scene to display
 		newStage.setScene(newScene);
