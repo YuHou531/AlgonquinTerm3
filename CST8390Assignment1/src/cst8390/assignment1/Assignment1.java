@@ -588,7 +588,7 @@ public class Assignment1 extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if(event.getClickCount() == 2) {
-					openOtherStage(streetNames);
+					openStreetsStage(streetNames, propertyData);
 				}
 			}
 		});
@@ -600,7 +600,7 @@ public class Assignment1 extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if(event.getClickCount() == 2) {
-					openOtherStage(streetNames);
+					openStreetsStage(streetNames, propertyData);
 				}
 			}
 		});
@@ -612,7 +612,7 @@ public class Assignment1 extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if(event.getClickCount() == 2) {
-					openOtherStage(streetNames);
+					openStreetsStage(streetNames, propertyData);
 				}
 			}
 		});
@@ -624,7 +624,7 @@ public class Assignment1 extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if(event.getClickCount() == 2) {
-					openOtherStage(streetNames);
+					openStreetsStage(streetNames, propertyData);
 				}
 			}
 		});
@@ -676,7 +676,7 @@ public class Assignment1 extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if(event.getClickCount() == 2) {
-					openOtherStage(streetNames);
+					openStreetsStage(streetNames, propertyData);
 				}
 			}
 		});
@@ -695,7 +695,7 @@ public class Assignment1 extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				if(event.getClickCount() == 2) {
-					openOtherStage(streetNames);
+					openStreetsStage(streetNames, propertyData);
 				}
 			}
 		});
@@ -711,10 +711,15 @@ public class Assignment1 extends Application {
 				
 		primaryStage.show();
 	}
-		
-	protected void openOtherStage(List<String> streetNames)
+	
+	/**
+	 * Used to display street stage
+	 * 
+	 * @param streetNames list of streets
+	 * @param propertyData all Property tax data
+	 */
+	protected void openStreetsStage(List<String> streetNames, List<PropertyTaxData> propertyData)
 	{
-		
 		VBox root = new VBox();
 		
 		//Create a second stage object
@@ -724,17 +729,107 @@ public class Assignment1 extends Application {
 		Scene newScene = new Scene(root, 500, 500);
 		
 		//Create a ListView object
-		ListView<Number> list = new ListView<>();
 		ListView<String> listStr = new ListView<>();
 		
-		//Create a list of data numbers
-		//ObservableList<Number> items = FXCollections.observableArrayList ( 1, 2, 3, 4, 5.5 );
+		//Create a list of data street names
 		ObservableList<String> itemStrs = FXCollections.observableArrayList ( streetNames );
-		//Give the listView a list of numbers:
-		//list.setItems(items);
+		//Give the listView a list of street names:
 		listStr.setItems(itemStrs);
 		
+		listStr.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					//get the selected streetName
+					String streetName = listStr.getSelectionModel().getSelectedItem();
+					openSpecificStreetStage(streetName, propertyData);
+				}
+			}
+		});
+		
 		root.getChildren().add(listStr);
+		
+		//Tell the stage which scene to display
+		newStage.setScene(newScene);
+		
+		//make the stage visible
+		newStage.show();
+	}
+	
+	/**
+	 * Used for prepare specific street house table
+	 * 
+	 * @author Yu Hou
+	 */
+	public class StreetHouseData{
+		public StreetHouseData(String name, String postcode, long price)
+		{
+			myName = name;
+			myPostcode = postcode;
+			myPrice = price;
+		}
+		
+		public String getName() 	{ return myName; }
+		public String getPostcode() { return myPostcode; }
+		public long getPrice() 	    { return myPrice; }
+		
+		private String myName;
+		private String myPostcode; 
+		private long myPrice; 
+	}
+	
+	/**
+	 * Used to display specific street stage
+	 * 
+	 * @param streetName   specific street name
+	 * @param propertyData all Property tax data
+	 */
+	protected void openSpecificStreetStage(String streetName, List<PropertyTaxData> propertyData)
+	{
+		VBox root = new VBox();
+		
+		//Create a second stage object
+		Stage newStage = new Stage();
+		
+		//Create a scene object to show objects
+		Scene newScene = new Scene(root, 500, 500);
+		
+		//Create the table with 4 columns
+		TableView<StreetHouseData> table = new TableView<>();
+		TableColumn<StreetHouseData, String> nameCol = new TableColumn<>("Street Name");	
+	    TableColumn<StreetHouseData, String> postcodeCol = new TableColumn<>("Post Code");
+	    TableColumn<StreetHouseData, Long> priceCol = new TableColumn<>("House Value");
+	    table.getColumns().addAll(nameCol, postcodeCol, priceCol);
+		
+	    //Tell the columns what getter function to call for their data:
+	    nameCol.setCellValueFactory(
+	    	    new PropertyValueFactory<StreetHouseData,String>("Name") //Will call "getName()" from objects in the list
+	    	);
+	    
+	    postcodeCol.setCellValueFactory(
+	    	    new PropertyValueFactory<StreetHouseData,String>("Postcode")  //Will call "getPostcode()" from objects in the list
+	    	);
+	    
+	    priceCol.setCellValueFactory(
+	    	    new PropertyValueFactory<StreetHouseData,Long>("Price") //Will call "getPrice()" from objects in the list
+	    	);
+	    
+	    //Create a list of data:
+	    final ObservableList<StreetHouseData> data = FXCollections.observableArrayList();
+	    
+	   //add elements one at a time:
+	    for(int i = 0; i<propertyData.size(); i++ )
+	    {
+	    	PropertyTaxData record = propertyData.get(i);
+	    	if( record.getSTREET_NAME().equals(streetName)) {
+	    		data.add(new StreetHouseData(streetName, record.getPROPERTY_POSTAL_CODE(), record.getCURRENT_LAND_VALUE()));
+	    	}
+	    }
+	    
+	    //Finally give the data to the table for rendering:
+	    table.setItems(data);
+	    
+		root.getChildren().add(table);
 		
 		//Tell the stage which scene to display
 		newStage.setScene(newScene);
@@ -839,38 +934,4 @@ public class Assignment1 extends Application {
 		}
 		return propertyTaxData;
 	}
-	
-	/**  
-	 * This is the basic parts of reading a CSV file.
-	 * 
-	 * @param filename The string representing a filename to open.
-	 */
-	public static void readCSVFile(String filename)
-	{
-		try(BufferedReader reader = Files.newBufferedReader(Paths.get(filename)))
-		{
-			String line = "";
-			while(line != null){
-				
-				//get a line of text from the file
-				line = reader.readLine();
-				
-				if( line != null) {
-					//Split the line by commas
-					String [] partsOfLine = line.split(",");
-
-					//The array partsOfLine should now hold everything in the line between commas
-					String first = partsOfLine[0];
-					String second = partsOfLine[1];
-					String third = partsOfLine[2];
-				}
-
-			}
-			
-		}catch(IOException ioe)
-		{
-			System.out.println("Problem reading csv: " + ioe.getMessage());
-		}
-	}
-
 }
