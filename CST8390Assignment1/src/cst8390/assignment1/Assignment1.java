@@ -12,9 +12,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -323,27 +328,30 @@ public class Assignment1 extends Application {
 			return myNEIGHBOURHOOD_CODE;
 		}
 	}
-	
-	/** A class that will store values for Data objects (what you read in from lines of the file).
+		
+	/**
+	 * Used for prepare house values table 
 	 * 
-	 * @author etorunski
-	 *
+	 * @author Yu Hou
 	 */
-	public class MyData{
-		public MyData(String n, int a, int sal)
+	public class HousePriceGroupData{
+		public HousePriceGroupData(String range, long min, long max, int num)
 		{
-			myName = n;
-			myAge = a;
-			annualSalary = sal;
+			myRange = range;
+			myMin = min;
+			myMax = max;
+			myNum = num;
 		}
 		
-		public String getName() 	{ return myName; }
-		public Integer getAge() 	{ return myAge; }
-		public Integer getSalary() 	{ return annualSalary; }
+		public String getRange() 	{ return myRange; }
+		public long getMin() 	    { return myMin; }
+		public long getMax() 	    { return myMax; }
+		public int getNum() 	    { return myNum; }
 		
-		private String myName;
-		private int myAge;
-		private int annualSalary;
+		private String myRange;
+		private long myMin; 
+		private long myMax; 
+		private int myNum;
 	}
 	
 	/**
@@ -626,7 +634,73 @@ public class Assignment1 extends Application {
 		//         with value from (thousands) 100 – 125, 125-150, 150-175, 175-200, etc all the way to the 
 		//         maximum first “bin” or interval that has 0 (this should be somewhere in the millions..)
 		
-		primaryStage.setScene(new Scene(new VBox(tf0, text1, text2, text3, text4), 1000, 600));
+		//Create the table with 4 columns
+		TableView<HousePriceGroupData> table = new TableView<>();
+		TableColumn<HousePriceGroupData, String> rangeCol = new TableColumn<>("House Price Range (in thousands)");	
+	    TableColumn<HousePriceGroupData, Long> minCol = new TableColumn<>("Minimum value");
+	    TableColumn<HousePriceGroupData, Long> maxCol = new TableColumn<>("Maximum value");
+	    TableColumn<HousePriceGroupData, Integer> numCol = new TableColumn<>("Number of houses");
+	    table.getColumns().addAll(rangeCol, minCol, maxCol, numCol);
+		
+	    //Tell the columns what getter function to call for their data:
+	    rangeCol.setCellValueFactory(
+	    	    new PropertyValueFactory<HousePriceGroupData,String>("Range") //Will call "getRange()" from objects in the list
+	    	);
+	    
+	    minCol.setCellValueFactory(
+	    	    new PropertyValueFactory<HousePriceGroupData,Long>("Min")  //Will call "getMin()" from objects in the list
+	    	);
+	    
+	    maxCol.setCellValueFactory(
+	    	    new PropertyValueFactory<HousePriceGroupData,Long>("Max") //Will call "getMax()" from objects in the list
+	    	);
+	    
+	    numCol.setCellValueFactory(
+	    	    new PropertyValueFactory<HousePriceGroupData,Integer>("Num") //Will call "getNum()" from objects in the list
+	    	);
+
+	    //Create a list of data:
+	    final ObservableList<HousePriceGroupData> data = FXCollections.observableArrayList();
+	    //add elements one at a time:
+	    data.add(new HousePriceGroupData("0 ~ 200", minValueGroup1, maxValueGroup1, propertyDataGroup1.size()));
+	    data.add(new HousePriceGroupData("200 ~ 600", minValueGroup2, maxValueGroup2, propertyDataGroup2.size()));
+	    data.add(new HousePriceGroupData("600 ~ 1000", minValueGroup3, maxValueGroup3, propertyDataGroup3.size()));
+	    data.add(new HousePriceGroupData("1000 ~ 1400", minValueGroup4, maxValueGroup4, propertyDataGroup4.size()));
+	    data.add(new HousePriceGroupData("1400 ~ 1800", minValueGroup5, maxValueGroup5, propertyDataGroup5.size()));
+	    data.add(new HousePriceGroupData("1800 plus", minValueGroup6, maxValueGroup6, propertyDataGroup6.size()));
+	    
+	    //Finally give the data to the table for rendering:
+	    table.setItems(data);
+	    
+	    table.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					openOtherStage(streetNames);
+				}
+			}
+		});
+	     
+	    //Pie Char
+	    ObservableList<PieChart.Data> pieChartData =
+	    		FXCollections.observableArrayList(
+		                new PieChart.Data("200 ~ 600", propertyDataGroup2.size()),
+		                new PieChart.Data("600 ~ 1000", propertyDataGroup3.size()),
+		                new PieChart.Data("1000 ~ 1400", propertyDataGroup4.size()),
+		                new PieChart.Data("1400 ~ 1800", propertyDataGroup5.size()),
+	                    new PieChart.Data("1800 plus", propertyDataGroup6.size()));
+	    final PieChart chart = new PieChart(pieChartData);
+	    chart.setTitle("House Price (in thousands) and number of houses");
+	    chart.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					openOtherStage(streetNames);
+				}
+			}
+		});
+	    
+		primaryStage.setScene(new Scene(new VBox(tf0, text1, text2, text3, text4, table, chart), 1000, 600));
 		
 		//Step 6 - The user should be able to double-click on any of the displays for items 1-5 to drill down to 
 		//         show more detail on the calculation. The next level of detail should be a stage with a  ListView 
@@ -634,53 +708,10 @@ public class Assignment1 extends Application {
 		//         calculation by postal code. For example, double-clicking on the property value should show a 
 		//         display of property values by street. Double-clicking on a given street name should then show 
 		//         the property values by postal code on that street.
-		
-		// start sample code
-		/*
-		Button newButton = new Button("Go!");
-		
-		//Create the table, and 3 columns: 
-		TableView<MyData> table = new TableView<>();
-		TableColumn<MyData, String> nameCol = new TableColumn<>("Name");	
-	    TableColumn<MyData, String> ageCol = new TableColumn<>("Age");
-	    TableColumn<MyData, String> salCol = new TableColumn<>("Salary");
-	    table.getColumns().addAll(nameCol, ageCol, salCol);
-	    
-	    //Tell the columns what getter function to call for their data:
-	    nameCol.setCellValueFactory(
-	    	    new PropertyValueFactory<MyData,String>("Name") //Will call "getName()" from objects in the list
-	    	);
-	    
-	    ageCol.setCellValueFactory(
-	    	    new PropertyValueFactory<MyData,String>("Age")  //Will call "getAge()" from objects in the list
-	    	);
-	    
-	    salCol.setCellValueFactory(
-	    	    new PropertyValueFactory<MyData,String>("Salary") //Will call "getSalary()" from objects in the list
-	    	);
-
-	    //Create a list of data:
-	    final ObservableList<MyData> data = FXCollections.observableArrayList();
-	    //add elements one at a time:
-	    data.add(new MyData("Eric", 20, 12345));
-	    data.add(new MyData("Cire", 40, 54321));
-	    data.add(new MyData("Rice", 60, 123321));
-		 
-	    //Finally give the data to the table for rendering:
-	    table.setItems(data);
-	     
-		primaryStage.setScene(new Scene(new VBox(newButton, table), 640, 480));
-		
-		//when clicking the button, call openOtherStage();
-		newButton.setOnMouseClicked(clickEvent -> openOtherStage(streetNames) );
-		*/
-		// end of sample code
-		
-		
+				
 		primaryStage.show();
 	}
-
-	
+		
 	protected void openOtherStage(List<String> streetNames)
 	{
 		
