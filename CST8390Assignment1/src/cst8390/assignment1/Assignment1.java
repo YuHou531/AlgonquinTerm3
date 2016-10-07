@@ -10,13 +10,14 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Assignment1 extends Application {
@@ -555,14 +556,78 @@ public class Assignment1 extends Application {
 		System.out.println("Group 5  10000 ~ 18000 (thousands) minimum value " + minValueGroup5 + " maximum value " + maxValueGroup5 + " group total numbers " + propertyDataGroup5.size());
 		System.out.println("Group 6  18000 plus (thousands) minimum value " + minValueGroup6 + " maximum value " + maxValueGroup6 + " group total numbers " + propertyDataGroup6.size());
 		
+		//Display the information about step 1 - 5
+		//create a VBox object as the root layout
+		VBox root = new VBox();
+		root.setSpacing(5);
+		primaryStage.setScene(new Scene(root, 1000, 600));
+		primaryStage.setTitle("CST8390 Assignment 1");
+		
+		TextField tf0 = new TextField ("The entire data set is " + dataSize + " houses in Vancouver.\n");
+		tf0.setDisable(true);
+		tf0.setStyle(""
+		        + "-fx-font-size: 20px;"
+		        + "-fx-font-style: italic;"
+		        + "-fx-font-weight: bold;"
+		        + "-fx-font-family: fantasy;"
+		        + "-fx-text-fill: blue;"
+		        + "-fx-background-color: aqua");
+		
 		//Step 1 - Average property value and standard deviation for the entire data set. 
+		Text text1 = new Text (800, 100, "Average property value is $" + averagePropertyValue + " and standard deviation is " + sdPropertyValue + " for the entire data set.\n");
+		text1.setFont(Font.font ("Verdana", 15));
+		text1.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					openOtherStage(streetNames);
+				}
+			}
+		});
+		
 		//Step 2 - Average house age and standard deviation for the entire data set.
+		Text text2 = new Text (800, 100, "Average house age is " + averageHouseAge + " and standard deviation is " + sdHouseAge + " for the entire data set.\n");
+		text2.setFont(Font.font ("Verdana", 15));
+		text2.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					openOtherStage(streetNames);
+				}
+			}
+		});
+		
 		//Step 3 - Total house value change for the entire data set (current land value – previous land value).
+		Text text3 = new Text (800, 100, "Total house value change for the entire data set (current land value – previous land value) is $" + totalHouseValueChange + " for the entire data set.\n");
+		text3.setFont(Font.font ("Verdana", 15));
+		text3.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					openOtherStage(streetNames);
+				}
+			}
+		});
+		
 		//Step 4 - Number of Commercial, One Family and Multiple Family Dwelling for the entire data set.
+		Text text4 = new Text (800, 100, "Number of Commercial House is " + numOfCommercial + "; Number of One Family House is " + numOfOneFamily + "; Number of Multiple Family House is " + numOfMultipleFamily + " \n");
+		text4.setFont(Font.font ("Verdana", 15));
+		text4.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if(event.getClickCount() == 2) {
+					openOtherStage(streetNames);
+				}
+			}
+		});
+		
 		//Step 5 - The maximumvalue, minimumvalue, and number of homes with house value by increments of $25000. 
 		//         For example, this could be a table, bar chart, or pie chart, which shows the number of homes 
 		//         with value from (thousands) 100 – 125, 125-150, 150-175, 175-200, etc all the way to the 
 		//         maximum first “bin” or interval that has 0 (this should be somewhere in the millions..)
+		
+		primaryStage.setScene(new Scene(new VBox(tf0, text1, text2, text3, text4), 1000, 600));
+		
 		//Step 6 - The user should be able to double-click on any of the displays for items 1-5 to drill down to 
 		//         show more detail on the calculation. The next level of detail should be a stage with a  ListView 
 		//         by street name, and then double-clicking on a given item should open another stage showing the 
@@ -570,6 +635,8 @@ public class Assignment1 extends Application {
 		//         display of property values by street. Double-clicking on a given street name should then show 
 		//         the property values by postal code on that street.
 		
+		// start sample code
+		/*
 		Button newButton = new Button("Go!");
 		
 		//Create the table, and 3 columns: 
@@ -592,9 +659,6 @@ public class Assignment1 extends Application {
 	    	    new PropertyValueFactory<MyData,String>("Salary") //Will call "getSalary()" from objects in the list
 	    	);
 
-	    
-	   
-	    
 	    //Create a list of data:
 	    final ObservableList<MyData> data = FXCollections.observableArrayList();
 	    //add elements one at a time:
@@ -602,17 +666,16 @@ public class Assignment1 extends Application {
 	    data.add(new MyData("Cire", 40, 54321));
 	    data.add(new MyData("Rice", 60, 123321));
 		 
-	    
-	    
-	    
 	    //Finally give the data to the table for rendering:
-	     table.setItems(data);
-	     
+	    table.setItems(data);
 	     
 		primaryStage.setScene(new Scene(new VBox(newButton, table), 640, 480));
 		
 		//when clicking the button, call openOtherStage();
 		newButton.setOnMouseClicked(clickEvent -> openOtherStage(streetNames) );
+		*/
+		// end of sample code
+		
 		
 		primaryStage.show();
 	}
