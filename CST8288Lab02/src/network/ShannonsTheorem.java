@@ -1,27 +1,14 @@
 /*
- * @(#)ShannonsTheorem.java   1.0 YY/MM/DD
+ * @(#)ShannonsTheorem.java   1.0
  *
- *
- *  This software contains confidential and proprietary information
- *  of Dyer Consulting ("Confidential Information").  You shall not disclose
- *  such Confidential Information and shall use it only in accordance with the
- *  terms of the license agreement you entered into with Dyer Consulting.
- *
- *  This software is provided "AS IS,".  No warrantee of any kind, express
- *  or implied, is included with this software; use at your own risk, responsibility
- *  for damages (if any) to anyone resulting from the use of this software rests
- *  entirely with the user even if Dyer Consulting has been advised of the
- *  possibility of such damages.
- *
- *  This software is not designed or intended for use in on-line control of
- *  aircraft, air traffic, aircraft navigation or aircraft communications; or in
- *  the design, construction, operation or maintenance of any nuclear
- *  facility. Licensee represents and warrants that it will not use or
- *  redistribute the Software for such purposes.
- *
- *  Distribute freely, except: don't remove my name from the source or
- *  documentation, mark your changes (don't blame me for your possible bugs),
- *  don't alter or remove any of this notice.
+ * The main class, ShannonsTheorem has an association with the model
+ * class. ShannosModel. The role name on the diagram indicates that the code
+ * should have a reference attribute named "model" of type ShannosModel
+ * 
+ * The new version of the ShannonsTheorem class, now contains the "view"
+ * and the "controller" component
+ * 
+ * It no longer contains the "model"
  */
 
 /*	Package for class placement	*/
@@ -30,9 +17,9 @@ package network;
 import javax.swing.JOptionPane;
 
 /**
- * CST8288 OPP with Design Partterns Lab1 B.
+ * CST8288 OPP with Design Partterns Lab2.
  * @author    Yu Hou
- * @version   Sep 12 2016
+ * @version   Oct 12 2016
  */
 public class ShannonsTheorem {
 	/** Double used for bandwidth input (hertz). */
