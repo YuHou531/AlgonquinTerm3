@@ -44,6 +44,7 @@ public class AllTests extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
 		suite.addTest(Test_ShannonsTheorem.suite());
+		suite.addTest(Test_ShannonsModel.suite());
 		return suite;
 	}
 

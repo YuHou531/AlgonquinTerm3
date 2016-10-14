@@ -22,96 +22,63 @@ import javax.swing.JOptionPane;
  * @version   Oct 12 2016
  */
 public class ShannonsTheorem {
-	/** Double used for bandwidth input (hertz). */
-	private double bandwidth;
-	/** Double used for signal-to-noise ratio input (decibels). */
-	private double signalToNoise;
+	
+	/** ShannonsModel instance */
+	private ShannonsModel shannonsModel;
 	
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
 	 *	Default construtor.
 	 */
-	public ShannonsTheorem()	
+	public ShannonsTheorem()
 	{	
-	}
-
-	/**
-	 *	Paramertized constructor.
-	 *	@param	bandWidth      band width of network
-	 *  @param  signalToNoise  signalToNoise of network
-	 */
-	public ShannonsTheorem(double bandWidth, double signalToNoise)	{
-		
-		setBandwidth(bandWidth);
-		
-		setSignalToNoise(signalToNoise);
+		shannonsModel = new ShannonsModel();
 	}
 
 	/* ACCESSORS	-----------------------------------------------------	*/
 	/**
-	 *	Document your getters.
-	 */
-	//public String getSomeAttribute()						{ return	someAttribute;		}
- 
-	/**
-	 * Get method that returns the bandwidth (hertz).
+	 * Get method that returns the bandwidth (hertz) of the ShannonsModel instance
 	 * @return	bandwidth	double containing the bandwidth.
 	 */
 	public double getBandwidth() { 
-		return bandwidth;
+		return shannonsModel.getBandwidth();
 	}
 	
 	/**
-	 * Get method that returns the signal-to-noise ratio (decibels).
+	 * Get method that returns the signal-to-noise ratio (decibels) of the ShannonsModel instance
 	 * @return	signalToNoise	double containing the signal-to-noise ratio.
 	 */
 	public double getSignalToNoise() { 
-		return signalToNoise;
+		return shannonsModel.getSignalToNoise();
 	}
 	
 	/**
-	 * Private get method that returns the maximum data rate in bits per second.
-	 * @param    hertz    		double to represent bandwidth in hertz.
-	 * @param    signalToNoise	double to represent signal-to-noise ratio (decibels).
+	 * Get method that returns the ShannonsModel instance
+	 * @return	shannonsModel	current ShannonsModel instance
+	 */
+	public ShannonsModel getShannonsModel() {
+		return shannonsModel;
+	}
+		
+	/**
+	 * Get method that returns the result of maximumDataRate of the ShannonsModel instance
 	 * @return maximum data rate in bits per second as a double.
 	 */
-	
-	private double getMaximumDataRate(double hertz, double signalToNoise) { 
-		double result = (hertz *  (Math.log(1+Math.pow(10, signalToNoise/10)) / Math.log(2))); 
-		return result;
+	public double maximumDataRate() { 
+		return shannonsModel.maximumDataRate();
 	}
 	
 	/**
-	 * Get method that returns the result of getMaximumDataRate.
-	 * @return maximum data rate in bits per second as a double.
-	 */
-	public double getMaximumDataRate() { 
-		return getMaximumDataRate(bandwidth, signalToNoise);
-	}
-	
-	/**
-	 * Set method for bandwidth.
+	 * Set method for bandwidth for ShannonsModel instance
 	 * @param    bandwidth    double containing the bandwidth (hertz).
 	 */
-	public void setBandwidth(double bandwidth) { this.bandwidth = bandwidth;}
+	public void setBandwidth(double bandwidth) { shannonsModel.setBandwidth(bandwidth);}
 	/**
-	 * Set method for signal-to-noise ratio.
+	 * Set method for signal-to-noise ratio for ShannonsModel instance
 	 * @param    signalToNoise   double containing the signal-to-noise ratio (decibels).
 	 */
-	public void setSignalToNoise(double signalToNoise) { this.signalToNoise = signalToNoise;}
+	public void setSignalToNoise(double signalToNoise) { shannonsModel.setSignalToNoise(signalToNoise);}
 	
-	/**
-	 *	Convert this class to a meaningful string.
-	 *	@return	result class as a meaningful string.
-	 */
-	 public String toString()	{
-		 
-	     String result = "With a bandwidth of " + getBandwidth() + " hertz and \na signal-to-noise ratio of " + getSignalToNoise() + " decibels\n";
-	     result += "using Shannon's Theorem got the Maximum data rate is " + String.format("%.2f",getMaximumDataRate()) + " bits-per-second.";
-         
-	     return result;
-	}
-
 	/*	ENTRY POINT for STAND-ALONE OPERATION ---------------------------	*/
 	/**
 	 * Entry point "main()" as required by the JVM.
@@ -173,7 +140,7 @@ public class ShannonsTheorem {
 			}
 		} while (continueValidate);
 		
-		JOptionPane.showMessageDialog(null, app, "Result", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, app.getShannonsModel().toString(), "Result", JOptionPane.PLAIN_MESSAGE);
 	}
 
 }	/*	End of CLASS:	ShannonsTheorem.java			*/
