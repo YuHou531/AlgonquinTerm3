@@ -31,7 +31,6 @@
 package networktest;
 
 import junit.framework.*;
-import networktest.*;
 
 /**
  * JUnit test class to execute all JUNIT tests for the "Shannons Theorem" project.
