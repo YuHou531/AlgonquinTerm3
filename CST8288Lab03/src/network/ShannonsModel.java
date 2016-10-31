@@ -73,6 +73,8 @@ public class ShannonsModel extends Observable {
 	 */
 	public void setBandwidth(double bandwidth) { 
 		this.bandwidth = bandwidth;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
@@ -81,6 +83,8 @@ public class ShannonsModel extends Observable {
 	 */
 	public void setSignalToNoise(double signalToNoise) { 
 		this.signalToNoise = signalToNoise;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
@@ -88,10 +92,6 @@ public class ShannonsModel extends Observable {
 	 *	@return	result class as a meaningful string.
 	 */
 	 public String toString()	{
-		 
-	     String result = "With a bandwidth of " + getBandwidth() + " hertz and \na signal-to-noise ratio of " + getSignalToNoise() + " decibels\n";
-	     result += "using Shannon's Theorem got the Maximum data rate is " + String.format("%.2f",getMaximumDataRate()) + " bits-per-second.";
-         
-	     return result;
+		 return "Maximum data rate via Shannons Theorem = " + String.format("%.2f",getMaximumDataRate());
 	}
 }

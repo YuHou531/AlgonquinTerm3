@@ -15,7 +15,12 @@ package network;
 
 import java.util.Observer;
 
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 /**
  * CST8288 OPP with Design Patterns Lab3.
@@ -24,42 +29,54 @@ import javax.swing.JOptionPane;
  */
 public class ShannonsTheorem  implements ShannonsController {
 	
-	/** ShannonsModel instance */
+	/** 
+	 * ShannonsModel instance 
+	 */
 	private ShannonsModel shannonsModel;
+	
+	/**
+	 * ShannonsController
+	 */
+	private ShannonsController controller;
+	
+	/**
+	 * ShannonsPanel panels
+	 */
 	private ShannonsPanel panel1;
 	private ShannonsPanel panel2;
-	private static ShannonsController controller;
-		
+	private ShannonsPanel panel3;
+			
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
 	 *	Default constructor.
 	 */
 	public ShannonsTheorem()
 	{	
+		shannonsModel = new ShannonsModel();
 		controller = new ShannonsController() {
-			
 			@Override
 			public void setSignalToNoise(double signalToNoiseRatio) {
-				this.setSignalToNoise(signalToNoiseRatio);
+				getModel().setSignalToNoise(signalToNoiseRatio);
 			}
 			
 			@Override
 			public void setBandwidth(double bandwidth) {
-				setBandwidth(bandwidth);
+				getModel().setBandwidth(bandwidth);
 			}
 			
 			@Override
 			public void addObserver(Observer o) {
-				addObserver(o);	
+				getModel().addObserver(o);	
 			}
 		};
 		
-		shannonsModel = new ShannonsModel();
-		panel1 = new ShannonsPanel(this);
-		panel2 = new ShannonsPanel(this);
+		panel1 = new ShannonsPanel(controller);
+		panel2 = new ShannonsPanel(controller);
+		panel3 = new ShannonsPanel(controller);
 		//Add observer for each panel
-		shannonsModel.addObserver(panel1);
-		shannonsModel.addObserver(panel2);
+		getModel().addObserver(panel1);
+		getModel().addObserver(panel2);
+		getModel().addObserver(panel3);
 	}
 
 	/* ACCESSORS	-----------------------------------------------------	*/
@@ -123,7 +140,25 @@ public class ShannonsTheorem  implements ShannonsController {
 	 * initGUI create the GUI view
 	 */
 	public void initGUI() {
-		ShannonsPanel shannonsPanel = new ShannonsPanel(this);
+		
+		JFrame frame = new JFrame("Shannons Theorem MVC Version 1.1.0");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(10, 10, 400, 130);
+				
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+		JSeparator separator1 = new JSeparator();
+		JSeparator separator2 = new JSeparator();
+		
+		container.add(panel1);
+		container.add(separator1);
+		container.add(panel2);
+		container.add(separator2);
+		container.add(panel3);
+		
+		frame.getContentPane().add(container);
+		frame.pack();
+		frame.setVisible(true);		
 	}
 	
 	/**

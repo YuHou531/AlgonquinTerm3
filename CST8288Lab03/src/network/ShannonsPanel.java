@@ -17,11 +17,10 @@
 package network;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -75,21 +74,11 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 * initGUI create the GUI view
 	 */
 	public void initGUI() {
-		JFrame frame = new JFrame("Shannons Theorem MVC Version 1.1.0");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(10, 10, 400, 130);
-		
+		setLayout(new GridLayout(3, 1, 4, 4));
 		setMaxDataRateLBL(new JLabel("Maximum data rate via Shannons Theorem = ???"));
-		
-		JPanel container = new JPanel();
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-
-		container.add(maxDataRateLBL);
-		container.add(createBandwidthPanel());
-		container.add(createSignalToNoisePanel());
-				
-		frame.getContentPane().add(container);
-		frame.setVisible(true);
+		add(maxDataRateLBL);
+		add(createBandwidthPanel());
+		add(createSignalToNoisePanel());
 	}
 	
 	/**
@@ -145,13 +134,9 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 * @param Object arg
 	 */
 	public void update(Observable o, Object arg) {
-		System.out.println("invoking update");
-		//System.out.println(arg);
-		System.out.println(arg.toString());
+		System.out.println("start update");
+		System.out.println(arg.toString()); //call ShannonsModel toString() get result
 		maxDataRateLBL.setText(arg.toString());
-		System.out.println(getMaxDataRateLBL().getText());
 		System.out.println("update complete");
 	}
-	
-	
 }
