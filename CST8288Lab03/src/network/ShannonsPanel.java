@@ -16,11 +16,15 @@
  */
 package network;
 
+import java.awt.FlowLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * CST8288 OPP with Design Patterns Lab3.
@@ -38,7 +42,9 @@ public class ShannonsPanel implements Observer{
 	 */
 	public ShannonsPanel(ShannonsController ctl)	
 	{	
-		controller = ctl;
+		setController(ctl);
+		controller.addObserver(this);
+		initGUI();
 	}
 	
 	/* ACCESSORS	-----------------------------------------------------	*/
@@ -67,10 +73,24 @@ public class ShannonsPanel implements Observer{
 	}
 	
 	/**
-	 * intGUI method
+	 * initGUI create the GUI view
 	 */
-	public void intGUI() {
+	public void initGUI() {
+		JFrame frame = new JFrame("Shannons Theorem MVC Version 1.1.0");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(10, 10, 400, 130);
 		
+		setMaxDataRateLBL(new JLabel("Maximum data rate via Shannons Theorem = ???"));
+		
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+		container.add(maxDataRateLBL);
+		container.add(createBandwidthPanel());
+		container.add(createSignalToNoisePanel());
+				
+		frame.getContentPane().add(container);
+		frame.setVisible(true);
 	}
 	
 	/**
@@ -78,8 +98,22 @@ public class ShannonsPanel implements Observer{
 	 * @return JPanel SignalToNoisePanel
 	 */
 	public JPanel createSignalToNoisePanel() {
+		JPanel panel = new JPanel();
+		JTextField textField = new JTextField();
+		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+
+		JLabel label = new JLabel("Signal To Noise (in DB): ");
+		panel.add(label);
 		
-		return null;
+		panel.add(textField);
+		textField.setColumns(20);
+		
+		textField.addActionListener(e-> {
+			System.out.println("inside action performed");
+			controller.setSignalToNoise(Double.parseDouble(textField.getText()));
+		});
+		
+		return panel;
 	}
 	
 	/**
@@ -87,8 +121,22 @@ public class ShannonsPanel implements Observer{
 	 * @return JPanel BandwidthPanel
 	 */
 	public JPanel createBandwidthPanel() {
+		JPanel panel = new JPanel();
+		JTextField textField = new JTextField();
+		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		return null;
+		JLabel label = new JLabel("Bandwidth (in hertz): ");
+		panel.add(label);
+		
+		panel.add(textField);
+		textField.setColumns(20);
+
+		textField.addActionListener(e-> {
+			System.out.println("inside action performed");
+			controller.setBandwidth(Double.parseDouble(textField.getText()));
+		});
+		
+		return panel;
 	}
 	
 	/**
@@ -98,6 +146,13 @@ public class ShannonsPanel implements Observer{
 	 * @param Object arg
 	 */
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		System.out.println("invoking update");
+		//System.out.println(arg);
+		System.out.println(arg.toString());
+		maxDataRateLBL.setText(arg.toString());
+		System.out.println(getMaxDataRateLBL().getText());
+		System.out.println("update complete");
 	}
+	
+	
 }
