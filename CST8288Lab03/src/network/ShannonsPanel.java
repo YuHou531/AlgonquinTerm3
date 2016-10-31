@@ -81,29 +81,6 @@ public class ShannonsPanel extends JPanel implements Observer {
 	}
 	
 	/**
-	 * createSignalToNoisePanel 
-	 * @return JPanel SignalToNoisePanel
-	 */
-	public JPanel createSignalToNoisePanel() {
-		JPanel panel = new JPanel();
-		JTextField textField = new JTextField();
-		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-
-		JLabel label = new JLabel("Signal To Noise (in DB): ");
-		panel.add(label);
-		
-		panel.add(textField);
-		textField.setColumns(20);
-		
-		textField.addActionListener(e-> {
-			System.out.println("inside action performed");
-			controller.setSignalToNoise(Double.parseDouble(textField.getText()));
-		});
-		
-		return panel;
-	}
-	
-	/**
 	 * createBandwidthPanel
 	 * @return JPanel BandwidthPanel
 	 */
@@ -121,6 +98,29 @@ public class ShannonsPanel extends JPanel implements Observer {
 		textField.addActionListener(e-> {
 			System.out.println("inside action performed");
 			controller.setBandwidth(Double.parseDouble(textField.getText()));
+		});
+		
+		return panel;
+	}
+	
+	/**
+	 * createSignalToNoisePanel 
+	 * @return JPanel SignalToNoisePanel
+	 */
+	public JPanel createSignalToNoisePanel() {
+		JPanel panel = new JPanel();
+		JTextField textField = new JTextField();
+		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+
+		JLabel label = new JLabel("Signal To Noise (in DB): ");
+		panel.add(label);
+		
+		panel.add(textField);
+		textField.setColumns(20);
+		
+		textField.addActionListener(e-> {
+			System.out.println("inside action performed");
+			controller.setSignalToNoise(Double.parseDouble(textField.getText()));
 		});
 		
 		return panel;
