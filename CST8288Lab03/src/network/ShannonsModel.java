@@ -12,7 +12,7 @@ package network;
 import java.util.Observable;
 
 /**
- * CST8288 OPP with Design Partterns Lab3.
+ * CST8288 OPP with Design Patterns Lab3.
  * @author    Yu Hou
  * @version   Oct 30 2016
  */

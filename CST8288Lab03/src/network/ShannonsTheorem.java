@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author    Yu Hou
  * @version   Oct 30 2016
  */
-public class ShannonsTheorem  implements ShannonsController{
+public class ShannonsTheorem  implements ShannonsController {
 	
 	/** ShannonsModel instance */
 	private ShannonsModel shannonsModel;
@@ -94,10 +94,10 @@ public class ShannonsTheorem  implements ShannonsController{
 	}
 
 	/**
-	 * intGUI method
+	 * initGUI create the GUI view
 	 */
-	public void intGUI() {
-
+	public void initGUI() {
+		ShannonsPanel shannonsPanel = new ShannonsPanel(this);
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public class ShannonsTheorem  implements ShannonsController{
 	 * @param Observer o
 	 */
 	public void addObserver(Observer o) {
-		
+		getModel().addObserver(o);
 	}
 	
 	/*	ENTRY POINT for STAND-ALONE OPERATION ---------------------------	*/
@@ -115,61 +115,65 @@ public class ShannonsTheorem  implements ShannonsController{
 	 *	string array.
 	 */
 	public static void main (String args[]) {
-		boolean continueValidate = false; 
-		String szBandwidth, szSignalToNoise;
-		
 		ShannonsTheorem app = new ShannonsTheorem();
-		JOptionPane.showMessageDialog(null, "Welcome to Yu Hou's Shannon's Theorem calculator!", "Welcome!", JOptionPane.PLAIN_MESSAGE);
+		app.initGUI();
 		
-		do {
-			szBandwidth = JOptionPane.showInputDialog(null, "Please enter the bandwidth.", "Enter hertz", JOptionPane.QUESTION_MESSAGE);
-			try {
-				if( szBandwidth == null ) {
-					JOptionPane.showMessageDialog(null, "Quiting program...\nGoodbye.", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
-					System.exit(0);
-				}
-				else {
-					double bandwidthValue = Double.parseDouble(szBandwidth);
-					if( bandwidthValue > 0) {
-						app.setBandwidth(bandwidthValue);
-						continueValidate = false;
-					}
-					else {
-						continueValidate = true;
-					}
-				}
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for bandwidth!", "Error!", JOptionPane.ERROR_MESSAGE);
-				continueValidate = true;
-			}
-		} while (continueValidate);
-		
-		continueValidate = false; 
-		
-		do {
-			szSignalToNoise = JOptionPane.showInputDialog(null, "Please enter the signal-to-noise ratio.", "Enter signal-to-noise ratio", JOptionPane.QUESTION_MESSAGE);
-			try {
-				if( szSignalToNoise == null ) {
-					JOptionPane.showMessageDialog(null, "Quiting program...\nGoodbye.", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
-					System.exit(0);
-				}
-				else {
-					double signalToNoiseValue = Double.parseDouble(szSignalToNoise);
-					if( signalToNoiseValue > 0) {
-						app.setSignalToNoise(signalToNoiseValue);
-						continueValidate = false;
-					}
-					else {
-						continueValidate = true;
-					}
-				}
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for SignalToNoise!", "Error!", JOptionPane.ERROR_MESSAGE);
-				continueValidate = true;
-			}
-		} while (continueValidate);
-		
-		JOptionPane.showMessageDialog(null, app.getModel().toString(), "Result", JOptionPane.PLAIN_MESSAGE);
+		//Old Code
+//		boolean continueValidate = false; 
+//		String szBandwidth, szSignalToNoise;
+//		
+//		ShannonsTheorem app = new ShannonsTheorem();
+//		JOptionPane.showMessageDialog(null, "Welcome to Yu Hou's Shannon's Theorem calculator!", "Welcome!", JOptionPane.PLAIN_MESSAGE);
+//		
+//		do {
+//			szBandwidth = JOptionPane.showInputDialog(null, "Please enter the bandwidth.", "Enter hertz", JOptionPane.QUESTION_MESSAGE);
+//			try {
+//				if( szBandwidth == null ) {
+//					JOptionPane.showMessageDialog(null, "Quiting program...\nGoodbye.", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
+//					System.exit(0);
+//				}
+//				else {
+//					double bandwidthValue = Double.parseDouble(szBandwidth);
+//					if( bandwidthValue > 0) {
+//						app.setBandwidth(bandwidthValue);
+//						continueValidate = false;
+//					}
+//					else {
+//						continueValidate = true;
+//					}
+//				}
+//			} catch (NumberFormatException e) {
+//				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for bandwidth!", "Error!", JOptionPane.ERROR_MESSAGE);
+//				continueValidate = true;
+//			}
+//		} while (continueValidate);
+//		
+//		continueValidate = false; 
+//		
+//		do {
+//			szSignalToNoise = JOptionPane.showInputDialog(null, "Please enter the signal-to-noise ratio.", "Enter signal-to-noise ratio", JOptionPane.QUESTION_MESSAGE);
+//			try {
+//				if( szSignalToNoise == null ) {
+//					JOptionPane.showMessageDialog(null, "Quiting program...\nGoodbye.", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
+//					System.exit(0);
+//				}
+//				else {
+//					double signalToNoiseValue = Double.parseDouble(szSignalToNoise);
+//					if( signalToNoiseValue > 0) {
+//						app.setSignalToNoise(signalToNoiseValue);
+//						continueValidate = false;
+//					}
+//					else {
+//						continueValidate = true;
+//					}
+//				}
+//			} catch (NumberFormatException e) {
+//				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for SignalToNoise!", "Error!", JOptionPane.ERROR_MESSAGE);
+//				continueValidate = true;
+//			}
+//		} while (continueValidate);
+//		
+//		JOptionPane.showMessageDialog(null, app.getModel().toString(), "Result", JOptionPane.PLAIN_MESSAGE);
 	}
 
 }	/*	End of CLASS:	ShannonsTheorem.java			*/
