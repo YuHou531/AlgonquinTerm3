@@ -71,8 +71,11 @@ public class ShannonsTheorem  implements ShannonsController {
 		};
 		
 		panel1 = new ShannonsPanel(controller);
-		panel2 = new ShannonsPanel(controller);
-		panel3 = new ShannonsPanel(controller);
+		panel1.initGUI();
+		panel2 = new ShannonsPanel2(controller);
+		panel2.initGUI();
+		panel3 = new ShannonsPanel3(controller);
+		panel3.initGUI();
 		//Add observer for each panel
 		getModel().addObserver(panel1);
 		getModel().addObserver(panel2);

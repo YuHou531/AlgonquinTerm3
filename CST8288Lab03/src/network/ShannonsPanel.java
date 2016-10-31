@@ -32,8 +32,8 @@ import javax.swing.JTextField;
  */
 public class ShannonsPanel extends JPanel implements Observer {
 
-	private JLabel maxDataRateLBL;
-	private ShannonsController controller;
+	protected JLabel maxDataRateLBL;
+	protected ShannonsController controller;
 	
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
@@ -42,7 +42,6 @@ public class ShannonsPanel extends JPanel implements Observer {
 	public ShannonsPanel(ShannonsController ctl)	
 	{	
 		setController(ctl);
-		initGUI();
 	}
 	
 	/* ACCESSORS	-----------------------------------------------------	*/
