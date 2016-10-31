@@ -71,11 +71,11 @@ public class Test_ShannonsTheorem extends TestCase {
       
       assertTrue("\t\tTest_ShannonsTheorem - test getBandwidth() ", shannonsTheorem.getBandwidth() == 3000);
       assertTrue("\t\tTest_ShannonsTheorem - test getSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 30);
-      assertTrue("\t\tTest_ShannonsTheorem - test maximumDataRate() ", shannonsTheorem.maximumDataRate() > 29901 && shannonsTheorem.maximumDataRate() < 29902);	
+      assertTrue("\t\tTest_ShannonsTheorem - test maximumDataRate() ", shannonsTheorem.getMaximumDataRate() > 29901 && shannonsTheorem.getMaximumDataRate() < 29902);	
       assertFalse("\t\tTest_ShannonsTheorem - test getBandwidth() ", shannonsTheorem.getBandwidth() == 20);
       assertFalse("\t\tTest_ShannonsTheorem - test getSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 10);
-      assertFalse("\t\tTest_ShannonsTheorem - test maximumDataRate() ", shannonsTheorem.maximumDataRate() == 50);
-	  assertNotNull("\t\tTest_ShannonsTheorem - test getShannonsModel: ShannonsModel instance is not null", shannonsTheorem.getShannonsModel());
+      assertFalse("\t\tTest_ShannonsTheorem - test maximumDataRate() ", shannonsTheorem.getMaximumDataRate() == 50);
+	  assertNotNull("\t\tTest_ShannonsTheorem - test getShannonsModel: ShannonsModel instance is not null", shannonsTheorem.getModel());
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class Test_ShannonsTheorem extends TestCase {
 		shannonsTheorem = new ShannonsTheorem();
 	    shannonsTheorem.setBandwidth(0.0);
 	    shannonsTheorem.setSignalToNoise(0.0);
-		assertEquals(sMessage1, shannonsTheorem.getShannonsModel().toString());
-		assertNotSame(sMessage2, shannonsTheorem.getShannonsModel().toString());
+		assertEquals(sMessage1, shannonsTheorem.getModel().toString());
+		assertNotSame(sMessage2, shannonsTheorem.getModel().toString());
 	}
 
 	/*	STAND-ALONE ENTRY POINT -----------------------------------------	*/

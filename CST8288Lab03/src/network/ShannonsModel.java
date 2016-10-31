@@ -1,19 +1,22 @@
-/*
- * @(#)ShannonsModel.java   1.0
- *
- * This is the new domain class - ShannonsModel.
- * It contains the "data structure" for the ShannonsTheorem project 
+/**
+ * This is the "observable" object, the model. 
+ * This class extends the java class "Observable" making it not only 
+ * an object of type ShannonsModel but also an object of type Observable
+ * 
+ * This object is under observation by the registered observers.
  */
 
 /*	Package for class placement	*/
 package network;
 
+import java.util.Observable;
+
 /**
- * CST8288 OPP with Design Partterns Lab2.
+ * CST8288 OPP with Design Partterns Lab3.
  * @author    Yu Hou
- * @version   Oct 12 2016
+ * @version   Oct 30 2016
  */
-public class ShannonsModel {
+public class ShannonsModel extends Observable {
 	
 	/** Double used for bandwidth input (hertz). */
 	private double bandwidth;
@@ -49,7 +52,7 @@ public class ShannonsModel {
 	 * Get method that returns the result of maximumDataRate.
 	 * @return maximum data rate in bits per second as a double.
 	 */
-	public double maximumDataRate() { 
+	public double getMaximumDataRate() { 
 		return maximumDataRate(bandwidth, signalToNoise);
 	}
 		
@@ -87,7 +90,7 @@ public class ShannonsModel {
 	 public String toString()	{
 		 
 	     String result = "With a bandwidth of " + getBandwidth() + " hertz and \na signal-to-noise ratio of " + getSignalToNoise() + " decibels\n";
-	     result += "using Shannon's Theorem got the Maximum data rate is " + String.format("%.2f",maximumDataRate()) + " bits-per-second.";
+	     result += "using Shannon's Theorem got the Maximum data rate is " + String.format("%.2f",getMaximumDataRate()) + " bits-per-second.";
          
 	     return result;
 	}

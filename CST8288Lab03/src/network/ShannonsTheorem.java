@@ -1,34 +1,35 @@
-/*
- * @(#)ShannonsTheorem.java   1.0
- *
- * The main class, ShannonsTheorem has an association with the model
- * class. ShannosModel. The role name on the diagram indicates that the code
- * should have a reference attribute named "model" of type ShannosModel
+/**
+ * A class that implements an interface "realizes" the interface (as
+ * we say in UML). it provides an implementation for the methods defined in 
+ * the interface (or it will defer the implementation to a child class(subclass))
+ * Realization is like a generalization line except the line is a dashed line.
  * 
- * The new version of the ShannonsTheorem class, now contains the "view"
- * and the "controller" component
+ * As in the previous exercise, this class implemented the delegate pattern.
+ * for example, it delegates the getBandwidth() operation to the model class
+ * by invoking getModel().getBandwidth()
  * 
- * It no longer contains the "model"
  */
 
 /*	Package for class placement	*/
 package network;
 
+import java.util.Observer;
+
 import javax.swing.JOptionPane;
 
 /**
- * CST8288 OPP with Design Partterns Lab2.
+ * CST8288 OPP with Design Patterns Lab3.
  * @author    Yu Hou
- * @version   Oct 12 2016
+ * @version   Oct 30 2016
  */
-public class ShannonsTheorem {
+public class ShannonsTheorem  implements ShannonsController{
 	
 	/** ShannonsModel instance */
 	private ShannonsModel shannonsModel;
 	
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
-	 *	Default construtor.
+	 *	Default constructor.
 	 */
 	public ShannonsTheorem()
 	{	
@@ -37,11 +38,27 @@ public class ShannonsTheorem {
 
 	/* ACCESSORS	-----------------------------------------------------	*/
 	/**
+	 * Get method that returns the ShannonsModel instance
+	 * @return	shannonsModel	current ShannonsModel instance
+	 */
+	public ShannonsModel getModel() {
+		return shannonsModel;
+	}
+	
+	/**
 	 * Get method that returns the bandwidth (hertz) of the ShannonsModel instance
 	 * @return	bandwidth	double containing the bandwidth.
 	 */
 	public double getBandwidth() { 
-		return shannonsModel.getBandwidth();
+		return getModel().getBandwidth();
+	}
+	
+	/**
+	 * Get method that returns the result of maximumDataRate of the ShannonsModel instance
+	 * @return maximum data rate in bits per second as a double.
+	 */
+	public double getMaximumDataRate() { 
+		return getModel().getMaximumDataRate();
 	}
 	
 	/**
@@ -49,35 +66,47 @@ public class ShannonsTheorem {
 	 * @return	signalToNoise	double containing the signal-to-noise ratio.
 	 */
 	public double getSignalToNoise() { 
-		return shannonsModel.getSignalToNoise();
+		return getModel().getSignalToNoise();
 	}
 	
 	/**
-	 * Get method that returns the ShannonsModel instance
-	 * @return	shannonsModel	current ShannonsModel instance
+	 * Set method for signal-to-noise ratio for ShannonsModel instance
+	 * @param    signalToNoise   double containing the signal-to-noise ratio (decibels).
 	 */
-	public ShannonsModel getShannonsModel() {
-		return shannonsModel;
+	public void setSignalToNoise(double signalToNoise) { 
+		getModel().setSignalToNoise(signalToNoise);
 	}
-		
+	
 	/**
-	 * Get method that returns the result of maximumDataRate of the ShannonsModel instance
-	 * @return maximum data rate in bits per second as a double.
+	 * Set method for setting ShannonsModel instance
+	 * @param model ShannonsModel instance
 	 */
-	public double maximumDataRate() { 
-		return shannonsModel.maximumDataRate();
+	public void setModel(ShannonsModel model) {
+		shannonsModel = model;
 	}
 	
 	/**
 	 * Set method for bandwidth for ShannonsModel instance
 	 * @param    bandwidth    double containing the bandwidth (hertz).
 	 */
-	public void setBandwidth(double bandwidth) { shannonsModel.setBandwidth(bandwidth);}
+	public void setBandwidth(double bandwidth) { 
+		getModel().setBandwidth(bandwidth);
+	}
+
 	/**
-	 * Set method for signal-to-noise ratio for ShannonsModel instance
-	 * @param    signalToNoise   double containing the signal-to-noise ratio (decibels).
+	 * intGUI method
 	 */
-	public void setSignalToNoise(double signalToNoise) { shannonsModel.setSignalToNoise(signalToNoise);}
+	public void intGUI() {
+
+	}
+	
+	/**
+	 * addObserver 
+	 * @param Observer o
+	 */
+	public void addObserver(Observer o) {
+		
+	}
 	
 	/*	ENTRY POINT for STAND-ALONE OPERATION ---------------------------	*/
 	/**
@@ -140,7 +169,7 @@ public class ShannonsTheorem {
 			}
 		} while (continueValidate);
 		
-		JOptionPane.showMessageDialog(null, app.getShannonsModel().toString(), "Result", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, app.getModel().toString(), "Result", JOptionPane.PLAIN_MESSAGE);
 	}
 
 }	/*	End of CLASS:	ShannonsTheorem.java			*/

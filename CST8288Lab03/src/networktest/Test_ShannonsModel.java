@@ -44,10 +44,10 @@ public class Test_ShannonsModel extends TestCase {
       
       assertTrue("\t\tTest_ShannonsModel - test getBandwidth() ", shannonsModel.getBandwidth() == 3000);
       assertTrue("\t\tTest_ShannonsModel - test getSignalToNoise() ", shannonsModel.getSignalToNoise() == 30);
-      assertTrue("\t\tTest_ShannonsModel - test maximumDataRate() ", shannonsModel.maximumDataRate() > 29901 && shannonsModel.maximumDataRate() < 29902);	
+      assertTrue("\t\tTest_ShannonsModel - test maximumDataRate() ", shannonsModel.getMaximumDataRate() > 29901 && shannonsModel.getMaximumDataRate() < 29902);	
       assertFalse("\t\tTest_ShannonsModel - test getBandwidth() ", shannonsModel.getBandwidth() == 20);
       assertFalse("\t\tTest_ShannonsModel - test getSignalToNoise() ", shannonsModel.getSignalToNoise() == 10);
-      assertFalse("\t\tTest_ShannonsModel - test maximumDataRate() ", shannonsModel.maximumDataRate() == 50);		
+      assertFalse("\t\tTest_ShannonsModel - test maximumDataRate() ", shannonsModel.getMaximumDataRate() == 50);		
 	}
 	
 	/**
