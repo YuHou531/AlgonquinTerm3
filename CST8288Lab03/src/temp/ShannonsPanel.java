@@ -14,91 +14,52 @@
  * 
  * maxDataRateLBL is a private attribute in ShannonsPanel
  */
-package network;
-
+package temp;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-/**
- * CST8288 OPP with Design Patterns Lab3.
- * @author    Yu Hou
- * @version   Oct 30 2016
- */
 public class ShannonsPanel extends JPanel implements Observer {
-
-	private JLabel maxDataRateLBL;
-	private ShannonsController controller;
 	
-	/* CONSTRUCTORS	--------------------------------------------------	*/
-	/**
-	 *	Default constructor.
-	 */
-	public ShannonsPanel(ShannonsController ctl)	
-	{	
+	public ShannonsPanel(ShannonsController ctl) {
 		setController(ctl);
-		initGUI();
+		initGui();
 	}
 	
-	/* ACCESSORS	-----------------------------------------------------	*/
-	/**
-	 * getMaxDataRateLBL 
-	 * @return current maxDataRateLBL
-	 */
 	public JLabel getMaxDataRateLBL() {
 		return maxDataRateLBL;
 	}
 	
-	/**
-	 * setMaxDataRateLBL
-	 * @param mdrlbl JLabel 
-	 */
 	public void setMaxDataRateLBL(JLabel mdrlbl) {
+		//maxDataRateLBL = new JLabel("Maximum data rate via Shannons Theorem = " + mdrlbl.getText());
 		maxDataRateLBL = mdrlbl;
+		
 	}
 	
-	/**
-	 * Set ShannonsController
-	 * @param ctl ShannonsController
-	 */
-	public void setController(ShannonsController ctl) {
+	public void setController (ShannonsController ctl) {
 		controller = ctl;
 	}
 	
-	/**
-	 * initGUI create the GUI view
-	 */
-	public void initGUI() {
-		JFrame frame = new JFrame("Shannons Theorem MVC Version 1.1.0");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(10, 10, 400, 130);
-		
-		setMaxDataRateLBL(new JLabel("Maximum data rate via Shannons Theorem = ???"));
-		
-		JPanel container = new JPanel();
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+	private void initGui() {
+		//frame should be in ShannonsTheorem
 
-		container.add(maxDataRateLBL);
-		container.add(createBandwidthPanel());
-		container.add(createSignalToNoisePanel());
-				
-		frame.getContentPane().add(container);
-		frame.setVisible(true);
+		setLayout(new GridLayout(3, 1, 5, 5));
+		setMaxDataRateLBL(new JLabel("Maximum data rate via Shannons Theorem = ???"));
+		add(maxDataRateLBL);
+		add(createSignalToNoisePanel());
+		add(createBandwidthPanel());
+		
 	}
 	
-	/**
-	 * createSignalToNoisePanel 
-	 * @return JPanel SignalToNoisePanel
-	 */
-	public JPanel createSignalToNoisePanel() {
+	private JPanel createSignalToNoisePanel() {
 		JPanel panel = new JPanel();
 		JTextField textField = new JTextField();
+		//panel.setLayout(new GridLayout(0, 2, 0, 0));
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
 		JLabel label = new JLabel("Signal To Noise (in DB): ");
@@ -115,13 +76,10 @@ public class ShannonsPanel extends JPanel implements Observer {
 		return panel;
 	}
 	
-	/**
-	 * createBandwidthPanel
-	 * @return JPanel BandwidthPanel
-	 */
-	public JPanel createBandwidthPanel() {
+	private JPanel createBandwidthPanel() {
 		JPanel panel = new JPanel();
 		JTextField textField = new JTextField();
+		//panel.setLayout(new GridLayout(0, 2, 0, 0));
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
 		JLabel label = new JLabel("Bandwidth (in hertz): ");
@@ -133,17 +91,12 @@ public class ShannonsPanel extends JPanel implements Observer {
 		textField.addActionListener(e-> {
 			System.out.println("inside action performed");
 			controller.setBandwidth(Double.parseDouble(textField.getText()));
+			System.out.println(textField.getText());
 		});
 		
 		return panel;
 	}
 	
-	/**
-	 * Implements Observer update method 
-	 * 
-	 * @param Observable observable 
-	 * @param Object arg
-	 */
 	public void update(Observable o, Object arg) {
 		System.out.println("invoking update");
 		//System.out.println(arg);
@@ -153,5 +106,25 @@ public class ShannonsPanel extends JPanel implements Observer {
 		System.out.println("update complete");
 	}
 	
+	private JLabel maxDataRateLBL;
 	
+	private ShannonsController controller;
+	/*private ShannonsController controller = new ShannonsController() {
+		
+		@Override
+		public void setSignalToNoise(double signalToNoiseRation) {
+			this.setSignalToNoise(signalToNoiseRation);
+		}
+		
+		@Override
+		public void setBandwidth(double bandwidth) {
+			this.setBandwidth(bandwidth);
+		}
+		
+		@Override
+		public void addObserver(Observer o) {
+			this.addObserver(o);
+		}
+	};*/
+
 }

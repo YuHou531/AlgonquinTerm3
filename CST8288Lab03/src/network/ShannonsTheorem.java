@@ -26,14 +26,40 @@ public class ShannonsTheorem  implements ShannonsController {
 	
 	/** ShannonsModel instance */
 	private ShannonsModel shannonsModel;
-	
+	private ShannonsPanel panel1;
+	private ShannonsPanel panel2;
+	private static ShannonsController controller;
+		
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
 	 *	Default constructor.
 	 */
 	public ShannonsTheorem()
 	{	
+		controller = new ShannonsController() {
+			
+			@Override
+			public void setSignalToNoise(double signalToNoiseRatio) {
+				this.setSignalToNoise(signalToNoiseRatio);
+			}
+			
+			@Override
+			public void setBandwidth(double bandwidth) {
+				setBandwidth(bandwidth);
+			}
+			
+			@Override
+			public void addObserver(Observer o) {
+				addObserver(o);	
+			}
+		};
+		
 		shannonsModel = new ShannonsModel();
+		panel1 = new ShannonsPanel(this);
+		panel2 = new ShannonsPanel(this);
+		//Add observer for each panel
+		shannonsModel.addObserver(panel1);
+		shannonsModel.addObserver(panel2);
 	}
 
 	/* ACCESSORS	-----------------------------------------------------	*/
