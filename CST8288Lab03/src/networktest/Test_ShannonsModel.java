@@ -72,6 +72,8 @@ public class Test_ShannonsModel extends TestCase {
 	 * Test behaviors.
 	 */
 	public void testBehaviors() {
+		System.out.println("\tExecuting Test_ShannonsModel.testBehaviors");
+		
 		String sMessage1 = "With a bandwidth of 0.0 hertz and \na signal-to-noise ratio of 0.0 decibels\nusing Shannon's Theorem got the Maximum data rate is 0.00 bits-per-second.";
 		String sMessage2 = "hello";
 		shannonsModel = new ShannonsModel();

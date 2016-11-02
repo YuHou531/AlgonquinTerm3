@@ -18,12 +18,22 @@ package network;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * CST8288 OPP with Design Patterns Lab3.
@@ -35,6 +45,13 @@ public class ShannonsPanel extends JPanel implements Observer {
 	protected JLabel maxDataRateLBL;
 	protected ShannonsController controller;
 	
+	public JTextField bandwidthTextField;
+	public JTextField stnTextField;
+	
+	protected ShannonsPanel topPanel;
+	protected ShannonsPanel2 middlePanel;
+	protected ShannonsPanel3 bottomPanel;
+	
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
 	 *	Default constructor.
@@ -42,8 +59,10 @@ public class ShannonsPanel extends JPanel implements Observer {
 	public ShannonsPanel(ShannonsController ctl)	
 	{	
 		setController(ctl);
+		bandwidthTextField = new JTextField();
+		stnTextField = new JTextField();
 	}
-	
+		
 	/* ACCESSORS	-----------------------------------------------------	*/
 	/**
 	 * getMaxDataRateLBL 
@@ -79,25 +98,35 @@ public class ShannonsPanel extends JPanel implements Observer {
 		add(createBandwidthPanel());
 		add(createSignalToNoisePanel());
 	}
-	
+		
 	/**
 	 * createBandwidthPanel
 	 * @return JPanel BandwidthPanel
 	 */
 	public JPanel createBandwidthPanel() {
 		JPanel panel = new JPanel();
-		JTextField textField = new JTextField();
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
 		JLabel label = new JLabel("Bandwidth (in hertz): ");
 		panel.add(label);
+		panel.add(bandwidthTextField);
+		bandwidthTextField.setColumns(20);
 		
-		panel.add(textField);
-		textField.setColumns(20);
-
-		textField.addActionListener(e-> {
-			System.out.println("inside action performed");
-			controller.setBandwidth(Double.parseDouble(textField.getText()));
+		bandwidthTextField.addActionListener(event-> {
+			String szBandwidth = bandwidthTextField.getText();
+			try{
+				double bandwidthValue = Double.parseDouble(szBandwidth);
+				if( bandwidthValue >= 0 && bandwidthValue <= 3000) {
+					controller.setBandwidth(bandwidthValue);
+					middlePanel.bandwidthSlider.setValue(Integer.parseInt(szBandwidth));
+					bottomPanel.bandwidthComboBox.setSelectedIndex(Integer.parseInt(szBandwidth));
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for bandwidth!", "Error!", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for bandwidth!", "Error!", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 		return panel;
@@ -109,23 +138,33 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 */
 	public JPanel createSignalToNoisePanel() {
 		JPanel panel = new JPanel();
-		JTextField textField = new JTextField();
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
 		JLabel label = new JLabel("Signal To Noise (in DB): ");
 		panel.add(label);
+		panel.add(stnTextField);
+		stnTextField.setColumns(20);
 		
-		panel.add(textField);
-		textField.setColumns(20);
-		
-		textField.addActionListener(e-> {
-			System.out.println("inside action performed");
-			controller.setSignalToNoise(Double.parseDouble(textField.getText()));
+		stnTextField.addActionListener(event-> {
+			String szSignalToNoise = stnTextField.getText();
+			try{
+				double signalToNoiseValue = Double.parseDouble(szSignalToNoise);
+				if( signalToNoiseValue >= 0 && signalToNoiseValue <= 100 ) {
+					controller.setSignalToNoise(signalToNoiseValue);
+					middlePanel.stnSlider.setValue(Integer.parseInt(szSignalToNoise));
+					bottomPanel.stnComboBox.setSelectedIndex(Integer.parseInt(szSignalToNoise));
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for SignalToNoise!", "Error!", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for SignalToNoise!", "Error!", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 		return panel;
 	}
-	
+						
 	/**
 	 * Implements Observer update method 
 	 * 
@@ -133,9 +172,9 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 * @param Object arg
 	 */
 	public void update(Observable o, Object arg) {
-		System.out.println("start update");
-		System.out.println(arg.toString()); //call ShannonsModel toString() get result
+		//System.out.println("start update");
+		//System.out.println(arg.toString()); //call ShannonsModel toString() get result
 		maxDataRateLBL.setText(arg.toString());
-		System.out.println("update complete");
+		//System.out.println("update complete");
 	}
 }

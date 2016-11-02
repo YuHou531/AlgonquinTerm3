@@ -28,7 +28,7 @@
 package networktest;
 
 import junit.framework.*;
-
+import network.ShannonsModel;
 import network.ShannonsTheorem;
 
 /**
@@ -68,14 +68,16 @@ public class Test_ShannonsTheorem extends TestCase {
       shannonsTheorem = new ShannonsTheorem();
       shannonsTheorem.setBandwidth(3000);
       shannonsTheorem.setSignalToNoise(30);
+      shannonsTheorem.setModel(new ShannonsModel());
       
       assertTrue("\t\tTest_ShannonsTheorem - test getBandwidth() ", shannonsTheorem.getBandwidth() == 3000);
       assertTrue("\t\tTest_ShannonsTheorem - test getSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 30);
-      assertTrue("\t\tTest_ShannonsTheorem - test maximumDataRate() ", shannonsTheorem.getMaximumDataRate() > 29901 && shannonsTheorem.getMaximumDataRate() < 29902);	
+      assertTrue("\t\tTest_ShannonsTheorem - test getMaximumDataRate() ", shannonsTheorem.getMaximumDataRate() > 29901 && shannonsTheorem.getMaximumDataRate() < 29902);
       assertFalse("\t\tTest_ShannonsTheorem - test getBandwidth() ", shannonsTheorem.getBandwidth() == 20);
       assertFalse("\t\tTest_ShannonsTheorem - test getSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 10);
-      assertFalse("\t\tTest_ShannonsTheorem - test maximumDataRate() ", shannonsTheorem.getMaximumDataRate() == 50);
+      assertFalse("\t\tTest_ShannonsTheorem - test getMaximumDataRate() ", shannonsTheorem.getMaximumDataRate() == 50);
 	  assertNotNull("\t\tTest_ShannonsTheorem - test getShannonsModel: ShannonsModel instance is not null", shannonsTheorem.getModel());
+	  assertNotNull("\t\tTest_ShannonsTheorem - test getModel() ", shannonsTheorem.getModel());
 	}
 
 	/**
@@ -87,6 +89,7 @@ public class Test_ShannonsTheorem extends TestCase {
       shannonsTheorem = new ShannonsTheorem();
       shannonsTheorem.setBandwidth(30);
       shannonsTheorem.setSignalToNoise(5);
+      shannonsTheorem.setModel(new ShannonsModel());
       
       shannonsTheorem.setBandwidth(60);
       shannonsTheorem.setSignalToNoise(40);
@@ -94,12 +97,15 @@ public class Test_ShannonsTheorem extends TestCase {
       assertFalse("\t\tTest_ShannonsTheorem - test setSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 5);
       assertTrue("\t\tTest_ShannonsTheorem - test setBandwidth() ", shannonsTheorem.getBandwidth() == 60);
       assertTrue("\t\tTest_ShannonsTheorem - test setSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 40);
+      assertNotNull("\t\tTest_ShannonsTheorem - test setModel() ", shannonsTheorem.getModel());
 	}
 
 	/**
 	 * Test behaviors.
 	 */
 	public void testBehaviors() {
+		System.out.println("\tExecuting Test_ShannonsTheorem.testBehaviors");
+		
 		String sMessage1 = "With a bandwidth of 0.0 hertz and \na signal-to-noise ratio of 0.0 decibels\nusing Shannon's Theorem got the Maximum data rate is 0.00 bits-per-second.";
 		String sMessage2 = "hello";
 		shannonsTheorem = new ShannonsTheorem();

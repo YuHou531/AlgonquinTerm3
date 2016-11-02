@@ -17,8 +17,6 @@ import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
@@ -42,9 +40,9 @@ public class ShannonsTheorem  implements ShannonsController {
 	/**
 	 * ShannonsPanel panels
 	 */
-	private ShannonsPanel panel1;
-	private ShannonsPanel panel2;
-	private ShannonsPanel panel3;
+	public ShannonsPanel panel1;
+	public ShannonsPanel2 panel2;
+	public ShannonsPanel3 panel3;
 			
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
@@ -53,6 +51,7 @@ public class ShannonsTheorem  implements ShannonsController {
 	public ShannonsTheorem()
 	{	
 		shannonsModel = new ShannonsModel();
+		
 		controller = new ShannonsController() {
 			@Override
 			public void setSignalToNoise(double signalToNoiseRatio) {
@@ -76,10 +75,22 @@ public class ShannonsTheorem  implements ShannonsController {
 		panel2.initGUI();
 		panel3 = new ShannonsPanel3(controller);
 		panel3.initGUI();
-		//Add observer for each panel
 		getModel().addObserver(panel1);
 		getModel().addObserver(panel2);
 		getModel().addObserver(panel3);
+		
+		//So that we can update different panels
+		panel1.topPanel = panel1;
+		panel1.middlePanel = panel2;
+		panel1.bottomPanel = panel3;
+		
+		panel2.topPanel = panel1;
+		panel2.middlePanel = panel2;
+		panel2.bottomPanel = panel3;
+		
+		panel3.topPanel = panel1;
+		panel3.middlePanel = panel2;
+		panel3.bottomPanel = panel3;
 	}
 
 	/* ACCESSORS	-----------------------------------------------------	*/
@@ -146,13 +157,11 @@ public class ShannonsTheorem  implements ShannonsController {
 		
 		JFrame frame = new JFrame("Shannons Theorem MVC Version 1.1.0");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(10, 10, 400, 130);
 				
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		JSeparator separator1 = new JSeparator();
 		JSeparator separator2 = new JSeparator();
-		
 		container.add(panel1);
 		container.add(separator1);
 		container.add(panel2);
@@ -181,63 +190,6 @@ public class ShannonsTheorem  implements ShannonsController {
 	public static void main (String args[]) {
 		ShannonsTheorem app = new ShannonsTheorem();
 		app.initGUI();
-		
-		//Old Code
-//		boolean continueValidate = false; 
-//		String szBandwidth, szSignalToNoise;
-//		
-//		ShannonsTheorem app = new ShannonsTheorem();
-//		JOptionPane.showMessageDialog(null, "Welcome to Yu Hou's Shannon's Theorem calculator!", "Welcome!", JOptionPane.PLAIN_MESSAGE);
-//		
-//		do {
-//			szBandwidth = JOptionPane.showInputDialog(null, "Please enter the bandwidth.", "Enter hertz", JOptionPane.QUESTION_MESSAGE);
-//			try {
-//				if( szBandwidth == null ) {
-//					JOptionPane.showMessageDialog(null, "Quiting program...\nGoodbye.", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
-//					System.exit(0);
-//				}
-//				else {
-//					double bandwidthValue = Double.parseDouble(szBandwidth);
-//					if( bandwidthValue > 0) {
-//						app.setBandwidth(bandwidthValue);
-//						continueValidate = false;
-//					}
-//					else {
-//						continueValidate = true;
-//					}
-//				}
-//			} catch (NumberFormatException e) {
-//				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for bandwidth!", "Error!", JOptionPane.ERROR_MESSAGE);
-//				continueValidate = true;
-//			}
-//		} while (continueValidate);
-//		
-//		continueValidate = false; 
-//		
-//		do {
-//			szSignalToNoise = JOptionPane.showInputDialog(null, "Please enter the signal-to-noise ratio.", "Enter signal-to-noise ratio", JOptionPane.QUESTION_MESSAGE);
-//			try {
-//				if( szSignalToNoise == null ) {
-//					JOptionPane.showMessageDialog(null, "Quiting program...\nGoodbye.", "Goodbye", JOptionPane.INFORMATION_MESSAGE);
-//					System.exit(0);
-//				}
-//				else {
-//					double signalToNoiseValue = Double.parseDouble(szSignalToNoise);
-//					if( signalToNoiseValue > 0) {
-//						app.setSignalToNoise(signalToNoiseValue);
-//						continueValidate = false;
-//					}
-//					else {
-//						continueValidate = true;
-//					}
-//				}
-//			} catch (NumberFormatException e) {
-//				JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid number for SignalToNoise!", "Error!", JOptionPane.ERROR_MESSAGE);
-//				continueValidate = true;
-//			}
-//		} while (continueValidate);
-//		
-//		JOptionPane.showMessageDialog(null, app.getModel().toString(), "Result", JOptionPane.PLAIN_MESSAGE);
 	}
 
 }	/*	End of CLASS:	ShannonsTheorem.java			*/

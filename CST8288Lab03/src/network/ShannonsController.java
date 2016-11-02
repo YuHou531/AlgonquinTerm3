@@ -5,7 +5,7 @@
  * Interfaces are said to be "pure abstract classes". They contain only
  * externally visible (public) operations without any implementation. 
  * They contain only method definitions, no instance variables. 
- * This makes an interface difinitoin only.
+ * This makes an interface definition only.
  */
 package network;
 
