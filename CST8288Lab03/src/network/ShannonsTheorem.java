@@ -99,7 +99,7 @@ public class ShannonsTheorem  implements ShannonsController {
 	 * @return	shannonsModel	current ShannonsModel instance
 	 */
 	public ShannonsModel getModel() {
-		return shannonsModel;
+		return this.shannonsModel;
 	}
 	
 	/**

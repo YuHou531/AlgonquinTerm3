@@ -66,9 +66,9 @@ public class Test_ShannonsTheorem extends TestCase {
       System.out.println("\tExecuting Test_ShannonsTheorem.testAccessors");
       
       shannonsTheorem = new ShannonsTheorem();
+      shannonsTheorem.setModel(new ShannonsModel());
       shannonsTheorem.setBandwidth(3000);
       shannonsTheorem.setSignalToNoise(30);
-      shannonsTheorem.setModel(new ShannonsModel());
       
       assertTrue("\t\tTest_ShannonsTheorem - test getBandwidth() ", shannonsTheorem.getBandwidth() == 3000);
       assertTrue("\t\tTest_ShannonsTheorem - test getSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 30);
@@ -106,7 +106,7 @@ public class Test_ShannonsTheorem extends TestCase {
 	public void testBehaviors() {
 		System.out.println("\tExecuting Test_ShannonsTheorem.testBehaviors");
 		
-		String sMessage1 = "With a bandwidth of 0.0 hertz and \na signal-to-noise ratio of 0.0 decibels\nusing Shannon's Theorem got the Maximum data rate is 0.00 bits-per-second.";
+		String sMessage1 = "Maximum data rate via Shannons Theorem = 0.00";
 		String sMessage2 = "hello";
 		shannonsTheorem = new ShannonsTheorem();
 	    shannonsTheorem.setBandwidth(0.0);
