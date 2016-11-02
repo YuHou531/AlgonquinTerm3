@@ -55,6 +55,7 @@ public class ShannonsPanel extends JPanel implements Observer {
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
 	 *	Default constructor.
+	 *  @param ctl ShannonsController
 	 */
 	public ShannonsPanel(ShannonsController ctl)	
 	{	
@@ -168,8 +169,8 @@ public class ShannonsPanel extends JPanel implements Observer {
 	/**
 	 * Implements Observer update method 
 	 * 
-	 * @param Observable observable 
-	 * @param Object arg
+	 * @param o observable 
+	 * @param arg argument
 	 */
 	public void update(Observable o, Object arg) {
 		//System.out.println("start update");

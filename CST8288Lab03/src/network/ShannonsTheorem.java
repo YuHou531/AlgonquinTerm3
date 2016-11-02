@@ -175,7 +175,7 @@ public class ShannonsTheorem  implements ShannonsController {
 	
 	/**
 	 * addObserver 
-	 * @param Observer o
+	 * @param o Observer
 	 */
 	public void addObserver(Observer o) {
 		getModel().addObserver(o);
