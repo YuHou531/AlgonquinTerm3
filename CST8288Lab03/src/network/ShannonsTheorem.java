@@ -70,11 +70,8 @@ public class ShannonsTheorem  implements ShannonsController {
 		};
 		
 		panel1 = new ShannonsPanel(controller);
-		panel1.initGUI();
 		panel2 = new ShannonsPanel2(controller);
-		panel2.initGUI();
 		panel3 = new ShannonsPanel3(controller);
-		panel3.initGUI();
 		getModel().addObserver(panel1);
 		getModel().addObserver(panel2);
 		getModel().addObserver(panel3);
@@ -98,7 +95,7 @@ public class ShannonsTheorem  implements ShannonsController {
 	 * Get method that returns the ShannonsModel instance
 	 * @return	shannonsModel	current ShannonsModel instance
 	 */
-	public ShannonsModel getModel() {
+	private ShannonsModel getModel() {
 		return this.shannonsModel;
 	}
 	
@@ -138,7 +135,7 @@ public class ShannonsTheorem  implements ShannonsController {
 	 * Set method for setting ShannonsModel instance
 	 * @param model ShannonsModel instance
 	 */
-	public void setModel(ShannonsModel model) {
+	private void setModel(ShannonsModel model) {
 		shannonsModel = model;
 	}
 	
@@ -153,7 +150,7 @@ public class ShannonsTheorem  implements ShannonsController {
 	/**
 	 * initGUI create the GUI view
 	 */
-	public void initGUI() {
+	private void initGUI() {
 		
 		JFrame frame = new JFrame("Shannons Theorem MVC Version 1.1.0");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

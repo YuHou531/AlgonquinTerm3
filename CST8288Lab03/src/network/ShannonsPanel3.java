@@ -3,6 +3,7 @@ package network;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Observable;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -12,18 +13,50 @@ import javax.swing.JPanel;
 
 public class ShannonsPanel3 extends ShannonsPanel {
 	
+	/** max Data Rate JLabel. */
+	private JLabel maxDataRateLBL;
+	
+	/** JComboBox for bandwidth */
 	public JComboBox bandwidthComboBox;
+	/** JComboBox for signal-to-noise ratio */
 	public JComboBox stnComboBox;
 
+	/* CONSTRUCTORS	--------------------------------------------------	*/
+	/**
+	 *	Default constructor.
+	 *  @param ctl ShannonsController
+	 */
 	public ShannonsPanel3(ShannonsController ctl)	
 	{	
-		super(ctl);
+		setController(ctl);
 		bandwidthComboBox = new JComboBox<String>();
 		stnComboBox = new JComboBox<String>();
+		initGUI();
 	}
 	
+	/* ACCESSORS	-----------------------------------------------------	*/
+	/**
+	 * getMaxDataRateLBL 
+	 * @return current maxDataRateLBL
+	 */
 	@Override
-	public void initGUI(){
+	public JLabel getMaxDataRateLBL() {
+		return maxDataRateLBL;
+	}
+	
+	/**
+	 * setMaxDataRateLBL
+	 * @param mdrlbl JLabel 
+	 */
+	@Override
+	public void setMaxDataRateLBL(JLabel mdrlbl) {
+		maxDataRateLBL = mdrlbl;
+	}
+	
+	/**
+	 * initGUI create the GUI view
+	 */
+	private void initGUI(){
 		setLayout(new GridLayout(3, 1, 4, 4));
 		setMaxDataRateLBL(new JLabel("Maximum data rate via Shannons Theorem = ???"));
 		add(maxDataRateLBL);
@@ -35,8 +68,7 @@ public class ShannonsPanel3 extends ShannonsPanel {
 	 * createBandwidthPanel
 	 * @return JPanel BandwidthPanel
 	 */
-	@Override
-	public JPanel createBandwidthPanel() {
+	private JPanel createBandwidthPanel() {
 		JPanel panel = new JPanel();
 		
 		JLabel bandwidthLabel = new JLabel("Bandwidth (in hertz): ");
@@ -75,8 +107,7 @@ public class ShannonsPanel3 extends ShannonsPanel {
 	 * createSignalToNoisePanel 
 	 * @return JPanel SignalToNoisePanel
 	 */
-	@Override
-	public JPanel createSignalToNoisePanel() {
+	private JPanel createSignalToNoisePanel() {
 		JPanel panel = new JPanel();
 		
 		JLabel signalToNoiseLabel  = new JLabel("Signal To Noise (in DB): ");
@@ -109,5 +140,19 @@ public class ShannonsPanel3 extends ShannonsPanel {
 		panel.add(stnComboBox);
 		
 		return panel;
+	}
+	
+	/**
+	 * Implements Observer update method 
+	 * 
+	 * @param o observable 
+	 * @param arg argument
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		//System.out.println("start update");
+		//System.out.println(arg.toString()); //call ShannonsModel toString() get result
+		maxDataRateLBL.setText(arg.toString());
+		//System.out.println("update complete");
 	}
 }

@@ -55,18 +55,7 @@ public class ShannonsModel extends Observable {
 	public double getMaximumDataRate() { 
 		return maximumDataRate(bandwidth, signalToNoise);
 	}
-		
-	/**
-	 * Private get method that returns the maximum data rate in bits per second.
-	 * @param    hertz    		double to represent bandwidth in hertz.
-	 * @param    signalToNoise	double to represent signal-to-noise ratio (decibels).
-	 * @return maximum data rate in bits per second as a double.
-	 */
-	private double maximumDataRate(double hertz, double signalToNoise) { 
-		double result = (hertz *  (Math.log(1+Math.pow(10, signalToNoise/10)) / Math.log(2))); 
-		return result;
-	}
-		
+				
 	/**
 	 * Set method for bandwidth.
 	 * @param    bandwidth    double containing the bandwidth (hertz).
@@ -93,5 +82,16 @@ public class ShannonsModel extends Observable {
 	 */
 	 public String toString()	{
 		 return "Maximum data rate via Shannons Theorem = " + String.format("%.2f",getMaximumDataRate());
+	}
+	 
+	/**
+	 * Private get method that returns the maximum data rate in bits per second.
+	 * @param    hertz    		double to represent bandwidth in hertz.
+	 * @param    signalToNoise	double to represent signal-to-noise ratio (decibels).
+	 * @return maximum data rate in bits per second as a double.
+	 */
+	private double maximumDataRate(double hertz, double signalToNoise) { 
+		double result = (hertz *  (Math.log(1+Math.pow(10, signalToNoise/10)) / Math.log(2))); 
+		return result;
 	}
 }

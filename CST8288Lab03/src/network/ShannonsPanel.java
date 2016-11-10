@@ -18,22 +18,12 @@ package network;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * CST8288 OPP with Design Patterns Lab3.
@@ -42,19 +32,33 @@ import javax.swing.event.ChangeListener;
  */
 public class ShannonsPanel extends JPanel implements Observer {
 
-	protected JLabel maxDataRateLBL;
+	/** max Data Rate JLabel. */
+	private JLabel maxDataRateLBL;
+
+	/** ShannonsController instance */
 	protected ShannonsController controller;
-	
-	public JTextField bandwidthTextField;
-	public JTextField stnTextField;
-	
+	/** top ShannonsPanel instance */
 	protected ShannonsPanel topPanel;
+	/** second ShannonsPanel instance */
 	protected ShannonsPanel2 middlePanel;
+	/** third ShannonsPanel instance */
 	protected ShannonsPanel3 bottomPanel;
+	
+	/** JTextField for bandwidth */
+	public JTextField bandwidthTextField;
+	/** JTextField for signal-to-noise ratio */
+	public JTextField stnTextField;
 	
 	/* CONSTRUCTORS	--------------------------------------------------	*/
 	/**
-	 *	Default constructor.
+	 *	Default Constructor.
+	 */
+	public ShannonsPanel()	
+	{	
+	}
+	
+	/**
+	 *	Constructor.
 	 *  @param ctl ShannonsController
 	 */
 	public ShannonsPanel(ShannonsController ctl)	
@@ -62,7 +66,9 @@ public class ShannonsPanel extends JPanel implements Observer {
 		setController(ctl);
 		bandwidthTextField = new JTextField();
 		stnTextField = new JTextField();
+		initGUI();
 	}
+	
 		
 	/* ACCESSORS	-----------------------------------------------------	*/
 	/**
@@ -92,7 +98,7 @@ public class ShannonsPanel extends JPanel implements Observer {
 	/**
 	 * initGUI create the GUI view
 	 */
-	public void initGUI() {
+	private void initGUI() {
 		setLayout(new GridLayout(3, 1, 4, 4));
 		setMaxDataRateLBL(new JLabel("Maximum data rate via Shannons Theorem = ???"));
 		add(maxDataRateLBL);
@@ -104,7 +110,7 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 * createBandwidthPanel
 	 * @return JPanel BandwidthPanel
 	 */
-	public JPanel createBandwidthPanel() {
+	private JPanel createBandwidthPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
@@ -137,7 +143,7 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 * createSignalToNoisePanel 
 	 * @return JPanel SignalToNoisePanel
 	 */
-	public JPanel createSignalToNoisePanel() {
+	private JPanel createSignalToNoisePanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
@@ -172,6 +178,7 @@ public class ShannonsPanel extends JPanel implements Observer {
 	 * @param o observable 
 	 * @param arg argument
 	 */
+	@Override
 	public void update(Observable o, Object arg) {
 		//System.out.println("start update");
 		//System.out.println(arg.toString()); //call ShannonsModel toString() get result
