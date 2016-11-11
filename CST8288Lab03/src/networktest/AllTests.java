@@ -34,7 +34,9 @@ import junit.framework.*;
 
 /**
  * JUnit test class to execute all JUNIT tests for the "Shannons Theorem" project.
- *
+ * 
+ * @author    Yu Hou
+ * @version   Oct 30 2016
  */
 public class AllTests extends TestCase {
 

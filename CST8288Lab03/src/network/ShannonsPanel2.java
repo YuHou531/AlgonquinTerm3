@@ -10,6 +10,11 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * CST8288 OPP with Design Patterns Lab3.
+ * @author    Yu Hou
+ * @version   Oct 30 2016
+ */
 public class ShannonsPanel2 extends ShannonsPanel {
 	
 	/** max Data Rate JLabel. */

@@ -11,6 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * CST8288 OPP with Design Patterns Lab3.
+ * @author    Yu Hou
+ * @version   Oct 30 2016
+ */
 public class ShannonsPanel3 extends ShannonsPanel {
 	
 	/** max Data Rate JLabel. */
