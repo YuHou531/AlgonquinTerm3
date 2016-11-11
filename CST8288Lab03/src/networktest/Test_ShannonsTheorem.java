@@ -66,7 +66,6 @@ public class Test_ShannonsTheorem extends TestCase {
       System.out.println("\tExecuting Test_ShannonsTheorem.testAccessors");
       
       shannonsTheorem = new ShannonsTheorem();
-      shannonsTheorem.setModel(new ShannonsModel());
       shannonsTheorem.setBandwidth(3000);
       shannonsTheorem.setSignalToNoise(30);
       
@@ -76,8 +75,6 @@ public class Test_ShannonsTheorem extends TestCase {
       assertFalse("\t\tTest_ShannonsTheorem - test getBandwidth() ", shannonsTheorem.getBandwidth() == 20);
       assertFalse("\t\tTest_ShannonsTheorem - test getSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 10);
       assertFalse("\t\tTest_ShannonsTheorem - test getMaximumDataRate() ", shannonsTheorem.getMaximumDataRate() == 50);
-	  assertNotNull("\t\tTest_ShannonsTheorem - test getShannonsModel: ShannonsModel instance is not null", shannonsTheorem.getModel());
-	  assertNotNull("\t\tTest_ShannonsTheorem - test getModel() ", shannonsTheorem.getModel());
 	}
 
 	/**
@@ -89,7 +86,6 @@ public class Test_ShannonsTheorem extends TestCase {
       shannonsTheorem = new ShannonsTheorem();
       shannonsTheorem.setBandwidth(30);
       shannonsTheorem.setSignalToNoise(5);
-      shannonsTheorem.setModel(new ShannonsModel());
       
       shannonsTheorem.setBandwidth(60);
       shannonsTheorem.setSignalToNoise(40);
@@ -97,7 +93,6 @@ public class Test_ShannonsTheorem extends TestCase {
       assertFalse("\t\tTest_ShannonsTheorem - test setSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 5);
       assertTrue("\t\tTest_ShannonsTheorem - test setBandwidth() ", shannonsTheorem.getBandwidth() == 60);
       assertTrue("\t\tTest_ShannonsTheorem - test setSignalToNoise() ", shannonsTheorem.getSignalToNoise() == 40);
-      assertNotNull("\t\tTest_ShannonsTheorem - test setModel() ", shannonsTheorem.getModel());
 	}
 
 	/**
@@ -106,13 +101,11 @@ public class Test_ShannonsTheorem extends TestCase {
 	public void testBehaviors() {
 		System.out.println("\tExecuting Test_ShannonsTheorem.testBehaviors");
 		
-		String sMessage1 = "Maximum data rate via Shannons Theorem = 0.00";
-		String sMessage2 = "hello";
 		shannonsTheorem = new ShannonsTheorem();
 	    shannonsTheorem.setBandwidth(0.0);
 	    shannonsTheorem.setSignalToNoise(0.0);
-		assertEquals(sMessage1, shannonsTheorem.getModel().toString());
-		assertNotSame(sMessage2, shannonsTheorem.getModel().toString());
+	    System.out.println(shannonsTheorem.getMaximumDataRate());
+		assertTrue("Test_ShannonsTheorem behaviour", shannonsTheorem.getMaximumDataRate() == 0.0);
 	}
 
 	/*	STAND-ALONE ENTRY POINT -----------------------------------------	*/

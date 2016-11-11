@@ -1,9 +1,10 @@
 package networktest;
 
+import java.util.Observer;
+
 import junit.framework.*;
 
-import network.ShannonsModel;
-import network.ShannonsTheorem;
+import network.*;
 
 /**
  * JUnit tests for the ShannonsController class from the "network" project.
@@ -26,12 +27,29 @@ public class Test_ShannonsController extends TestCase {
 	public void testBehaviors() {
 		System.out.println("\tExecuting Test_ShannonsController.testBehaviors");
 		shannonsTheorem = new ShannonsTheorem();
-		ShannonsModel model = shannonsTheorem.getModel();
-		model.addObserver(shannonsTheorem.panel1);
-		shannonsTheorem.panel1.bandwidthTextField.setText("3000");
-		shannonsTheorem.panel1.stnTextField.setText("20");
-		
-		assertNotNull("\t\tTest_ShannonsController.testBehaviors controller / model  is not null", model);
+		shannonsController = new ShannonsController() {
+			@Override
+			public void setSignalToNoise(double signalToNoiseRatio) {
+				shannonsTheorem.setSignalToNoise(signalToNoiseRatio);
+			}
+			
+			@Override
+			public void setBandwidth(double bandwidth) {
+				shannonsTheorem.setBandwidth(bandwidth);
+			}
+			
+			@Override
+			public void addObserver(Observer o) {
+				shannonsTheorem.addObserver(o);	
+			}
+		};
+		shannonsController.setBandwidth(1000);
+		shannonsController.setSignalToNoise(50);
+
+	    assertTrue("\t\tTest_ShannonsController.testBehaviors ", shannonsTheorem.getBandwidth() == 1000);
+	    assertTrue("\t\tTest_ShannonsController.testBehaviors ", shannonsTheorem.getSignalToNoise() == 50);
+	    assertFalse("\t\tTest_ShannonsController.testBehaviors ", shannonsTheorem.getBandwidth() == 300);
+	    assertFalse("\t\tTest_ShannonsController.testBehaviors ", shannonsTheorem.getSignalToNoise() == 100);
 	}
 	
 	/*	STAND-ALONE ENTRY POINT -----------------------------------------	*/
@@ -46,4 +64,5 @@ public class Test_ShannonsController extends TestCase {
 	
     /* ATTRIBUTES	-----------------------------------------------	*/
     private ShannonsTheorem shannonsTheorem = null;
+    private ShannonsController shannonsController = null;
 }

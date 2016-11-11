@@ -38,7 +38,6 @@ public class Test_ShannonsPanel extends TestCase {
 	public void testAccessors() {
       System.out.println("\tExecuting Test_ShannonsPanel.testAccessors");
       shannonsPanel = new ShannonsPanel(controller);
-      shannonsPanel.initGUI();
       assertEquals("Maximum data rate via Shannons Theorem = ???", shannonsPanel.getMaxDataRateLBL().getText());
 	}
 	
@@ -59,8 +58,8 @@ public class Test_ShannonsPanel extends TestCase {
 	public void testBehaviors() {
 		System.out.println("\tExecuting Test_ShannonsPanel.testBehaviors");
 		shannonsPanel = new ShannonsPanel(controller);
-		assertNotNull("\t\tTest_ShannonsPanel.createBandwidthPanel is not null", shannonsPanel.createBandwidthPanel());
-		assertNotNull("\t\tTest_ShannonsPanel.createBandwidthPanel is not null", shannonsPanel.createSignalToNoisePanel());
+		
+		assertTrue("Executing Test_ShannonsPanel created three panels", shannonsPanel.getComponents().length == 3);
 	}
 	
 	/*	STAND-ALONE ENTRY POINT -----------------------------------------	*/
