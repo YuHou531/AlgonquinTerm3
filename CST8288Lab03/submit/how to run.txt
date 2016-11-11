@@ -1,0 +1,6 @@
+Run App
+java -jar CST8288-014-Lab3-Hou-Yu-040844947BIN.jar network.ShannonsTheorem
+
+Run JUnit tests
+java -cp CST8288-014-Lab3-Hou-Yu-040844947BIN.jar;junit-4.10.jar org.junit.runner.JUnitCore networktest.AllTests
+
