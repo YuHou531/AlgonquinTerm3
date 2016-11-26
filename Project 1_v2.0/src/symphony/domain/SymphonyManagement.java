@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class SymphonyManagement implements ApplicationController {
 
 	private static SymphonyManagement managerInstance;
+	private static int sid = 0;// season id which is assigned to a newly added season
 	private ArrayList<ConcertSeason> seasons;
 	
 	private SymphonyManagement(){
@@ -24,7 +25,9 @@ public class SymphonyManagement implements ApplicationController {
 	}
 
 	@Override
-	public boolean addConcertSeason(ConcertSeason season) {
+	public boolean addConcertSeason(LocalDate date, int length) {
+		ConcertSeason season = new ConcertSeason(date, length);
+		season.setSeasonID(++sid);
 		seasons.add(season);
 		return true;
 	}
@@ -34,14 +37,14 @@ public class SymphonyManagement implements ApplicationController {
 		return season.getLastDatePerformed(soloist, composition);
 	}
 	
-	public ConcertSeason getConcertSeason(String seasonID){
+	public ConcertSeason getConcertSeason(int seasonID){
 		for(ConcertSeason cs: seasons){
-			if(cs.getSeasonID().equals(seasonID)) return cs;
+			if(cs.getSeasonID() == seasonID) return cs;
 		}
 		return null;
 	}
 	
-	public ArrayList<Soloist> getSoloists(String seasonID){
+	public ArrayList<Soloist> getSoloists(int seasonID){
 		ArrayList<Soloist> soloists = new ArrayList<>();
 		ConcertSeason cs = getConcertSeason(seasonID);
 		ArrayList<Concert> concerts = cs.getConcerts();
@@ -55,4 +58,5 @@ public class SymphonyManagement implements ApplicationController {
 		}
 		return soloists;
 	}
+
 }

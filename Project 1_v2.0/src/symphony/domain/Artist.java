@@ -1,23 +1,16 @@
 package symphony.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import symphony.domain.Soloist.Builder;
-
 public abstract class Artist {
 	private String id;
 	private String name;
 	private String address;
 	private String phone;
-	//private List<String> expertises;
 	
 	public static abstract class Builder{
 		private String id;
 		private String name;
 		private String address = "";
 		private String phone = "";
-		//private List<String> expertises = new ArrayList<>();
 		
 		public Builder(String id, String name){
 			this.id = id;
@@ -34,12 +27,9 @@ public abstract class Artist {
 			return this;
 		}
 		
-		//public abstract Builder addExpertise(String expertise);
-		///*
 		public Builder addExpertise(String expertise){
-			//expertises.add(expertise);
 			return this;
-		}//*/
+		}
 		
 		public abstract Artist build();
 	}
@@ -49,7 +39,6 @@ public abstract class Artist {
 		name = b.name;
 		address = b.address;
 		phone = b.phone;
-		//expertises = b.expertises;
 	}
 	
 	public String getID(){
@@ -67,8 +56,5 @@ public abstract class Artist {
 	public String getPhone(){
 		return phone;
 	}
-	/*
-	public List<String> getExpertises(){
-		return expertises;
-	}*/
+	
 }

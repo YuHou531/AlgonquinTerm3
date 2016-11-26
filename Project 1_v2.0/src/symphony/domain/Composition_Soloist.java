@@ -5,18 +5,13 @@ import java.util.ArrayList;
 public class Composition_Soloist extends Composition {
 	private ArrayList<Soloist> soloists;
 	
-	public Composition_Soloist(String compositionID){
-		super(compositionID);
-		soloists = new ArrayList<>();
+	public Composition_Soloist(ArrayList<Soloist> soloists){
+		super();
+		this.soloists = soloists;
 		//hasSoloist = true;
 		soloistAssigned(true);
 	}
-	/*
-	public Composition_Soloist(String CID, ArrayList<Soloist> soloists){
-		//????????????
-		hasSoloist = true;
-	}*/
-	
+
 	public ArrayList<Soloist> getSoloists(){
 		return soloists;
 	}

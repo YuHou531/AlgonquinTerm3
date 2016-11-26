@@ -1,10 +1,5 @@
 package symphony.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import symphony.domain.Soloist.Builder;
-
 public class Conductor extends Artist {
 	private Conductor(Builder b){
 		super(b);

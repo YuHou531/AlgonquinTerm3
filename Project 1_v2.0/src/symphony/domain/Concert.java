@@ -1,40 +1,18 @@
 package symphony.domain;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Concert {
 	private boolean isScheduled;
 	private boolean isPerformed;
-	//private LocalDate scheduledDate;
-	//private LocalDate performedDate;
-	private LocalDate date;
-
+	private LocalDate date;//this date can be scheduled or performed date
+	private LocalTime time;//this time can be scheduled or performed time
 	private String concertID;
 	private Conductor conductor;
 	private ArrayList<Composition> compositions;
-	//private ArrayList<Composition_Soloist> comp_solos;
-	
-	/*
-	public Concert(){
-		conductor = new Conductor();
-		//builder pattern makes no such constructor in Conductor
-	}
-	
-	public Concert(){
-		this(conductor);
-	}*/
-	
-	public Concert(Conductor conductor){
-		//minimum requirement for a new concert is
-		//a conductor and a composition
-		//this.conductor = conductor; 
-		setConductor(conductor);
-		compositions = new ArrayList<Composition>();
-		compositions.add(new Composition());//???must at least set one composition??????
-	}
-	
+
 	public Concert(Conductor conductor, ArrayList<Composition> compositions){
 		this.conductor = conductor; 
 		if(compositions.isEmpty()){
@@ -42,11 +20,7 @@ public class Concert {
 		}
 		this.compositions = compositions;		
 	}
-	
-	public Concert(String concertID){
-		this.concertID = concertID;
-	}
-	
+
 	public String getID(){
 		return concertID;
 	}
@@ -65,6 +39,14 @@ public class Concert {
 	
 	public LocalDate getDate(){
 		return date;
+	}
+	
+	public void setTime(LocalTime time){
+		this.time = time;
+	}
+	
+	public LocalTime getTime(){
+		return time;
 	}
 	
 	public boolean isScheduled(){
@@ -90,15 +72,7 @@ public class Concert {
 	public Conductor getConductor(){
 		return conductor;
 	}
-	/*
-	public Concert setScheduledDate(LocalDate date){
-		return new ScheduledConcert(this);
-	}//*/
-	/*
-	public ArrayList<Composition_Soloist> getCompositionSoloists(){
-		return comp_solos;
-	}//*/
-	
+
 	public ArrayList<Composition> getCompositions(){
 		return compositions;
 	}

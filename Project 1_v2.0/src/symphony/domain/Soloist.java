@@ -17,12 +17,11 @@ public class Soloist extends Artist{
 		public Builder(String id, String name){
 			super(id, name);
 		}
-		///*
+	
 		public Builder addExpertise(String expertise){
-			//super.addExpertise(expertise);
 			expertises.add(expertise);
 			return this;
-		}//*/
+		}
 		
 		public Soloist build(){
 			return new Soloist(this);

@@ -1,40 +1,41 @@
 package symphony.domain;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
+/**
+ * class ConcertSeason in symphony.domain package
+ */
 public class ConcertSeason {
-	private String seasonID;
+	private int seasonID;
 	private LocalDate openDate;
 	private int length;
 	private ArrayList<Concert> concerts;
-	private ArrayList<ScheduledConcert> scheduledConcerts;
-	private ArrayList<PerformedConcert> performedConcerts;
-	private int CID = 0;//concert's id (number part)
+	private static int cid = 0;//concert's id (number part)
 	
-	public ConcertSeason(LocalDate openDate, int length){
+	public ConcertSeason(LocalDate openDate, int length){		
 		setOpenDate(openDate);
 		setLength(length);
 		concerts = new ArrayList<Concert>();
-		scheduledConcerts = new ArrayList<ScheduledConcert>();
-		performedConcerts = new ArrayList<PerformedConcert>();
 	}
 	
 	public boolean addConcert(Concert concert){
 		LocalDate currentDate = LocalDate.now();
 		LocalDate opendate = getOpenDate();
 		if(currentDate.isBefore(openDate)){
-			CID++;
-			concert.setID("Concert " + CID);
+			concert.setID("Concert " + (++cid));//when add a concert, it's given an id
 			concerts.add(concert);
 			return true;
 		}
 		else{
-			return false;
+			return false;//if current date is later than openDate, not allowed to add
 		}
+	}
+	
+	public void setSeasonID(int seasonID){
+		this.seasonID = seasonID;
 	}
 	
 	public void setOpenDate(LocalDate date){
@@ -45,7 +46,7 @@ public class ConcertSeason {
 		length = duration;
 	}
 	
-	public String getSeasonID(){
+	public int getSeasonID(){
 		return seasonID;
 	}
 	
@@ -77,26 +78,50 @@ public class ConcertSeason {
 	}
 	
 	public ArrayList<PerformedConcert> getPerformedConcerts(){
+		ArrayList<PerformedConcert> performedConcerts = new ArrayList<>();
+		for(Concert c: concerts){
+			if(c.isPerformed()){
+				performedConcerts.add((PerformedConcert)c);
+			}
+		}
 		return performedConcerts;
 	}
 	
-	public boolean setScheduledDate(Concert concert, LocalDate date){
+	/**
+	 * set date, time and venue, a concert becomes a scheduled concert
+	 * @param concert
+	 * @param date
+	 * @param venue
+	 * @return
+	 */
+	public boolean setScheduledDate(String concertID, LocalDate date, LocalTime time, Venue venue){
+		Concert concert = this.getConcert(concertID);
 		if(concert.isPerformed()) {//if already performed, not allow to change scheduled date
 			return false;
 		}
 		if(concert.isScheduled()) {//if already scheduled, reset scheduled date
-			concert.setDate(date);;
+			concert.setDate(date);//reset scheduled date
+			((ScheduledConcert)concert).setVenue(venue);//reset location
 			return true;
 		}
 		//if not scheduled, create a new scheduled concert
 		ScheduledConcert sc = new ScheduledConcert(concert);
-		sc.setDate(date);
+		sc.setDate(date);//set scheduled date
+		sc.setTime(time);//set scheduled time (hour, minute)
+		sc.setVenue(venue);//set location
 		concerts.remove(concert);
-		scheduledConcerts.add(sc);
+		concerts.add(sc);
 		return true;
 	}
 	
-	public boolean setPerformedDate(Concert concert, LocalDate date){
+	/**
+	 * set performed date/time, a scheduled concert becomes a performed concert
+	 * @param concert
+	 * @param date
+	 * @return
+	 */
+	public boolean setPerformedDate(String concertID, LocalDate date, LocalTime time){
+		Concert concert = this.getConcert(concertID);
 		if(concert.isPerformed()) {//reset performed date -- or not allowed???
 			concert.setDate(date);
 			return true;
@@ -105,24 +130,30 @@ public class ConcertSeason {
 			//if scheduled and performed, convert this concert to a new performed concert
 			PerformedConcert pc = new PerformedConcert(concert);
 			pc.setDate(date);
-			scheduledConcerts.remove(concert);
-			performedConcerts.add(pc);
+			pc.setTime(time);
+			concerts.remove(concert);
+			concerts.add(pc);
 			return true;
 		}
 		//if not scheduled, not allow to set performed date
 		return false;
 	}
 	
+	/**
+	 * get the last date a soloist performed a given composition
+	 * @param soloist
+	 * @param composition
+	 * @return
+	 */
 	public LocalDate getLastDatePerformed(Soloist soloist, Composition composition){
 		ArrayList<PerformedConcert> performedConcerts = getPerformedConcerts();
 		ArrayList<LocalDate> dates = new ArrayList<>();
 		if(performedConcerts.isEmpty())return null;
 		for(PerformedConcert pc: performedConcerts){
 			LocalDate date = pc.getDate();
-			//ArrayList<Composition_Soloist> comp_solos = (ArrayList<Composition_Soloist>)pc.getCompositionSoloists();
 			ArrayList<Composition> compositions = pc.getCompositions();
 			for(Composition c: compositions){
-				if(!c.hasSoloist())continue;
+				if(!c.hasSoloist())continue;//if this is a composition without a soloist, search next
 				if(c.getCompositionID().equals(composition.getCompositionID())){
 					ArrayList<Soloist> soloists = ((Composition_Soloist)c).getSoloists();
 					if(soloists.contains(soloist)){
@@ -132,7 +163,7 @@ public class ConcertSeason {
 			}
 		}
 		if(dates.isEmpty())return null;
-		Collections.sort(dates);
+		Collections.sort(dates);// sort the dates, the last one is the latest date
 		return dates.get(dates.size()-1);
 	}
 }

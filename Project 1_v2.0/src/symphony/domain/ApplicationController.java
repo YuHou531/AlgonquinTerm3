@@ -7,10 +7,9 @@ public interface ApplicationController {
 
 	public boolean addConcert(Concert concert, ConcertSeason season);
 
-	//public static void addConcertSeason();//abstract can't be static in interface
-	public boolean addConcertSeason(ConcertSeason season);
+	public boolean addConcertSeason(LocalDate date, int length);
 	
 	public LocalDate getLastDatePerformed(Soloist soloist, Composition composition, ConcertSeason season);
 
-	public ArrayList<Soloist> getSoloists(String seasonID);
+	public ArrayList<Soloist> getSoloists(int seasonID);
 }
