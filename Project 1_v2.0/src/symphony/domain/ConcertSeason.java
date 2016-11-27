@@ -11,9 +11,9 @@ import java.util.Collections;
 public class ConcertSeason {
 	
 	/**
-	 * constructor
-	 * @param openDate
-	 * @param length
+	 * constructor for ConcertSeason
+	 * @param openDate concert date
+	 * @param length   concert length
 	 */
 	public ConcertSeason(LocalDate openDate, int length){		
 		setOpenDate(openDate);
@@ -23,8 +23,8 @@ public class ConcertSeason {
 	
 	/**
 	 * add a concert
-	 * @param concert
-	 * @return
+	 * @param concert concert instance to add
+	 * @return true when add concert success else flase
 	 */
 	public boolean addConcert(Concert concert){
 		LocalDate currentDate = LocalDate.now();
@@ -41,7 +41,7 @@ public class ConcertSeason {
 	
 	/**
 	 * set season id
-	 * @param seasonID
+	 * @param seasonID concert season ID
 	 */
 	public void setSeasonID(int seasonID){
 		this.seasonID = seasonID;
@@ -49,7 +49,7 @@ public class ConcertSeason {
 	
 	/**
 	 * set season open date
-	 * @param date
+	 * @param date season open date
 	 */
 	public void setOpenDate(LocalDate date){
 		openDate = date;
@@ -57,7 +57,7 @@ public class ConcertSeason {
 	
 	/**
 	 * set season length in days
-	 * @param duration
+	 * @param duration season length in days
 	 */
 	public void setLength(int duration){
 		length = duration;
@@ -65,7 +65,7 @@ public class ConcertSeason {
 	
 	/**
 	 * get season id
-	 * @return
+	 * @return the concert season id
 	 */
 	public int getSeasonID(){
 		return seasonID;
@@ -73,7 +73,7 @@ public class ConcertSeason {
 	
 	/**
 	 * get season open date
-	 * @return
+	 * @return season open date
 	 */
 	public LocalDate getOpenDate(){
 		return openDate;
@@ -81,7 +81,7 @@ public class ConcertSeason {
 	
 	/**
 	 * get season length
-	 * @return
+	 * @return season length
 	 */
 	public int getLength(){
 		return length;
@@ -89,7 +89,7 @@ public class ConcertSeason {
 
 	/**
 	 * get list of concerts in this season
-	 * @return
+	 * @return list of concerts in this season
 	 */
 	public ArrayList<Concert> getConcerts(){
 		return concerts;
@@ -97,8 +97,8 @@ public class ConcertSeason {
 	
 	/**
 	 * get a concert by its object
-	 * @param concert
-	 * @return
+	 * @param concert concert instance
+	 * @return concert instance
 	 */
 	public Concert getConcert(Concert concert){
 		if(concerts.isEmpty() || concerts == null) return null;
@@ -109,8 +109,8 @@ public class ConcertSeason {
 
 	/**
 	 * get a concert by its id
-	 * @param concertID
-	 * @return
+	 * @param concertID concert id
+	 * @return concert instance
 	 */
 	public Concert getConcert(String concertID){
 		if(concerts.isEmpty() || concerts == null) return null;
@@ -122,7 +122,7 @@ public class ConcertSeason {
 	
 	/**
 	 * get list of performed concerts in this season
-	 * @return
+	 * @return list of performed concerts in this season
 	 */
 	public ArrayList<PerformedConcert> getPerformedConcerts(){
 		ArrayList<PerformedConcert> performedConcerts = new ArrayList<>();
@@ -136,10 +136,11 @@ public class ConcertSeason {
 	
 	/**
 	 * set date, time and venue, a concert becomes a scheduled concert
-	 * @param concert
-	 * @param date
-	 * @param venue
-	 * @return
+	 * @param concertID concert unique ID 
+	 * @param date concert date
+	 * @param time concert time
+	 * @param venue concert venue
+	 * @return true for scheduledConcert else false
 	 */
 	public boolean scheduleConcert(String concertID, LocalDate date, LocalTime time, Venue venue){
 		//scheduled means not only date/time but also location is determined
@@ -168,9 +169,10 @@ public class ConcertSeason {
 	
 	/**
 	 * set performed date/time, a scheduled concert becomes a performed concert
-	 * @param concert
-	 * @param date
-	 * @return
+	 * @param concertID concert unique ID 
+	 * @param date concert date
+	 * @param time concert time
+	 * @return true when success set performed date else false
 	 */
 	public boolean setPerformedDate(String concertID, LocalDate date, LocalTime time){
 		//if performed date is before open date, it's invalid
@@ -204,9 +206,9 @@ public class ConcertSeason {
 	
 	/**
 	 * get the last date a soloist performed a given composition
-	 * @param soloist
-	 * @param composition
-	 * @return
+	 * @param soloist     soloist instance
+	 * @param composition composition instance
+	 * @return the last date a soloist performed a given composition
 	 */
 	public LocalDate getLastDatePerformed(Soloist soloist, Composition composition){
 		ArrayList<PerformedConcert> performedConcerts = getPerformedConcerts();
@@ -231,10 +233,15 @@ public class ConcertSeason {
 	}
 	
 	//ATTRIBUTES----------------------------------------------
+	/** concert season ID */
 	private int seasonID;
+	/** concert season openDate */
 	private LocalDate openDate;
+	/** concert season length */
 	private int length;
+	/** list of concerts */
 	private ArrayList<Concert> concerts;
+	/** concert's id */ 
 	private static int cid = 0;//concert's id (number part)
 	
 }

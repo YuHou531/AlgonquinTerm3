@@ -7,12 +7,11 @@ import java.util.ArrayList;
  */
 public class Composition {
 	/**
-	 * constructor
+	 * constructor for Composition
 	 */
 	public Composition(){
 		compositionID = "Composition "+ (++id);//when generate a new composition, it's given an id
 		movements = new ArrayList<>();
-		
 	}
 
 	/**
@@ -24,7 +23,7 @@ public class Composition {
 	}
 	
 	/**
-	 * set compositon name
+	 * set composition name
 	 * @param name composition name
 	 */
 	public void setCompositionName(String name){
@@ -32,7 +31,7 @@ public class Composition {
 	}
 	
 	/**
-	 * get compositon name
+	 * get composition name
 	 * @return composition name
 	 */
 	public String getCompositionName(){
@@ -56,7 +55,7 @@ public class Composition {
 	}
 
 	/**
-	 * get if the compositon has soloist or not
+	 * get if the composition has the soloist or not
 	 * @return true if has, or else false
 	 */
 	public boolean hasSoloist(){

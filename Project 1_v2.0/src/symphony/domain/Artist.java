@@ -15,8 +15,8 @@ public abstract class Artist {
 		
 		/**
 		 * Builder constructor
-		 * @param id
-		 * @param name
+		 * @param id   Artist id
+		 * @param name Artist name
 		 */
 		public Builder(String id, String name){
 			this.id = id;
@@ -25,8 +25,8 @@ public abstract class Artist {
 		
 		/**
 		 * add an artist address
-		 * @param address
-		 * @return
+		 * @param address the address for artist
+		 * @return artist instance
 		 */
 		public Builder addAddress(String address){
 			this.address = address;
@@ -35,8 +35,8 @@ public abstract class Artist {
 		
 		/**
 		 * add an artist phone
-		 * @param phone
-		 * @return
+		 * @param phone the phone for artist
+		 * @return artist instance
 		 */
 		public Builder addPhone(String phone){
 			this.phone = phone;
@@ -45,8 +45,8 @@ public abstract class Artist {
 		
 		/**
 		 * add an artist's expertise area
-		 * @param expertise
-		 * @return
+		 * @param expertise the expertise for artist 
+		 * @return artist instance
 		 */
 		public Builder addExpertise(String expertise){
 			return this;
@@ -54,14 +54,14 @@ public abstract class Artist {
 		
 		/**
 		 * build an artist
-		 * @return
+		 * @return artist instance
 		 */
 		public abstract Artist build();
 	}
 	
 	/**
 	 * constructor
-	 * @param b
+	 * @param b artist instance
 	 */
 	protected Artist(Builder b){
 		id = b.id;
@@ -72,7 +72,7 @@ public abstract class Artist {
 	
 	/**
 	 * get an artist id
-	 * @return
+	 * @return artist ID
 	 */
 	public String getID(){
 		return id;
@@ -80,7 +80,7 @@ public abstract class Artist {
 	
 	/**
 	 * get an artist name
-	 * @return
+	 * @return artist name
 	 */
 	public String getName(){
 		return name;
@@ -88,7 +88,7 @@ public abstract class Artist {
 	
 	/**
 	 * get an artist address
-	 * @return
+	 * @return artist address
 	 */
 	public String getAddress(){
 		return address;
@@ -96,15 +96,19 @@ public abstract class Artist {
 	
 	/**
 	 * get an artist phone
-	 * @return
+	 * @return artist phone
 	 */
 	public String getPhone(){
 		return phone;
 	}
 	
 	//ATRIBUTES------------------------------
+	/** artist id */
 	private String id;
+	/** artist name */
 	private String name;
+	/** artist address */
 	private String address;
+	/** artist phone */
 	private String phone;
 }

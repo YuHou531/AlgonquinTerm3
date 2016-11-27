@@ -6,8 +6,8 @@ package symphony.domain;
 public abstract class Venue {
 	
 	/**
-	 * constructor
-	 * @param address
+	 * constructor for Venue
+	 * @param address - Venue address
 	 */
 	public Venue(String address){
 		this.address = address;
@@ -15,7 +15,7 @@ public abstract class Venue {
 	
 	/**
 	 * get venue's address
-	 * @return
+	 * @return String of venue's address
 	 */
 	public String getAddress(){
 		return address;
@@ -23,7 +23,7 @@ public abstract class Venue {
 	
 	/**
 	 * set seats in this venue
-	 * @param number
+	 * @param number number of seats in this venue
 	 */
 	public void setSeats(int number){
 		seats = new int[number];
@@ -34,8 +34,8 @@ public abstract class Venue {
 	
 	/**
 	 * get a seat by its number
-	 * @param seatNumber
-	 * @return
+	 * @param seatNumber the seat number
+	 * @return the seat by its number
 	 */
 	public int getSeat(int seatNumber){
 		if(seatNumber > seats.length) return -1;
@@ -44,12 +44,19 @@ public abstract class Venue {
 	
 	/**
 	 * abstract method
-	 * @return
+	 * @return true when there is discount
+	 * @return false when there is not discount
 	 */
 	public abstract boolean hasDiscount();
 	
 	//ATTRIBUTES ---------------------------------
+	/** 
+	 * venue address
+	 */
 	protected String address;
+	/** 
+	 * venue seats
+	 */
 	protected int[] seats;
 	
 }

@@ -6,8 +6,8 @@ package symphony.domain;
 public class Conductor extends Artist {
 	
 	/**
-	 * constructor
-	 * @param b
+	 * constructor for Conductor
+	 * @param b Conductor instance
 	 */
 	private Conductor(Builder b){
 		super(b);
@@ -20,8 +20,8 @@ public class Conductor extends Artist {
 		
 		/**
 		 * constructor
-		 * @param id
-		 * @param name
+		 * @param id   Conductor id 
+		 * @param name Conductor name
 		 */
 		public Builder(String id, String name){
 			super(id, name);

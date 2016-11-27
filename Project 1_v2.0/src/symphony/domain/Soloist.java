@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public class Soloist extends Artist{
 	/**
-	 * constructor
-	 * @param b
+	 * constructor for Soloist
+	 * @param b Soloist instance
 	 */
 	private Soloist(Builder b){
 		super(b);
@@ -23,8 +23,8 @@ public class Soloist extends Artist{
 		
 		/**
 		 * constructor
-		 * @param id
-		 * @param name
+		 * @param id   Soloist id 
+		 * @param name Soloist name
 		 */
 		public Builder(String id, String name){
 			super(id, name);
@@ -40,6 +40,7 @@ public class Soloist extends Artist{
 		
 		/**
 		 * return a Soloist instance
+		 * @return Soloist instance
 		 */
 		public Soloist build(){
 			return new Soloist(this);
@@ -48,13 +49,14 @@ public class Soloist extends Artist{
 	
 	/**
 	 * get the list of expertise area of this soloist
-	 * @return
+	 * @return list of expertise area of this soloist
 	 */
 	public ArrayList<String> getExpertises(){
 		return expertises;
 	}
 	
 	//ATTRIBUTES ------------------------------------
+	/** list of expertise area of this soloist */
 	private ArrayList<String> expertises;
 	
 }

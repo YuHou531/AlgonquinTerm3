@@ -10,8 +10,8 @@ import java.util.Scanner;
  */
 public class SymphonyUser {
 	/**
-	 * constructor
-	 * @param ctrl
+	 * constructor for SymphonyUser
+	 * @param ctrl ApplicationController
 	 */
 	public SymphonyUser(ApplicationController ctrl){
 		controller = ctrl;
@@ -19,9 +19,9 @@ public class SymphonyUser {
 
 	/**
 	 * add concert
-	 * @param concert
-	 * @param season
-	 * @return
+	 * @param concert concert instance
+	 * @param season ConcertSeason instance
+	 * @return true when add concert success else false
 	 */
 	public boolean addConcert(Concert concert, ConcertSeason season){
 		return controller.addConcert(concert, season);
@@ -29,10 +29,10 @@ public class SymphonyUser {
 
 	/**
 	 * get last date a solist performed a given composition in a season
-	 * @param soloist
-	 * @param composition
-	 * @param season
-	 * @return
+	 * @param soloist soloist instance
+	 * @param composition composition instance
+	 * @param season ConcertSeason instance
+	 * @return last date a solist performed a given composition in a season
 	 */
 	public LocalDate getLastDatePerformed(Soloist soloist, Composition composition, ConcertSeason season){
 		return controller.getLastDatePerformed(soloist, composition, season);
@@ -40,8 +40,8 @@ public class SymphonyUser {
 
 	/**
 	 * list all soloists in a season
-	 * @param seasonID
-	 * @return
+	 * @param seasonID concert season id
+	 * @return all soloists in a season
 	 */
 	public ArrayList<Soloist> getSoloists(int seasonID){
 		return controller.getSoloists(seasonID);
@@ -49,8 +49,8 @@ public class SymphonyUser {
 
 	/**
 	 * add a concert season
-	 * @param openDate
-	 * @param length
+	 * @param openDate concert season open date
+	 * @param length  concert season length
 	 */
 	public void addConcertSeason(LocalDate openDate, int length){
 		controller.addConcertSeason(openDate, length);
@@ -58,8 +58,8 @@ public class SymphonyUser {
 
 	/**
 	 * retrieve a concert season
-	 * @param seasonID
-	 * @return
+	 * @param seasonID concert season id
+	 * @return the concert season
 	 */
 	public ConcertSeason getConcertSeason(int seasonID){
 		return controller.getConcertSeason(seasonID);
@@ -67,7 +67,7 @@ public class SymphonyUser {
 
 	/**
 	 * get a list of concert seasons
-	 * @return
+	 * @return a list of concert seasons
 	 */
 	public ArrayList<ConcertSeason> getConcertSeasons(){
 		return controller.getConcertSeasons();
@@ -75,7 +75,7 @@ public class SymphonyUser {
 
 	/**
 	 * entry point
-	 * @param args
+	 * @param args arguments
 	 */
 	public static void main(String[] args){
 		//define controller:

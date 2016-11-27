@@ -6,8 +6,8 @@ package symphony.domain;
 public class ScheduledConcert extends Concert {
 
 	/**
-	 * constructor
-	 * @param concert
+	 * constructor for ScheduledConcert
+	 * @param concert concert instance
 	 */
 	public ScheduledConcert(Concert concert){
 		super(concert.getConductor(), concert.getCompositions());
@@ -19,7 +19,7 @@ public class ScheduledConcert extends Concert {
 	
 	/**
 	 * set a venue to this concert
-	 * @param v
+	 * @param v venue instance
 	 */
 	public void setVenue(Venue v){
 		venue = v;
@@ -27,13 +27,14 @@ public class ScheduledConcert extends Concert {
 	
 	/**
 	 * get the venue this concert is scheduled to
-	 * @return
+	 * @return venue instance
 	 */
 	public Venue getVenue(){
 		return venue;
 	}
 	
 	//ATTRIBUTES -------------------------------------
+	/** venue instance */
 	private Venue venue;
 	
 }

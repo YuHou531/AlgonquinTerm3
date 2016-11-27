@@ -5,9 +5,9 @@ package symphony.domain;
  */
 public class Movement {
 	/**
-	 * constructor
-	 * @param id
-	 * @param name
+	 * constructor for Movement
+	 * @param id   movement id
+	 * @param name movement name
 	 */
 	public Movement(int id, String name){
 		movementID = id;
@@ -16,7 +16,7 @@ public class Movement {
 	
 	/**
 	 * get movement id
-	 * @return
+	 * @return movement id
 	 */
 	public int getID(){
 		return movementID;
@@ -24,14 +24,16 @@ public class Movement {
 	
 	/**
 	 * get movement name
-	 * @return
+	 * @return movement name
 	 */
 	public String getName(){
 		return name;
 	}
 
 	//ATTRIBUTES------------------------
+	/** movement id */
 	private int movementID;
+	/** movement name */
 	private String name;
 	
 }

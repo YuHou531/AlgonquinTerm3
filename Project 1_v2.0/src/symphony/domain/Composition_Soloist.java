@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Composition_Soloist extends Composition {
 	
 	/**
-	 * constructor
-	 * @param soloists soloist list
+	 * constructor for Composition_Soloist
+	 * @param soloists soloists list
 	 */
 	public Composition_Soloist(ArrayList<Soloist> soloists){
 		super();
@@ -20,7 +20,7 @@ public class Composition_Soloist extends Composition {
 
 	/**
 	 * get soloist list
-	 * @return soloist list
+	 * @return soloists list
 	 */
 	public ArrayList<Soloist> getSoloists(){
 		return soloists;

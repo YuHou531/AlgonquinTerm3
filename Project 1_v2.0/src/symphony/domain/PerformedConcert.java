@@ -6,8 +6,8 @@ package symphony.domain;
 public class PerformedConcert extends ScheduledConcert {
 
 	/**
-	 * constructor
-	 * @param concert
+	 * constructor for PerformedConcert
+	 * @param concert concert instance
 	 */
 	public PerformedConcert(Concert concert){
 		super(concert);

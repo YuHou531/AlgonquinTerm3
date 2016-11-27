@@ -11,8 +11,8 @@ public class Concert {
 
 	/**
 	 * Concert constructor
-	 * @param conductor
-	 * @param compositions
+	 * @param conductor    conductor instance
+	 * @param compositions compositions details
 	 */
 	public Concert(Conductor conductor, ArrayList<Composition> compositions){
 		this.conductor = conductor; 
@@ -25,7 +25,7 @@ public class Concert {
 	/**
 	 * Getter
 	 * Get concert's id
-	 * @return
+	 * @return the ID of concert
 	 */
 	public String getID(){
 		return concertID;
@@ -35,7 +35,7 @@ public class Concert {
 	 * Setter
 	 * Set id for each concert
 	 * @param concertID
-	 * @return
+	 * @return true when setID success else false
 	 */
 	public boolean setID(String concertID){
 		if(isPerformed) return false;//if concert has performed, no setting allowed
@@ -47,7 +47,7 @@ public class Concert {
 	
 	/**
 	 * Setter
-	 * @param date
+	 * @param date date for concert
 	 */
 	public void setDate(LocalDate date){
 		this.date = date;
@@ -55,7 +55,7 @@ public class Concert {
 	
 	/**
 	 * get concert date
-	 * @return
+	 * @return concert date
 	 */
 	public LocalDate getDate(){
 		return date;
@@ -63,7 +63,7 @@ public class Concert {
 	
 	/**
 	 * set concert time
-	 * @param time
+	 * @param time time for concert
 	 */
 	public void setTime(LocalTime time){
 		this.time = time;
@@ -71,15 +71,15 @@ public class Concert {
 	
 	/**
 	 * get concert time
-	 * @return
+	 * @return the concert time
 	 */
 	public LocalTime getTime(){
 		return time;
 	}
 	
 	/**
-	 * Get conditional varaible
-	 * @return
+	 * Get conditional variable
+	 * @return whether concert is scheduled
 	 */
 	public boolean isScheduled(){
 		return isScheduled;
@@ -87,15 +87,15 @@ public class Concert {
 	
 	/**
 	 * set a concert scheduled or not
-	 * @param b boolean
+	 * @param b boolean consert scheduled or not
 	 */
 	public void setScheduled(boolean b){
 		isScheduled = b;
 	}
 	
 	/**
-	 * get conditional varaible
-	 * @return
+	 * get conditional variable
+	 * @return concert is performed or not
 	 */
 	public boolean isPerformed(){
 		return isPerformed;
@@ -103,7 +103,7 @@ public class Concert {
 	
 	/**
 	 * set concert performed or not
-	 * @param b boolean
+	 * @param b boolean concert performed or not
 	 */
 	public void setPerformed(boolean b){
 		isPerformed = b;
@@ -111,7 +111,7 @@ public class Concert {
 	
 	/**
 	 * set a conductor
-	 * @param conductor
+	 * @param conductor conductor of the concert
 	 */
 	public void setConductor(Conductor conductor){
 		this.conductor = conductor;
@@ -119,7 +119,7 @@ public class Concert {
 	
 	/**
 	 * get a conductor
-	 * @return a conductor
+	 * @return a conductor for concert
 	 */
 	public Conductor getConductor(){
 		return conductor;
@@ -127,7 +127,7 @@ public class Concert {
 
 	/**
 	 * get list of compositions in a concert
-	 * @return
+	 * @return list of compositions in a concert
 	 */
 	public ArrayList<Composition> getCompositions(){
 		return compositions;
@@ -135,18 +135,25 @@ public class Concert {
 
 	/**
 	 * set a concert's composition list
-	 * @param compositions
+	 * @param compositions conpositions in concert
 	 */
 	public void setCompositions(ArrayList<Composition> compositions){
 		this.compositions = compositions;
 	}
 	
 	//ATTIBUTES -----------------------------------------------------------
+	/** concert scheduled value */
 	private boolean isScheduled;
+	/** concert performed value*/
 	private boolean isPerformed;
+	/** concert date */
 	private LocalDate date;//this date can be scheduled or performed date
+	/** concert time*/
 	private LocalTime time;//this time can be scheduled or performed time
+	/** concert unique ID*/
 	private String concertID;
+	/** concert conductor*/
 	private Conductor conductor;
+	/** concert compositions*/
 	private ArrayList<Composition> compositions;
 }
