@@ -1,18 +1,13 @@
 package symphony.domain;
 
 /**
- * PerformedConcert used to represent performed concert
- * 
- * @author    Yu Hou
- * @version   Nov 24 2016
- *
+ * class PerformedConcert in symphony.domain package
  */
 public class PerformedConcert extends ScheduledConcert {
 
 	/**
-	 * Constructor - used to represent a performed concert
-	 * 
-	 * @param concert - concert instance for performed concert
+	 * constructor
+	 * @param concert
 	 */
 	public PerformedConcert(Concert concert){
 		super(concert);

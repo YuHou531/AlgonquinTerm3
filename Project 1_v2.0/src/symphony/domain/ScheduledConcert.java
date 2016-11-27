@@ -1,23 +1,13 @@
 package symphony.domain;
 
 /**
- * ScheduledConcert used to represent schedule a concert
- * 
- * @author    Yu Hou
- * @version   Nov 24 2016
- *
+ * class ScheduledConcert in symphony.domain package
  */
 public class ScheduledConcert extends Concert {
-	
-	/**
-	 * Venue instance represents scheduled concert
-	 */
-	private Venue venue;
 
 	/**
-	 * Constructor - used to represent scheduled concert
-	 * 
-	 * @param concert - concert instance for scheduled concert 
+	 * constructor
+	 * @param concert
 	 */
 	public ScheduledConcert(Concert concert){
 		super(concert.getConductor(), concert.getCompositions());
@@ -28,18 +18,22 @@ public class ScheduledConcert extends Concert {
 	}
 	
 	/**
-	 * Used to set venue for concert
-	 * 
-	 * @param v the venue for concert
+	 * set a venue to this concert
+	 * @param v
 	 */
 	public void setVenue(Venue v){
 		venue = v;
 	}
 	
 	/**
-	 * Used to get venue for concert
+	 * get the venue this concert is scheduled to
+	 * @return
 	 */
 	public Venue getVenue(){
 		return venue;
 	}
+	
+	//ATTRIBUTES -------------------------------------
+	private Venue venue;
+	
 }

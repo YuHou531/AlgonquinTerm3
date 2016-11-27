@@ -8,8 +8,6 @@ import symphony.domain.Soloist;;
 
 /**
  * Junit test class for class Composition_Soloist
- * @author sulin
- *
  */
 public class Test_Composition_Soloist extends TestCase {
 

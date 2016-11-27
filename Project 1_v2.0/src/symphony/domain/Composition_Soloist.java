@@ -2,9 +2,15 @@ package symphony.domain;
 
 import java.util.ArrayList;
 
+/**
+ * class Composition_Soloist, subclass of class Composition, has soloist information
+ */
 public class Composition_Soloist extends Composition {
-	private ArrayList<Soloist> soloists;
 	
+	/**
+	 * constructor
+	 * @param soloists soloist list
+	 */
 	public Composition_Soloist(ArrayList<Soloist> soloists){
 		super();
 		this.soloists = soloists;
@@ -12,14 +18,27 @@ public class Composition_Soloist extends Composition {
 		soloistAssigned(true);
 	}
 
+	/**
+	 * get soloist list
+	 * @return soloist list
+	 */
 	public ArrayList<Soloist> getSoloists(){
 		return soloists;
 	}
 
+	/**
+	 * add a soloist
+	 * @param soloist the soloist to add
+	 */
 	public void addSoloist(Soloist soloist){
 		soloists.add(soloist);
 	}
 	
+	/**
+	 * get soloist by ID
+	 * @param soloistID soloist ID
+	 * @return soloist object
+	 */
 	public Soloist getSoloist(String soloistID){
 		for(Soloist s: soloists){
 			if(s.getID().equals(soloistID)){
@@ -29,6 +48,11 @@ public class Composition_Soloist extends Composition {
 		return null;
 	}
 	
+	/**
+	 * delete soloist by ID
+	 * @param soloistID soloist ID
+	 * @return true if found the soloist ID, or else false
+	 */
 	public boolean deleteSoloist(String soloistID){
 		for(Soloist s: soloists){
 			if(s.getID().equals(soloistID)){
@@ -38,4 +62,8 @@ public class Composition_Soloist extends Composition {
 		}
 		return false;
 	}
+	
+	//ATTRIBUTES--------------------------------------
+	/**soloist list*/
+	private ArrayList<Soloist> soloists;
 }

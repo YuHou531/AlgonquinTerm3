@@ -13,8 +13,6 @@ import symphony.domain.PerformedConcert;
 /**
  * JUnit tests for the PerformedConcert class
  * 
- * @author Yu Hou
- * @version 1.0.0
  */
 public class Test_PerformedConcert extends TestCase {
 
@@ -50,9 +48,9 @@ public class Test_PerformedConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert performedConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
 
-		performedConcert = new PerformedConcert(performedConcert);
+		performedConcert = new PerformedConcert(concert);
 
 		assertNotNull("\t\tTest_PerformedConcert.testConstructors performedConcert is null", performedConcert);
 	}
@@ -70,9 +68,9 @@ public class Test_PerformedConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert performedConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
 
-		performedConcert = new PerformedConcert(performedConcert);
+		performedConcert = new PerformedConcert(concert);
 
 		assertTrue("\t\tTest_PerformedConcert - test isPerformed() ", performedConcert.isPerformed() == true);
 		assertFalse("\t\tTest_PerformedConcert - test isPerformed() ", performedConcert.isPerformed() == false);
@@ -91,9 +89,9 @@ public class Test_PerformedConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert performedConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
 
-		performedConcert = new PerformedConcert(performedConcert);
+		performedConcert = new PerformedConcert(concert);
 
 		performedConcert.setPerformed(false);
 
@@ -112,7 +110,7 @@ public class Test_PerformedConcert extends TestCase {
 	}
 
 	/**
-	 * Test behaviors.
+	 * Test behaviors: if a concert is set to performed, then it must have also been scheduled
 	 */
 	public void testBehaviors() {
 		System.out.println("\tExecuting Test_PerformedConcert.testBehaviors");
@@ -124,13 +122,13 @@ public class Test_PerformedConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert performedConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
 
-		performedConcert = new PerformedConcert(performedConcert);
-		performedConcert.setPerformed(false);
+		performedConcert = new PerformedConcert(concert);
+		
+		//if a concert is set to performed, then it must have also been scheduled
+		assertTrue("\t\tTest_PerformedConcert", performedConcert.isScheduled() == true);
 
-		assertTrue("\t\tTest_PerformedConcert test change performed value ", performedConcert.isPerformed() == false);
-		assertFalse("\t\tTest_PerformedConcert test change performed value ", performedConcert.isPerformed() == true);
 	}
 
 	/* STAND-ALONE ENTRY POINT ----------------------------------------- */

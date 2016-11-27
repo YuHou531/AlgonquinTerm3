@@ -8,8 +8,6 @@ import symphony.domain.Movement;
 
 /**
  * Junit test class for class Composition
- * @author sulin
- *
  */
 public class Test_Composition extends TestCase {
 	

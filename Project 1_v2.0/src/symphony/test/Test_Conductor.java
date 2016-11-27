@@ -11,9 +11,6 @@ import symphony.domain.Conductor;
 
 /**
  * JUnit tests for the Movement class from the "symphony" project.
- * 
- * @author Yun Luo, November 24, 2016
- * @version 1.0.0
  */
 public class Test_Conductor extends TestCase {
 	
@@ -57,7 +54,7 @@ public class Test_Conductor extends TestCase {
 	public void testConductorBuildConstructor() {
 		System.out.println("\tExecuting Test_Conductor.testBuilderConstructor");
 
-		Conductor conductor = (Conductor) new Conductor.Builder("conductor 01", "John Smith").addPhone("999-999")
+		conductor = (Conductor) new Conductor.Builder("conductor 01", "John Smith").addPhone("999-999")
 				.addAddress("77 Noname").build();
 
 		assertNotNull("\t\tTest_Conductor.testConductorBuilder: conductor is null", conductor);
@@ -77,4 +74,6 @@ public class Test_Conductor extends TestCase {
 
 	}
 
+	//ATTRIBUTES------------------------
+	private Conductor conductor;
 }

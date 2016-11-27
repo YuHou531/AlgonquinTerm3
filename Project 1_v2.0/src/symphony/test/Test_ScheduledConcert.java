@@ -8,13 +8,12 @@ import junit.framework.TestSuite;
 import symphony.domain.Composition;
 import symphony.domain.Concert;
 import symphony.domain.Conductor;
+import symphony.domain.OttawaChamberfest;
 import symphony.domain.ScheduledConcert;
+import symphony.domain.Venue;
 
 /**
  * JUnit tests for the ScheduledConcert class
- * 
- * @author Yu Hou
- * @version 1.0.0
  */
 public class Test_ScheduledConcert extends TestCase {
 
@@ -50,15 +49,15 @@ public class Test_ScheduledConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert scheduledConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
 
-		scheduledConcert = new ScheduledConcert(scheduledConcert);
+		scheduledConcert = new ScheduledConcert(concert);
 
 		assertNotNull("\t\tTest_ScheduledConcert.testConstructors scheduledConcert is null", scheduledConcert);
 	}
 
 	/**
-	 * Test the accessors.
+	 * Test the accessors, including getVenue()
 	 */
 	public void testAccessors() {
 		System.out.println("\tExecuting Test_ScheduledConcert.testAccessors");
@@ -70,17 +69,28 @@ public class Test_ScheduledConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert scheduledConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
+		concert.setID("Concert 1");//manually set id here. In domain package tis is done automatically
+		
+		Venue cityHall = new OttawaChamberfest("110 Laurier");
 
-		scheduledConcert = new ScheduledConcert(scheduledConcert);
+		scheduledConcert = new ScheduledConcert(concert);
+		scheduledConcert.setVenue(cityHall);
+		
+		//verify scheduledConcert has the same concertID as the concert
+		assertTrue("\t\tTest_ScheduledConcert - test isScheduled() ", scheduledConcert.getID().equals(concert.getID()));
 
+		//verify the concert is set to scheduled
 		assertTrue("\t\tTest_ScheduledConcert - test isScheduled() ", scheduledConcert.isScheduled() == true);
 		assertFalse("\t\tTest_ScheduledConcert - test isScheduled() ", scheduledConcert.isScheduled() == false);
+		
+		//test getVenue		
+		assertTrue("\t\tTest_ScheduledConcert - test getVenue() ", (scheduledConcert.getVenue() instanceof OttawaChamberfest));
 		
 	}
 
 	/**
-	 * Test the mutators/modifiers.
+	 * Test the mutators/modifiers: setScheduled(), setVenue()
 	 */
 	public void testMutators() {
 		System.out.println("\tExecuting Test_ScheduledConcert.testMutators");
@@ -92,9 +102,9 @@ public class Test_ScheduledConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert scheduledConcert = new Concert(conductor1, compositions_1);
-
-		scheduledConcert = new ScheduledConcert(scheduledConcert);
+		Concert concert = new Concert(conductor1, compositions_1);
+		
+		scheduledConcert = new ScheduledConcert(concert);
 
 		scheduledConcert.setScheduled(false);
 
@@ -109,6 +119,12 @@ public class Test_ScheduledConcert extends TestCase {
 				scheduledConcert.isScheduled() == true);
 		assertFalse("\t\tTest_ScheduledConcert testMutators change scheduled be true ",
 				scheduledConcert.isScheduled() == false);
+		
+		//test setVenue()
+		Venue cityHall = new OttawaChamberfest("101");
+		scheduledConcert.setVenue(cityHall);
+		assertTrue("\t\tTest_ScheduledConcert - test setVenue() ", scheduledConcert.getVenue().getAddress().equals(new String("101")));
+		assertTrue("\t\tTest_ScheduledConcert - test setVenue() ", (scheduledConcert.getVenue() instanceof OttawaChamberfest));
 	}
 
 	/**
@@ -124,9 +140,9 @@ public class Test_ScheduledConcert extends TestCase {
 		compo1.setComposer("Bach");
 		compo1.setCompositionName("BWV 1");
 		compositions_1.add(compo1);
-		Concert scheduledConcert = new Concert(conductor1, compositions_1);
+		Concert concert = new Concert(conductor1, compositions_1);
 
-		scheduledConcert = new ScheduledConcert(scheduledConcert);
+		scheduledConcert = new ScheduledConcert(concert);
 		
 		scheduledConcert.setScheduled(false);
 

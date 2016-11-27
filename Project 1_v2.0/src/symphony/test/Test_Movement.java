@@ -4,16 +4,12 @@
 package symphony.test;
 
 import symphony.domain.Movement;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the Movement class from the "symphony" project.
- * 
- * @author Yun Luo, November 24,2016
- * @version 1.0.0
  */
 public class Test_Movement extends TestCase {
 	/**
@@ -48,10 +44,14 @@ public class Test_Movement extends TestCase {
 	 * @param name
 	 *            String variable for the movement name given by composer
 	 */
-	public void Test_movement(int id, String name) {
-
-		this.getName();
-
+	public void TestConstructors() {
+		System.out.println("\tExecuting Test_Movement.testConstructor");
+		
+		assertNull("\t\tTest_SymphonyManagement.testConstructor", movement);
+		
+		movement = new Movement(0, "xyz");
+		
+		assertNotNull("\t\tTest_SymphonyManagement.testConstructor", movement);
 	}
 
 	/**
@@ -65,5 +65,9 @@ public class Test_Movement extends TestCase {
 		assertTrue(movement.getName().equals(" Beethoven's String Quartet op. 131"));
 
 	}
+	
+	/* ATTRIBUTES	-----------------------------------------------	*/
+	private Movement movement;
+
 
 }

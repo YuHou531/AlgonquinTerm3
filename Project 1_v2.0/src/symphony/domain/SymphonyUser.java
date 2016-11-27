@@ -3,37 +3,88 @@ package symphony.domain;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+/**
+ * SymphonyUser class in symphony.domain package
+ */
 public class SymphonyUser {
-	
+	/**
+	 * constructor
+	 * @param ctrl
+	 */
 	public SymphonyUser(ApplicationController ctrl){
 		controller = ctrl;
 	}
 
+	/**
+	 * add concert
+	 * @param concert
+	 * @param season
+	 * @return
+	 */
 	public boolean addConcert(Concert concert, ConcertSeason season){
 		return controller.addConcert(concert, season);
 	}
 
+	/**
+	 * get last date a solist performed a given composition in a season
+	 * @param soloist
+	 * @param composition
+	 * @param season
+	 * @return
+	 */
 	public LocalDate getLastDatePerformed(Soloist soloist, Composition composition, ConcertSeason season){
 		return controller.getLastDatePerformed(soloist, composition, season);
 	}
-	
+
+	/**
+	 * list all soloists in a season
+	 * @param seasonID
+	 * @return
+	 */
 	public ArrayList<Soloist> getSoloists(int seasonID){
 		return controller.getSoloists(seasonID);
 	}
-	
+
+	/**
+	 * add a concert season
+	 * @param openDate
+	 * @param length
+	 */
 	public void addConcertSeason(LocalDate openDate, int length){
 		controller.addConcertSeason(openDate, length);
 	}
-	
+
+	/**
+	 * retrieve a concert season
+	 * @param seasonID
+	 * @return
+	 */
+	public ConcertSeason getConcertSeason(int seasonID){
+		return controller.getConcertSeason(seasonID);
+	}
+
+	/**
+	 * get a list of concert seasons
+	 * @return
+	 */
+	public ArrayList<ConcertSeason> getConcertSeasons(){
+		return controller.getConcertSeasons();
+	}
+
+	/**
+	 * entry point
+	 * @param args
+	 */
 	public static void main(String[] args){
 		//define controller:
 		SymphonyManagement symphony = SymphonyManagement.getInstance();
 		SymphonyUser user = new SymphonyUser(symphony);
 		
 		//add concert seasons
-		user.addConcertSeason(LocalDate.of(2016, 12, 14), 20);
 		user.addConcertSeason(LocalDate.of(2017, 1, 1), 30);
+		user.addConcertSeason(LocalDate.of(2017, 3, 15), 10);
 		
 		//populate conductor list and soloist list
 		ArrayList<Soloist> soloists = new ArrayList<>();
@@ -43,7 +94,7 @@ public class SymphonyUser {
 				.addExpertise("piano").addExpertise("saxophone").build();
 		Soloist soloist3 = (Soloist) new Soloist.Builder("solo 3", "Glenn Gould")
 				.addExpertise("cello").addPhone("413-000-1111").build();
-		Soloist soloist4 = (Soloist) new Soloist.Builder("solo 4", "Itzhak Perlman ")
+		Soloist soloist4 = (Soloist) new Soloist.Builder("solo 4", "Itzhak Perlman")
 				.addAddress("Isreal").addExpertise("violin").build();
 		soloists.add(soloist1);
 		soloists.add(soloist2);
@@ -65,7 +116,7 @@ public class SymphonyUser {
 		System.out.println("Welcome to add a concert:\n");
 		
 		System.out.println("Step 1: add or select a concert season");				
-		ConcertSeason season1 = symphony.getConcertSeason(1);
+		ConcertSeason season1 = user.getConcertSeason(1);
 		System.out.println("\tConcert Season " + season1.getSeasonID() + 
 				", open at " + season1.getOpenDate().getDayOfMonth() +
 				"-" + season1.getOpenDate().getMonth() +
@@ -174,10 +225,10 @@ public class SymphonyUser {
 		System.out.println("\nNow schedule a concert:");
 		
 		//schedule concert_1
-		LocalDate scheduledDate = LocalDate.of(2016, 12, 20);
+		LocalDate scheduledDate = LocalDate.of(2017, 1, 2);
 		LocalTime scheduledTime = LocalTime.of(10, 30);//time 10:30
 		Venue algonquin = new AlgonquinCommonsTheatre("1385 Woodroffe Ave");
-		season1.setScheduledDate(concert_1.getID(), scheduledDate, scheduledTime, algonquin);
+		season1.scheduleConcert(concert_1.getID(), scheduledDate, scheduledTime, algonquin);
 		System.out.println("\tConcertID: " + concert_1.getID() + 
 				            " has been scheduled to perform on " +
 		                    scheduledDate.getDayOfMonth() + "-" +
@@ -185,10 +236,10 @@ public class SymphonyUser {
 		                    scheduledDate.getYear());
 		
 		//schedule concert_2
-		scheduledDate = LocalDate.of(2016, 12, 25);
-		scheduledTime = LocalTime.of(6, 0);
+		scheduledDate = LocalDate.of(2017, 1, 25);
+		scheduledTime = LocalTime.of(6, 0);//time 6:00
 		Venue cityHall = new OttawaChamberfest("110 Laurier Ave W");
-		season1.setScheduledDate(concert_2.getID(), scheduledDate, scheduledTime, cityHall);
+		season1.scheduleConcert(concert_2.getID(), scheduledDate, scheduledTime, cityHall);
 		System.out.println("\tConcertID: " + concert_2.getID() + 
 				            " has been scheduled to perform on " +
 		                    scheduledDate.getDayOfMonth() + "-" +
@@ -197,7 +248,7 @@ public class SymphonyUser {
 		
 		//-----------------------------------------------------------------------------
 		System.out.println("\nNow set a concert as already performed:");
-		LocalDate performedDate = LocalDate.of(2016, 12, 20);//performed date is the same as scheduled date
+		LocalDate performedDate = LocalDate.of(2017, 1, 3);//performed date is different from scheduled date
 		LocalTime performedTime = LocalTime.of(11, 10);//performed time is different from scheduled time
 		season1.setPerformedDate(concert_1.getID(), performedDate, performedTime);
 		System.out.println("\tConcertID: " + concert_1.getID() + 
@@ -262,6 +313,29 @@ public class SymphonyUser {
 				System.out.println("\tThe address is " + sx.getAddress());
 			}
 		}
+		
+		//-----------------------------------------------------------
+		System.out.println("\nList all soloists in a season: enter season id here");
+		int seasonID_x = 1;
+		ArrayList<Soloist> solos_x = user.getSoloists(seasonID_x);
+		if(solos_x == null || solos_x.isEmpty()){//null when no composition selected, empty when no soloist assigned
+			System.out.println("\tNo soloist found, either the season entered is invalid or the season doesn't have any soloist");
+		}
+		else{
+			ArrayList<String> solo_List = new ArrayList<>();
+			for(Soloist s: solos_x){
+				String sName = s.getName();
+				//To avoid show duplicate soloist: more efficient way is to use Set<>, Comparable<Soloist>
+				//but need first to override equals() and hasCode() in Soloist class
+				if(!solo_List.contains(sName)){
+					solo_List.add(sName);
+					System.out.println("\tIn season " + seasonID_x +
+				            ", there is soloist: " + sName);
+				}
+			}
+		}
+		
+		symphony = null;
 
 	}
 	//---- Attributes -------------------------------------

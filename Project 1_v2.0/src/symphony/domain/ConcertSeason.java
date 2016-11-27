@@ -9,18 +9,23 @@ import java.util.Collections;
  * class ConcertSeason in symphony.domain package
  */
 public class ConcertSeason {
-	private int seasonID;
-	private LocalDate openDate;
-	private int length;
-	private ArrayList<Concert> concerts;
-	private static int cid = 0;//concert's id (number part)
 	
+	/**
+	 * constructor
+	 * @param openDate
+	 * @param length
+	 */
 	public ConcertSeason(LocalDate openDate, int length){		
 		setOpenDate(openDate);
 		setLength(length);
 		concerts = new ArrayList<Concert>();
 	}
 	
+	/**
+	 * add a concert
+	 * @param concert
+	 * @return
+	 */
 	public boolean addConcert(Concert concert){
 		LocalDate currentDate = LocalDate.now();
 		LocalDate opendate = getOpenDate();
@@ -34,49 +39,91 @@ public class ConcertSeason {
 		}
 	}
 	
+	/**
+	 * set season id
+	 * @param seasonID
+	 */
 	public void setSeasonID(int seasonID){
 		this.seasonID = seasonID;
 	}
 	
+	/**
+	 * set season open date
+	 * @param date
+	 */
 	public void setOpenDate(LocalDate date){
 		openDate = date;
 	}
 	
+	/**
+	 * set season length in days
+	 * @param duration
+	 */
 	public void setLength(int duration){
 		length = duration;
 	}
 	
+	/**
+	 * get season id
+	 * @return
+	 */
 	public int getSeasonID(){
 		return seasonID;
 	}
 	
+	/**
+	 * get season open date
+	 * @return
+	 */
 	public LocalDate getOpenDate(){
 		return openDate;
 	}
 	
+	/**
+	 * get season length
+	 * @return
+	 */
 	public int getLength(){
 		return length;
 	}
 
+	/**
+	 * get list of concerts in this season
+	 * @return
+	 */
 	public ArrayList<Concert> getConcerts(){
 		return concerts;
 	}
 	
+	/**
+	 * get a concert by its object
+	 * @param concert
+	 * @return
+	 */
 	public Concert getConcert(Concert concert){
-		if(concerts == null) return null;
+		if(concerts.isEmpty() || concerts == null) return null;
 		int index = concerts.indexOf(concert);
 		if(index == -1) return null;
 		return concerts.get(index);
 	}
-	
+
+	/**
+	 * get a concert by its id
+	 * @param concertID
+	 * @return
+	 */
 	public Concert getConcert(String concertID){
-		if(concerts == null) return null;
+		if(concerts.isEmpty() || concerts == null) return null;
 		for(Concert c: concerts){
 			if(c.getID().equals(concertID)) return c;
 		}
 		return null;
 	}
 	
+	/**
+	 * get list of performed concerts in this season
+	 * @return
+	 */
 	public ArrayList<PerformedConcert> getPerformedConcerts(){
 		ArrayList<PerformedConcert> performedConcerts = new ArrayList<>();
 		for(Concert c: concerts){
@@ -94,7 +141,12 @@ public class ConcertSeason {
 	 * @param venue
 	 * @return
 	 */
-	public boolean setScheduledDate(String concertID, LocalDate date, LocalTime time, Venue venue){
+	public boolean scheduleConcert(String concertID, LocalDate date, LocalTime time, Venue venue){
+		//scheduled means not only date/time but also location is determined
+		if(date.isBefore(openDate)) return false;//if scheduled date is before open date, it's invalid
+		
+		if(date.isAfter(openDate.plusDays(length))) return false;//if scheduled date is after end date, not allowed to schedule
+		
 		Concert concert = this.getConcert(concertID);
 		if(concert.isPerformed()) {//if already performed, not allow to change scheduled date
 			return false;
@@ -108,10 +160,10 @@ public class ConcertSeason {
 		ScheduledConcert sc = new ScheduledConcert(concert);
 		sc.setDate(date);//set scheduled date
 		sc.setTime(time);//set scheduled time (hour, minute)
-		sc.setVenue(venue);//set location
-		concerts.remove(concert);
+		sc.setVenue(venue);//set location			
 		concerts.add(sc);
-		return true;
+		concerts.remove(concert);
+		return true;	
 	}
 	
 	/**
@@ -121,6 +173,12 @@ public class ConcertSeason {
 	 * @return
 	 */
 	public boolean setPerformedDate(String concertID, LocalDate date, LocalTime time){
+		//if performed date is before open date, it's invalid
+		if(date.isBefore(openDate)) return false;
+		
+		//if performed date is after end date, not allowed to set
+		if(date.isAfter(openDate.plusDays(length))) return false;
+		
 		Concert concert = this.getConcert(concertID);
 		if(concert.isPerformed()) {//reset performed date -- or not allowed???
 			concert.setDate(date);
@@ -128,6 +186,11 @@ public class ConcertSeason {
 		}
 		if(concert.isScheduled()) {
 			//if scheduled and performed, convert this concert to a new performed concert
+			
+			//if performed date is before scheduled date, it's invalid????
+			//LocalDate scheduledDate = concert.getDate();
+			//if(date.isBefore(scheduledDate)) return false;
+			
 			PerformedConcert pc = new PerformedConcert(concert);
 			pc.setDate(date);
 			pc.setTime(time);
@@ -166,4 +229,12 @@ public class ConcertSeason {
 		Collections.sort(dates);// sort the dates, the last one is the latest date
 		return dates.get(dates.size()-1);
 	}
+	
+	//ATTRIBUTES----------------------------------------------
+	private int seasonID;
+	private LocalDate openDate;
+	private int length;
+	private ArrayList<Concert> concerts;
+	private static int cid = 0;//concert's id (number part)
+	
 }
