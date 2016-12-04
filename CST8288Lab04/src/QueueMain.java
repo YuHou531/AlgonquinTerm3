@@ -52,7 +52,7 @@ public class QueueMain {
 	 * if no arguments, display GUI and take it from there
 	 * 
 	 * @param args - arguments for input enqueue
-	 * @throws EmptyQueueException 
+	 * @throws EmptyQueueException  EmptyQueueException
 	 */
 	public static void main (String args[]) throws EmptyQueueException {
         if(args.length > 0) {

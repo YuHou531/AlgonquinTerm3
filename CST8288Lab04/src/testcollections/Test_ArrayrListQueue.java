@@ -53,8 +53,8 @@ public class Test_ArrayrListQueue extends TestCase {
 	
 	/**
 	 * Test behaviors.
-	 * @throws NullObjectException 
-	 * @throws EmptyQueueException 
+	 * @throws NullObjectException NullObjectException
+	 * @throws EmptyQueueException EmptyQueueException
 	 */
 	public void testBehaviors() throws NullObjectException, EmptyQueueException {
 		System.out.println("\tExecuting Test_ArrayrListQueue.testBehaviors");

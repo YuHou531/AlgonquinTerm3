@@ -49,6 +49,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	
 	/**
 	 * get current ArrayList to hold queue structure
+	 * @return arraylist where hold the queue structure
 	 */
 	public ArrayList<E> getArrayList() {
 		return arraylist;
@@ -56,6 +57,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	
 	/**
 	 * get current queue in ArrayList
+	 * @return currentQueueList where is the queue
 	 */
 	public ArrayList<E> getCurrentQueueList() {
 		currentQueueList = new ArrayList<E>();
