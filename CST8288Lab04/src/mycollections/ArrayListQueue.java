@@ -44,8 +44,23 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 		arraylist = new ArrayList<E>();
 		first = 0;
 		next = arraylist.size();
+		currentQueueList = new ArrayList<E>();
 	}
 	
+	/**
+	 * get current ArrayList to hold queue structure
+	 */
+	public ArrayList<E> getArrayList() {
+		return arraylist;
+	}
+	
+	/**
+	 * get current queue in ArrayList
+	 */
+	public ArrayList<E> getCurrentQueueList() {
+		return currentQueueList;
+	}
+		
 	/**
 	 * Inserts an element at the rear of the queue
 	 * Adds the specified element to this queue
@@ -61,6 +76,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 			throw new NullObjectException("cannot add null to the queue");
 		}
 		arraylist.add(next, o);  //add element to the arraylist index - next
+		next++;
 		return true;
 	}
 
@@ -92,7 +108,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 			throw new EmptyQueueException("queue is empty");
 		}
 		E firstElement = arraylist.get(first);
-		first = first++;
+		first = first + 1;
 		return firstElement;
 	}
 
@@ -137,7 +153,13 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	@Override
 	public boolean remove(Object o) {
         if(contains(o)) {
-        	arraylist.remove(o);
+        	currentQueueList.remove(o);
+        	//re-set arraylist which holds current queue part
+        	for(int i = 0; i<currentQueueList.size(); i++) {
+        		arraylist.set(first + i, currentQueueList.get(i));
+        	}
+        	arraylist.remove(arraylist.size() - 1); //delete last element as the last part had been updated with queue
+        	next = arraylist.size();
         	return true;
         }
 		return false;
@@ -149,6 +171,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	 */
 	@Override
 	public boolean contains(Object o) {
+		iterator();
 		while(hasNext()) {
 			if(next().equals(o)) {
 				return true;
@@ -162,7 +185,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	 */
 	@Override
 	public boolean hasNext() {
-		return iterator().hasNext();
+		return iterator.hasNext();
 	}
 
 	/**
@@ -170,7 +193,6 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	 */
 	@Override
 	public E next() {
-		return iterator().next();
+		return iterator.next();
 	}
-
 }
