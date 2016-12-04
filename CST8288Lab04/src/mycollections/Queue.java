@@ -16,20 +16,23 @@ public interface Queue<E> {
 	 * Adds the specified element to this queue
 	 * 
 	 * @param o new element to be inserted
+	 * @throws NullObjectException  
 	 */
-	public boolean enqueue(E o); 
+	public boolean enqueue(E o) throws NullObjectException; 
 	
 	/**
 	 * Retrieves, but does not remove, the head of this queue
 	 * an error occurs if the queue is empty
+	 * @throws EmptyQueueException 
 	 */
-	public E peek();
+	public E peek() throws EmptyQueueException;
 	
 	/**
 	 * Retrieves and removes the head of this queue
 	 * an error occurs if the queue is empty
+	 * @throws EmptyQueueException 
 	 */
-	public E dequeue();
+	public E dequeue() throws EmptyQueueException;
 	
 	/**
 	 * Returns the number of elements in this collection 

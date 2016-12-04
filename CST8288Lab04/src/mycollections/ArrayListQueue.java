@@ -3,18 +3,47 @@ package mycollections;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
-//ref
-//http://eddmann.com/posts/implementing-a-queue-in-java-using-arrays-and-linked-lists/
-public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
+/**
+ * ArrayList implements Queue ADT
+ * 
+ * @author    Yu Hou
+ * @version   Nov 20 2016
+ *
+ */
+public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E> {
 	
-	private ArrayList<E> arraylist;
+	/**
+	 * ArrayList instance used to hold queue structure 
+	 */
+	private ArrayList<E> arraylist; 
+	
+	/**
+	 * ArrayList instance for current queue
+	 */
+	private ArrayList<E> currentQueueList; 
+	
+	/**
+	 * iterator instance over the elements in this queue
+	 */
+	private Iterator<E> iterator;
+	
+	/**
+	 * index in the arraylist where to store the first element of the queue
+	 */
+	private int first;
+	
+	/**
+	 * index in the arraylist where to store the next available element of the queue
+	 */
+	private int next;
 
 	/**
-	 * Default constructor
+	 * ArrayListQueue constructor
 	 */
 	public ArrayListQueue() {
 		arraylist = new ArrayList<E>();
+		first = 0;
+		next = arraylist.size();
 	}
 	
 	/**
@@ -24,11 +53,14 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 * @param o new element to be inserted
 	 */
 	@Override
-	public boolean enqueue(E o) {
+	public boolean enqueue(E o) throws NullObjectException {
 		if(arraylist == null) {
 			return false;
 		}
-		arraylist.add(o);
+		if( o == null ) {
+			throw new NullObjectException("cannot add null to the queue");
+		}
+		arraylist.add(next, o);  //add element to the arraylist index - next
 		return true;
 	}
 
@@ -37,9 +69,14 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 * an error occurs if the queue is empty
 	 */
 	@Override
-	public E peek() {
-		// TODO Auto-generated method stub
-		return null;
+	public E peek() throws EmptyQueueException {
+		if(arraylist == null) {
+			throw new java.util.NoSuchElementException("arraylist is empty");
+		}
+		if(first == next) {
+			throw new EmptyQueueException("queue is empty");
+		}
+		return arraylist.get(first);
 	}
 
 	/**
@@ -47,18 +84,24 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 * an error occurs if the queue is empty
 	 */
 	@Override
-	public E dequeue() {
-		// TODO Auto-generated method stub
-		return null;
+	public E dequeue() throws EmptyQueueException {
+		if(arraylist == null) {
+			throw new java.util.NoSuchElementException("arraylist is empty");
+		}
+		if(first == next) {
+			throw new EmptyQueueException("queue is empty");
+		}
+		E firstElement = arraylist.get(first);
+		first = first++;
+		return firstElement;
 	}
 
 	/**
-	 * Returns the number of elements in this collection 
+	 * Returns the number of elements in this collection (queue)
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return next - first;
 	}
 
 	/**
@@ -66,8 +109,9 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 */
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		arraylist = new ArrayList<E>();
+		first = 0;
+		next = arraylist.size();
 	}
 
 	/**
@@ -75,8 +119,13 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		currentQueueList = new ArrayList<E>();
+		for(int i = first; i<next; i++)
+		{
+			currentQueueList.add(arraylist.get(i));
+		}
+		iterator = currentQueueList.iterator();
+		return iterator;
 	}
 
 	/**
@@ -87,7 +136,10 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 */
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
+        if(contains(o)) {
+        	arraylist.remove(o);
+        	return true;
+        }
 		return false;
 	}
 
@@ -97,8 +149,28 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	 */
 	@Override
 	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
+		while(hasNext()) {
+			if(next().equals(o)) {
+				return true;
+			}
+		}
 		return false;
+	}
+
+	/**
+	 * check whether queue has next element
+	 */
+	@Override
+	public boolean hasNext() {
+		return iterator().hasNext();
+	}
+
+	/**
+	 * returns next element in the queue
+	 */
+	@Override
+	public E next() {
+		return iterator().next();
 	}
 
 }
