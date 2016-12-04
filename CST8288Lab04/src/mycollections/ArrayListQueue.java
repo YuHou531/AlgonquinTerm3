@@ -6,14 +6,14 @@ import java.util.Iterator;
 
 //ref
 //http://eddmann.com/posts/implementing-a-queue-in-java-using-arrays-and-linked-lists/
-public class QueueArrayList<E> extends ArrayList implements Queue<E>  {
+public class ArrayListQueue<E> extends ArrayList implements Queue<E>  {
 	
 	private ArrayList<E> arraylist;
 
 	/**
 	 * Default constructor
 	 */
-	public QueueArrayList() {
+	public ArrayListQueue() {
 		arraylist = new ArrayList<E>();
 	}
 	
