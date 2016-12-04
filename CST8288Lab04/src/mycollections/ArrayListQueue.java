@@ -58,6 +58,11 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	 * get current queue in ArrayList
 	 */
 	public ArrayList<E> getCurrentQueueList() {
+		currentQueueList = new ArrayList<E>();
+		for(int i = first; i<next; i++)
+		{
+			currentQueueList.add(arraylist.get(i));
+		}
 		return currentQueueList;
 	}
 		
@@ -135,11 +140,7 @@ public class ArrayListQueue<E> extends ArrayList implements Queue<E>, Iterator<E
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		currentQueueList = new ArrayList<E>();
-		for(int i = first; i<next; i++)
-		{
-			currentQueueList.add(arraylist.get(i));
-		}
+		currentQueueList = getCurrentQueueList();
 		iterator = currentQueueList.iterator();
 		return iterator;
 	}
