@@ -159,10 +159,12 @@ public class QueueMain {
 		panel.setBorder(new CompoundBorder(new EtchedBorder(EtchedBorder.LOWERED), new EmptyBorder(5, 5, 5, 5)));
 		JButton enqueueButton = new JButton( "enqueue" );
 		JButton dequeueButton = new JButton( "dequeue" );
-		JButton testCase1Button = new JButton( "100 items" );
-		JButton testCase2Button = new JButton( "10000 items" );
+		JButton testCase0Button = new JButton( "100" );
+		JButton testCase1Button = new JButton( "100000" );
+		JButton testCase2Button = new JButton( "1000000" ); 
 		enqueueButton.setPreferredSize(new Dimension(60, 40));
 		dequeueButton.setPreferredSize(new Dimension(60, 40));
+		testCase0Button.setPreferredSize(new Dimension(60, 40));
 		testCase1Button.setPreferredSize(new Dimension(60, 40));
 		testCase2Button.setPreferredSize(new Dimension(60, 40));
 
@@ -200,7 +202,7 @@ public class QueueMain {
 		});
 
 		// 100 test
-		testCase1Button.addActionListener( new ActionListener() {			
+		testCase0Button.addActionListener( new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -212,14 +214,28 @@ public class QueueMain {
 				}
 			}
 		});
+		
+		// 100000 test
+		testCase1Button.addActionListener( new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					textArea.setText("perform 100000 elements queue test, please wait");
+					textArea.setText( performTestQueue(100000) );
+				} catch (EmptyQueueException e1) {
+					// TODO Auto-generated catch block
+					textArea.setText( "got EmptyQueueException" );
+				}
+			}
+		});
 
-		// 10000 test
+		// 1000000 test
 		testCase2Button.addActionListener( new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					textArea.setText("perform 1000 elements queue test, please wait");
-					textArea.setText( performTestQueue(10000) );
+					textArea.setText("perform 1000000 elements queue test, please wait");
+					textArea.setText( performTestQueue(1000000) );
 				} catch (EmptyQueueException e1) {
 					// TODO Auto-generated catch block
 					textArea.setText( "got EmptyQueueException" );
@@ -229,6 +245,7 @@ public class QueueMain {
 
 		panel.add(enqueueButton);
 		panel.add(dequeueButton);
+		panel.add(testCase0Button);
 		panel.add(testCase1Button);
 		panel.add(testCase2Button);
 		return panel;
@@ -270,8 +287,18 @@ public class QueueMain {
 	private String performTestQueue(int numberOfTests) throws EmptyQueueException {
 		//cleanup
 		arrayListQueue.clear();
+		
+		boolean displayCurrentQueue = numberOfTests <= 1000 ? true : false;
+		
+		long start, enqueueTime, dequeueTime;
+		
+		start = System.currentTimeMillis();
+
 		Random rand = new Random();
 		String report = "";
+		String reportEnqueue = "";
+		String reportDequeue = "";
+		
 		report += "Test queue in " + numberOfTests + " elements\n";
 		
 		for(int j = 0; j<numberOfTests; j++) {
@@ -284,15 +311,24 @@ public class QueueMain {
 			}
 		}
 		
-		report += "\ncurrent queue is " + arrayListQueue.getArrayList() + "\n";
-		
-		report += "\ndequeue...\n";
+		enqueueTime = System.currentTimeMillis();
+				
+		reportEnqueue += "\ncurrent queue is " + arrayListQueue.getArrayList() + "\n";
+		reportEnqueue += "\nenqueue time cost is " + (enqueueTime - start) + " milliseconds";
+		reportEnqueue += "\ndequeue...\n";
 		
 		for(int j = 0; j<numberOfTests; j++) {
 			arrayListQueue.dequeue();
-			report += "\ncurrent queue is " + arrayListQueue.getCurrentQueueList() + "\n";
+			if(displayCurrentQueue) {
+				reportDequeue += "\ncurrent queue is " + arrayListQueue.getCurrentQueueList() + "\n";
+			}
 		}
 		
+		dequeueTime = System.currentTimeMillis();
+		
+		reportEnqueue += "\ndequeue time cost is " + (dequeueTime - enqueueTime) + " milliseconds";
+		report += reportEnqueue;
+		report += reportDequeue;
 		report += "\nthe end, thanks!\n";
 		
 		return report;
