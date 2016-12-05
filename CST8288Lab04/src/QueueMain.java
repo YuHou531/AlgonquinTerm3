@@ -20,9 +20,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import junit.framework.TestSuite;
 import mycollections.ArrayListQueue;
 import mycollections.EmptyQueueException;
 import mycollections.NullObjectException;
+import testcollections.Test_ArrayrListQueue;
 
 /**
  * QueueMain
@@ -55,6 +57,12 @@ public class QueueMain {
 	 * @throws EmptyQueueException  EmptyQueueException
 	 */
 	public static void main (String args[]) throws EmptyQueueException {
+		
+		TestSuite suite = new TestSuite();
+		suite.addTest(Test_ArrayrListQueue.suite());
+        System.out.println("Executing AllTests ...");
+        junit.textui.TestRunner.run(suite);
+		
         if(args.length > 0) {
         	System.out.println("Welcome to QueueMain - Yu Hou (Lab 4)");
         	System.out.println("=====================================");
